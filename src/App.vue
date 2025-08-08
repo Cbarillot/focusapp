@@ -1,16 +1,36 @@
+<!--
+  FocusApp - Main Application Component
+  
+  A modern Pomodoro focus application with advanced features:
+  - Pomodoro timer with customizable intervals
+  - Dynamic background system (gradients, images, videos)
+  - Music integration (YouTube, Spotify, Deezer, local files)
+  - Comprehensive task management
+  - Modern glassmorphic UI design
+  - Responsive and accessible interface
+  
+  Layout Structure:
+  - DynamicBackground: Handles all background types and animations
+  - Header: Contains settings toggle button
+  - Main: Timer display and controls
+  - Footer: Ambient soundscape controls
+  - Sidebar: Settings panels (timer, themes, music, background, todo)
+-->
 <template>
   <div class="app">
-    <!-- Dynamic Background -->
+    <!-- Dynamic Background Layer -->
+    <!-- Supports gradients, solid colors, images, and videos -->
     <DynamicBackground />
     
-    <!-- Main Layout -->
+    <!-- Main Application Layout -->
     <div class="main-layout">
-      <!-- Header with Settings Button -->
+      <!-- Application Header with Settings Access -->
       <header class="app-header">
         <button 
           class="settings-btn"
           @click="store.toggleSidebar()"
           :class="{ active: store.sidebarOpen }"
+          aria-label="Open settings panel"
         >
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M3 12H21M3 6H21M3 18H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -18,35 +38,45 @@
         </button>
       </header>
       
-      <!-- Central Timer Area -->
+      <!-- Central Timer Interface -->
       <main class="timer-area">
         <div class="timer-container">
-          <!-- Mode Tabs -->
-          <div class="mode-tabs">
+          <!-- Pomodoro Mode Selection Tabs -->
+          <div class="mode-tabs" role="tablist" aria-label="Timer modes">
             <button 
               v-for="mode in modes" 
               :key="mode.key"
               class="mode-tab"
               :class="{ active: store.timerMode === mode.key }"
               @click="store.switchMode(mode.key)"
+              role="tab"
+              :aria-selected="store.timerMode === mode.key"
+              :aria-label="`Switch to ${mode.label} mode`"
             >
               {{ mode.label }}
             </button>
           </div>
           
-          <!-- Timer Display -->
+          <!-- Timer Display and Controls -->
           <div class="timer-display">
-            <div class="time">{{ store.displayTime }}</div>
+            <!-- Large Time Display -->
+            <div class="time" role="timer" :aria-label="`${store.displayTime} remaining`">
+              {{ store.displayTime }}
+            </div>
+            
+            <!-- Timer Control Buttons -->
             <div class="timer-controls">
               <button 
                 class="control-btn primary"
                 @click="store.toggleTimer()"
+                :aria-label="store.isRunning ? 'Pause timer' : 'Start timer'"
               >
                 {{ store.isRunning ? 'Pause' : 'Start' }}
               </button>
               <button 
                 class="control-btn secondary"
                 @click="store.resetTimer()"
+                aria-label="Reset timer to initial value"
               >
                 Reset
               </button>
@@ -55,43 +85,95 @@
         </div>
       </main>
       
-      <!-- Footer with Soundscapes -->
+      <!-- Footer with Ambient Soundscapes -->
       <footer class="app-footer">
         <SoundscapeControls />
       </footer>
     </div>
     
-    <!-- Side Panel -->
+    <!-- Settings Sidebar Panel -->
+    <!-- Slides in from the left with backdrop blur -->
     <Transition name="slide">
-      <div v-if="store.sidebarOpen" class="sidebar">
+      <div v-if="store.sidebarOpen" class="sidebar" role="dialog" aria-labelledby="settings-title">
         <SidePanel />
       </div>
     </Transition>
     
-    <!-- Sidebar Overlay -->
+    <!-- Sidebar Backdrop Overlay -->
     <Transition name="fade">
       <div 
         v-if="store.sidebarOpen" 
         class="sidebar-overlay"
         @click="store.toggleSidebar()"
+        aria-label="Close settings panel"
       ></div>
     </Transition>
   </div>
 </template>
 
 <script setup>
+/**
+ * FocusApp - Main Application Setup
+ * 
+ * This is the main entry point for the FocusApp Vue.js application.
+ * It sets up the core components and manages the overall application state
+ * through the Pinia store system.
+ * 
+ * Features integrated:
+ * - Pomodoro timer with multiple modes (work, short break, long break)
+ * - Dynamic background system with support for gradients, images, videos
+ * - Music integration with YouTube, Spotify, Deezer, and local files
+ * - Task management system with priorities and pomodoro estimates  
+ * - Modern glassmorphic UI with responsive design
+ * - Ambient soundscape controls for focus enhancement
+ */
+
 import { useAppStore } from './stores/appStore'
 import DynamicBackground from './components/DynamicBackground.vue'
 import SidePanel from './components/SidePanel.vue'
 import SoundscapeControls from './components/SoundscapeControls.vue'
 
+// Initialize the main application store
 const store = useAppStore()
 
+/**
+ * Pomodoro timer mode definitions
+ * Each mode has a key for state management and a user-friendly label
+ */
 const modes = [
-  { key: 'pomodoro', label: 'Pomodoro' },
-  { key: 'shortBreak', label: 'Short Break' },
-  { key: 'longBreak', label: 'Long Break' }
+  { key: 'pomodoro', label: 'Pomodoro' },      // 25-minute work session
+  { key: 'shortBreak', label: 'Short Break' }, // 5-minute break
+  { key: 'longBreak', label: 'Long Break' }    // 15-minute extended break
 ]
+
+/**
+ * TODO: Future enhancements to consider:
+ * 
+ * 1. Notification System:
+ *    - Browser notifications when timer completes
+ *    - Custom notification sounds
+ *    - Desktop integration
+ * 
+ * 2. Analytics & Statistics:
+ *    - Track completed pomodoros per day/week/month
+ *    - Productivity insights and charts
+ *    - Task completion rates
+ * 
+ * 3. Advanced Integrations:
+ *    - Calendar integration (Google Calendar, Outlook)
+ *    - Productivity app sync (Todoist, Trello, Notion)
+ *    - Time tracking exports
+ * 
+ * 4. Customization:
+ *    - Custom timer durations
+ *    - Personalized themes beyond color schemes
+ *    - UI layout preferences
+ * 
+ * 5. Collaboration Features:
+ *    - Shared pomodoro sessions
+ *    - Team productivity tracking
+ *    - Focus room creation
+ */
 </script>
 
 <style scoped>

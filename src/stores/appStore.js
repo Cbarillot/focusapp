@@ -1,33 +1,91 @@
+/**
+ * App Store - Centralized State Management
+ * 
+ * This store manages the entire application state using Pinia.
+ * It handles timer functionality, UI state, theming, music, and todo management.
+ * 
+ * Key Features:
+ * - Pomodoro timer with auto-cycling between work and break sessions
+ * - Theme and background customization
+ * - Music and soundscape integration
+ * - Task management with priorities and pomodoro estimates
+ * - Persistent UI state (sidebar, active tabs)
+ * 
+ * Architecture:
+ * - Uses Vue 3 Composition API with reactive references
+ * - Computed properties for derived state (displayTime, currentModeTime)
+ * - Actions for state mutations and side effects
+ * - Timer uses JavaScript intervals for countdown functionality
+ */
+
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 
 export const useAppStore = defineStore('app', () => {
-  // Timer state
-  const timerMode = ref('pomodoro') // pomodoro, shortBreak, longBreak
-  const timeRemaining = ref(25 * 60) // in seconds
+  // ==========================================
+  // TIMER STATE & CONFIGURATION
+  // ==========================================
+  
+  // Current timer mode: 'pomodoro' (25min), 'shortBreak' (5min), 'longBreak' (15min)
+  const timerMode = ref('pomodoro')
+  
+  // Time remaining in seconds for current session
+  const timeRemaining = ref(25 * 60)
+  
+  // Whether timer is currently running
   const isRunning = ref(false)
+  
+  // Number of completed pomodoro cycles (used for long break timing)
   const cycle = ref(0)
+  
+  // Internal timer interval reference
   let timerInterval = null
   
-  // Timer settings
-  const pomodoroTime = ref(25 * 60)
-  const shortBreakTime = ref(5 * 60)
-  const longBreakTime = ref(15 * 60)
+  // Timer duration settings (in seconds)
+  const pomodoroTime = ref(25 * 60)     // 25 minutes work session
+  const shortBreakTime = ref(5 * 60)    // 5 minute break
+  const longBreakTime = ref(15 * 60)    // 15 minute long break
   
-  // UI state
+  // ==========================================
+  // UI STATE MANAGEMENT
+  // ==========================================
+  
+  // Controls sidebar visibility
   const sidebarOpen = ref(false)
-  const activeTab = ref('timer') // timer, themes, music, background, todo
   
-  // Theme & styling
+  // Active tab in sidebar: 'timer', 'themes', 'music', 'background', 'todo'
+  const activeTab = ref('timer')
+  
+  // ==========================================
+  // THEME & VISUAL CUSTOMIZATION
+  // ==========================================
+  
+  // Current color theme identifier
   const currentTheme = ref('purple')
-  const backgroundType = ref('gradient') // gradient, image, video, color
+  
+  // Background type: 'gradient', 'image', 'video', 'color'
+  const backgroundType = ref('gradient')
+  
+  // Background content (CSS gradient, image URL, video URL, or color value)
   const backgroundValue = ref('linear-gradient(135deg, #667eea 0%, #764ba2 100%)')
+  
+  // Overlay opacity for background content (0-1)
   const overlayOpacity = ref(0.3)
   
-  // Music state
+  // ==========================================
+  // MUSIC & AUDIO STATE
+  // ==========================================
+  
+  // Whether music is currently playing
   const musicPlaying = ref(false)
+  
+  // Current track information (URL, name, or object)
   const currentTrack = ref(null)
+  
+  // Master volume level (0-1)
   const volume = ref(0.7)
+  
+  // Ambient soundscape settings
   const soundscapes = ref({
     rain: { enabled: false, volume: 0.5 },
     forest: { enabled: false, volume: 0.5 },
@@ -35,18 +93,37 @@ export const useAppStore = defineStore('app', () => {
     ocean: { enabled: false, volume: 0.5 }
   })
   
-  // Todo state
-  const todos = ref([])
-  const todoFilter = ref('all') // all, active, completed
-  const todoSort = ref('created') // created, priority, due, alphabetical
+  // ==========================================
+  // TASK MANAGEMENT STATE
+  // ==========================================
   
-  // Computed
+  // Array of todo items with full task information
+  const todos = ref([])
+  
+  // Filter for task list: 'all', 'active', 'completed'
+  const todoFilter = ref('all')
+  
+  // Sort order: 'created', 'priority', 'due', 'alphabetical'
+  const todoSort = ref('created')
+  
+  // ==========================================
+  // COMPUTED PROPERTIES
+  // ==========================================
+  
+  /**
+   * Format time remaining as MM:SS string for display
+   * @returns {string} Formatted time string (e.g., "25:00")
+   */
   const displayTime = computed(() => {
     const minutes = Math.floor(timeRemaining.value / 60)
     const seconds = timeRemaining.value % 60
     return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`
   })
   
+  /**
+   * Get the total duration for the current timer mode
+   * @returns {number} Duration in seconds
+   */
   const currentModeTime = computed(() => {
     switch (timerMode.value) {
       case 'pomodoro': return pomodoroTime.value
@@ -56,21 +133,29 @@ export const useAppStore = defineStore('app', () => {
     }
   })
   
-  // Timer functions
+  // ==========================================
+  // TIMER FUNCTIONS
+  // ==========================================
+  
+  /**
+   * Timer tick function - decrements time and handles completion
+   * Automatically cycles between pomodoro and break modes
+   */
   function tick() {
     if (timeRemaining.value > 0) {
       timeRemaining.value--
     } else {
-      // Timer finished
+      // Timer completed - handle mode switching
       isRunning.value = false
       if (timerInterval) {
         clearInterval(timerInterval)
         timerInterval = null
       }
       
-      // Auto-switch to next mode (simplified logic)
+      // Auto-cycle logic: pomodoro → break, break → pomodoro
       if (timerMode.value === 'pomodoro') {
         cycle.value++
+        // Every 4th cycle triggers a long break
         if (cycle.value % 4 === 0) {
           switchMode('longBreak')
         } else {

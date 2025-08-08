@@ -156,16 +156,20 @@
 <script setup>
 import { ref, computed } from 'vue'
 import { useAppStore } from '../../stores/appStore'
+import IconGradient from '../icons/IconGradient.vue'
+import IconColor from '../icons/IconColor.vue'
+import IconImage from '../icons/IconImage.vue'
+import IconVideo from '../icons/IconVideo.vue'
 
 const store = useAppStore()
 
 const videoUrl = ref('')
 
 const backgroundTypes = [
-  { key: 'gradient', label: 'Gradient', icon: 'GradientIcon' },
-  { key: 'color', label: 'Color', icon: 'ColorIcon' },
-  { key: 'image', label: 'Image', icon: 'ImageIcon' },
-  { key: 'video', label: 'Video', icon: 'VideoIcon' }
+  { key: 'gradient', label: 'Gradient', icon: IconGradient },
+  { key: 'color', label: 'Color', icon: IconColor },
+  { key: 'image', label: 'Image', icon: IconImage },
+  { key: 'video', label: 'Video', icon: IconVideo }
 ]
 
 const gradientPresets = [
@@ -182,18 +186,67 @@ const colorPresets = [
   '#f093fb', '#f5576c', '#4ecdc4', '#ff6b6b', '#71b280'
 ]
 
+// Popular background image URLs - Replace these with your own curated collection
 const imagePresets = [
-  { name: 'Mountain Lake', url: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&h=1080&fit=crop' },
-  { name: 'Forest Path', url: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1920&h=1080&fit=crop' },
-  { name: 'Ocean Waves', url: 'https://images.unsplash.com/photo-1439066615861-d1af74d74000?w=1920&h=1080&fit=crop' },
-  { name: 'Desert Dunes', url: 'https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=1920&h=1080&fit=crop' }
+  { 
+    name: 'Mountain Lake', 
+    url: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&h=1080&fit=crop',
+    description: 'Serene mountain lake reflection'
+  },
+  { 
+    name: 'Forest Path', 
+    url: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1920&h=1080&fit=crop',
+    description: 'Peaceful forest trail'
+  },
+  { 
+    name: 'Ocean Waves', 
+    url: 'https://images.unsplash.com/photo-1439066615861-d1af74d74000?w=1920&h=1080&fit=crop',
+    description: 'Calming ocean waves'
+  },
+  { 
+    name: 'Desert Dunes', 
+    url: 'https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=1920&h=1080&fit=crop',
+    description: 'Golden desert landscape'
+  },
+  // TODO: Add more curated background images
+  // Recommended categories: Nature, Abstract, Minimalist, Architectural
+  { 
+    name: 'Add Your Own', 
+    url: '/assets/placeholders/custom-background-placeholder.jpg', 
+    description: 'Upload custom background',
+    isPlaceholder: true 
+  }
 ]
 
+// Video background presets - These should be stored locally for better performance
 const videoPresets = [
-  { name: 'Flowing Water', url: '/videos/water-flow.mp4' },
-  { name: 'Fireplace', url: '/videos/fireplace.mp4' },
-  { name: 'Rain Window', url: '/videos/rain-window.mp4' },
-  { name: 'Space Journey', url: '/videos/space.mp4' }
+  { 
+    name: 'Flowing Water', 
+    url: '/assets/videos/water-flow.mp4',
+    description: 'Gentle water flowing over rocks',
+    isPlaceholder: true // Mark as placeholder - video file needs to be added
+  },
+  { 
+    name: 'Fireplace', 
+    url: '/assets/videos/fireplace.mp4',
+    description: 'Cozy fireplace ambiance',
+    isPlaceholder: true 
+  },
+  { 
+    name: 'Rain Window', 
+    url: '/assets/videos/rain-window.mp4',
+    description: 'Rain drops on window',
+    isPlaceholder: true 
+  },
+  { 
+    name: 'Space Journey', 
+    url: '/assets/videos/space.mp4',
+    description: 'Cosmic space travel',
+    isPlaceholder: true 
+  },
+  // TODO: Add actual video files to /public/assets/videos/
+  // Recommended: 30-60 second loops, MP4 format, 1080p resolution
+  // Consider file size for web optimization
 ]
 
 const colorValue = computed(() => {
@@ -233,58 +286,7 @@ function loadBackgroundImage(event) {
 }
 </script>
 
-<script>
-// Icon components
-const GradientIcon = {
-  template: `
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stop-color="currentColor" stop-opacity="1"/>
-          <stop offset="100%" stop-color="currentColor" stop-opacity="0.3"/>
-        </linearGradient>
-      </defs>
-      <rect x="3" y="3" width="18" height="18" rx="2" stroke="url(#grad)" stroke-width="2" fill="url(#grad)"/>
-    </svg>
-  `
-}
 
-const ColorIcon = {
-  template: `
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M12 2L2 22H22L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="currentColor"/>
-    </svg>
-  `
-}
-
-const ImageIcon = {
-  template: `
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect x="3" y="3" width="18" height="18" rx="2" ry="2" stroke="currentColor" stroke-width="2"/>
-      <circle cx="8.5" cy="8.5" r="1.5" stroke="currentColor" stroke-width="2"/>
-      <path d="M21 15L16 10L5 21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-  `
-}
-
-const VideoIcon = {
-  template: `
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <polygon points="23 7 16 12 23 17 23 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      <rect x="1" y="5" width="15" height="14" rx="2" ry="2" stroke="currentColor" stroke-width="2"/>
-    </svg>
-  `
-}
-
-export default {
-  components: {
-    GradientIcon,
-    ColorIcon, 
-    ImageIcon,
-    VideoIcon
-  }
-}
-</script>
 
 <style scoped>
 .background-settings {
