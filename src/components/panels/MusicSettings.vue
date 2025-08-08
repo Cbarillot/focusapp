@@ -1,5 +1,11 @@
 <template>
   <div class="music-settings">
+    <!-- Universal Music Component -->
+    <div class="section">
+      <UniversalMusic />
+    </div>
+    
+    <!-- YouTube Music (Legacy Support) -->
     <div class="section">
       <h3 class="section-title">YouTube Music</h3>
       
@@ -41,6 +47,7 @@
       </div>
     </div>
     
+    <!-- Local Music -->
     <div class="section">
       <h3 class="section-title">Local Music</h3>
       
@@ -71,6 +78,7 @@
       </div>
     </div>
     
+    <!-- Music Settings -->
     <div class="section">
       <h3 class="section-title">Music Settings</h3>
       
@@ -100,6 +108,7 @@
 <script setup>
 import { ref } from 'vue'
 import { useAppStore } from '../../stores/appStore'
+import UniversalMusic from '../UniversalMusic.vue'
 
 const store = useAppStore()
 
