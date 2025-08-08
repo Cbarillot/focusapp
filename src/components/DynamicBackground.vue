@@ -50,11 +50,11 @@ const backgroundStyle = computed(() => {
       }
     case 'video':
       return {
-        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+        background: 'linear-gradient(135deg, #8B5CF6 0%, #EC4899 50%, #F59E0B 100%)'
       }
     default:
       return {
-        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+        background: 'linear-gradient(135deg, #8B5CF6 0%, #EC4899 50%, #F59E0B 100%)'
       }
   }
 })
@@ -105,7 +105,6 @@ const overlayStyle = computed(() => ({
   bottom: 0;
   transition: background-color var(--transition-normal);
   backdrop-filter: blur(1px);
-  width: 1194px;
 }
 
 @keyframes gradientShift {
