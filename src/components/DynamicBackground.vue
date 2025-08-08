@@ -97,6 +97,7 @@ const overlayStyle = computed(() => ({
   animation: gradientShift 20s ease-in-out infinite;
 }
 
+.background-image,
 .background-video {
   position: absolute;
   top: 50%;
