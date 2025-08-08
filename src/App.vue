@@ -81,11 +81,51 @@
 </template>
 
 <script setup>
+import { ref } from 'vue'
 import { useAppStore } from './stores/appStore'
 import DynamicBackground from './components/DynamicBackground.vue'
 import SidePanel from './components/SidePanel.vue'
 import SoundscapeControls from './components/SoundscapeControls.vue'
 import BottomNavigation from './components/BottomNavigation.vue'
+
+// Variables fusionnées pour la gestion des thèmes, du background et du fullscreen
+const activeTab = ref('themes') // themes, clock, timer, stats, music, notepad, sounds, quotes, background, todo
+const isFullscreen = ref(false) // Fullscreen mode state
+
+// Theme & styling
+const currentTheme = ref('toto-forest') // home, ambiance, focus, toto-forest, etc.
+const backgroundType = ref('canvas') // gradient, image, video, canvas, color, youtube, animated-gradient
+const backgroundValue = ref('lava-lamp') // valeur par défaut selon le backgroundType
+const overlayOpacity = ref(0.2) // compromis entre 0.1 et 0.3
+
+// Custom gradient colors (utilisé pour les backgrounds personnalisés)
+const customGradientColors = ref(['#DF437A', '#3d57d6', '#a117fd', '#ec634b'])
+
+// Authentic Flocus themes with official assets + custom and canvas/animated themes
+const themes = ref({
+  // Gradients & Couleurs
+  'aura-twilight': {
+    name: 'Aura Twilight',
+    type: 'image',
+    value: 'https://app.flocus.com/resources/images/themes/fc5d2c05dba5c17ea3fa.jpg',
+    preview: 'https://app.flocus.com/resources/images/themes/58caf7f5c0a933ebfcf7.jpg'
+  },
+  // Ajoutez ici les autres thèmes et backgrounds customisés
+  'lava-lamp': {
+    name: 'Lava Lamp',
+    type: 'canvas',
+    value: 'lava-lamp',
+    colors: ['#DF437A', '#3d57d6', '#a117fd', '#ec634b'],
+    preview: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDIwMCAxMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj48c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojREY0MzdBIiAvPjxzdG9wIG9mZnNldD0iMzMlIiBzdHlsZT0ic3RvcC1jb2xvcjojM2Q1N2Q2IiAvPjxzdG9wIG9mZnNldD0iNjYlIiBzdHlsZT0ic3RvcC1jb2xvcjojYTExN2ZkIiAvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6I2VjNjM0YiIgLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjEyMCIgZmlsbD0idXJsKCNncmFkKSIgcng9IjgiLz48L3N2Zz4='
+  },
+  'custom-animated-gradient': {
+    name: 'Custom Animated Gradient',
+    type: 'animated-gradient',
+    value: 'custom',
+    colors: ['#DF437A', '#3d57d6', '#a117fd', '#ec634b'],
+    preview: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDIwMCAxMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJhbmltYXRlZCIgeDI9IjEwMCUiIHkyPSIxMDAlIj48c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojREY0MzdBIiAvPjxzdG9wIG9mZnNldD0iMzMlIiBzdHlsZT0ic3RvcC1jb2xvcjojM2Q1N2Q2IiAvPjxzdG9wIG9mZnNldD0iNjYlIiBzdHlsZT0ic3RvcC1jb2xvcjojYTExN2ZkIiAvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6I2VjNjM0YiIgLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjEyMCIgZmlsbD0idXJsKCNhbmltYXRlZCkiIHJ4PSI4Ii8+PGNpcmNsZSBjeD0iMTAwIiBjeT0iNjAiIHI9IjMiIGZpbGw9IndoaXRlIiBvcGFjaXR5PSIwLjgiPjxhbmltYXRlIGF0dHJpYnV0ZU5hbWU9Im9wYWNpdHkiIHZhbHVlcz0iMC44OzAuMzswLjgiIGR1cj0iMnMiIHJlcGVhdENvdW50PSJpbmRlZmluaXRlIi8+PC9jaXJjbGU+PC9zdmc+'
+  }
+})
 
 const store = useAppStore()
 

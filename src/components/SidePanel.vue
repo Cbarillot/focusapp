@@ -34,80 +34,85 @@
 <script setup>
 import { computed } from 'vue'
 import { useAppStore } from '../stores/appStore'
-import TimerSettings from './panels/TimerSettings.vue'
 import ThemeSettings from './panels/ThemeSettings.vue'
+import TimerSettings from './panels/TimerSettings.vue'
 import MusicSettings from './panels/MusicSettings.vue'
-import BackgroundSettings from './panels/BackgroundSettings.vue'
-import TodoSettings from './panels/TodoSettings.vue'
+import SoundsSettings from './panels/SoundsSettings.vue'
 
 const store = useAppStore()
 
 const tabs = [
-  { 
-    key: 'timer', 
-    label: 'Timer', 
-    icon: 'TimerIcon'
-  },
-  { 
-    key: 'themes', 
-    label: 'Themes', 
+  {
+    key: 'themes',
+    label: 'Themes',
     icon: 'ThemeIcon'
   },
-  { 
-    key: 'music', 
-    label: 'Music', 
+  {
+    key: 'timer',
+    label: 'Timer Settings',
+    icon: 'TimerIcon'
+  },
+  {
+    key: 'music',
+    label: 'Music & Sounds',
     icon: 'MusicIcon'
   },
-  { 
-    key: 'background', 
-    label: 'Background', 
-    icon: 'BackgroundIcon'
-  },
-  { 
-    key: 'todo', 
-    label: 'To-do', 
-    icon: 'TodoIcon'
+  {
+    key: 'sounds',
+    label: 'Ambient Sounds',
+    icon: 'SoundsIcon'
   }
 ]
 
 const activeComponent = computed(() => {
   switch (store.activeTab) {
-    case 'timer': return TimerSettings
     case 'themes': return ThemeSettings
+    case 'timer': return TimerSettings
     case 'music': return MusicSettings
-    case 'background': return BackgroundSettings
-    case 'todo': return TodoSettings
-    default: return TimerSettings
+    case 'sounds': return SoundsSettings
+    default: return ThemeSettings
   }
 })
 </script>
 
 <script>
-// Icon components
+// Flocus-style SVG Icon components
+
 const TimerIcon = {
   template: `
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
-      <path d="M12 6V12L16 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <svg width="20" height="20" viewBox="0 0 36 36" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <path d="M18 6c-6.075 0-11 4.925-11 11s4.925 11 11 11 11-4.925 11-11S24.075 6 18 6zm0 19.25c-4.558 0-8.25-3.692-8.25-8.25S13.442 8.75 18 8.75 26.25 12.442 26.25 17 22.558 25.25 18 25.25zm3.438-8.25H18V12.125a1.375 1.375 0 1 0-2.75 0V18.375c0 .758.617 1.375 1.375 1.375h4.813a1.375 1.375 0 1 0 0-2.75z"/>
+      <path d="M14.5 3h7v2h-7zM16.25 0h3.5v1.5h-3.5z"/>
     </svg>
   `
 }
 
+
+
+const SoundsIcon = {
+  template: `
+    <svg width="20" height="20" viewBox="0 0 36 36" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <path d="M10.3 12.8L15 8.1c.4-.4 1-.1 1 .4v18.9c0 .6-.6.8-1 .4l-4.7-4.7H5c-.6 0-1-.4-1-1v-8.6c0-.6.4-1 1-1h5.3z"/>
+      <path d="M19.5 12c1.4 1.4 1.4 3.6 0 5s-3.6 1.4-5 0"/>
+      <path d="M23.1 8.4c2.8 2.8 2.8 7.4 0 10.2s-7.4 2.8-10.2 0"/>
+      <path d="M26.7 4.8c4.2 4.2 4.2 11 0 15.2s-11 4.2-15.2 0"/>
+    </svg>
+  `
+}
+
+
 const ThemeIcon = {
   template: `
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M12 1V3M12 21V23M4.22 4.22L5.64 5.64M18.36 18.36L19.78 19.78M1 12H3M21 12H23M4.22 19.78L5.64 18.36M18.36 5.64L19.78 4.22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      <circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2"/>
+    <svg width="20" height="20" viewBox="0 0 36 36" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <path d="M18 2.5c-.4 0-.8.1-1.2.3L7.6 7.6c-.8.4-1.3 1.3-1.3 2.2v16.4c0 .9.5 1.8 1.3 2.2l9.2 4.8c.8.4 1.7.4 2.4 0l9.2-4.8c.8-.4 1.3-1.3 1.3-2.2V9.8c0-.9-.5-1.8-1.3-2.2L19.2 2.8c-.4-.2-.8-.3-1.2-.3zm0 3.2l7.8 4.1v14.4L18 28.3V5.7z"/>
     </svg>
   `
 }
 
 const MusicIcon = {
   template: `
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M9 18V5L21 3V16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      <circle cx="6" cy="18" r="3" stroke="currentColor" stroke-width="2"/>
-      <circle cx="18" cy="16" r="3" stroke="currentColor" stroke-width="2"/>
+    <svg width="20" height="20" viewBox="0 0 36 36" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <path d="M33 6.5c0-.8-.7-1.5-1.5-1.5-.3 0-.5.1-.8.2L13 9.8c-.8.3-1.3 1-1.3 1.8v13.9c-1-.6-2.2-1-3.7-1-3.3 0-6 1.8-6 4s2.7 4 6 4 6-1.8 6-4V16.2l16.5-5.5v8.8c-1-.6-2.2-1-3.7-1-3.3 0-6 1.8-6 4s2.7 4 6 4 6-1.8 6-4V6.5z"/>
     </svg>
   `
 }
@@ -134,10 +139,9 @@ const TodoIcon = {
 export default {
   components: {
     TimerIcon,
-    ThemeIcon, 
+    ThemeIcon,
     MusicIcon,
-    BackgroundIcon,
-    TodoIcon
+    SoundsIcon
   }
 }
 </script>
@@ -202,6 +206,7 @@ export default {
   font-size: 14px;
   font-weight: 500;
   transition: all var(--transition-fast);
+  position: relative;
 }
 
 .nav-tab:hover {
@@ -218,10 +223,11 @@ export default {
   margin-bottom: 0;
 }
 
+
 .panel-content {
   flex: 1;
   overflow-y: auto;
-  padding: 24px;
+  padding: 32px;
 }
 
 /* Responsive */

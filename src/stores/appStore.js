@@ -16,14 +16,47 @@ export const useAppStore = defineStore('app', () => {
   
   // UI state
   const sidebarOpen = ref(false)
-  const activeTab = ref('timer') // timer, themes, music, background, todo
-  const isFullscreen = ref(false) // Fullscreen mode state
-  
-  // Theme & styling - Three integrated themes: home, ambiance, focus
-  const currentTheme = ref('home') // home, ambiance, focus
-  const backgroundType = ref('gradient') // gradient, image, video, color
-  const backgroundValue = ref('linear-gradient(135deg, #667eea 0%, #764ba2 100%)')
-  const overlayOpacity = ref(0.3)
+const activeTab = ref('themes') // themes, clock, timer, stats, music, notepad, sounds, quotes, background, todo
+const isFullscreen = ref(false) // Fullscreen mode state
+
+// Theme & styling
+const currentTheme = ref('toto-forest') // home, ambiance, focus, toto-forest, etc.
+const backgroundType = ref('canvas') // gradient, image, video, canvas, color, youtube, animated-gradient
+const backgroundValue = ref('lava-lamp') // valeur par défaut selon le backgroundType
+const overlayOpacity = ref(0.2) // compromis entre 0.1 et 0.3
+
+// Custom gradient colors (utilisé pour les backgrounds personnalisés)
+const customGradientColors = ref(['#DF437A', '#3d57d6', '#a117fd', '#ec634b'])
+
+// Authentic Flocus themes with official assets + custom and canvas/animated themes
+const themes = ref({
+  // Gradients & Couleurs
+  'aura-twilight': {
+    name: 'Aura Twilight',
+    type: 'image',
+    value: 'https://app.flocus.com/resources/images/themes/fc5d2c05dba5c17ea3fa.jpg',
+    preview: 'https://app.flocus.com/resources/images/themes/58caf7f5c0a933ebfcf7.jpg'
+  },
+  // ... (tous les autres thèmes de la version ai_main_f671d7f41848, à conserver)
+  // Exemple avec les mondes ambiants, canvas, animated, custom, etc.
+  'lava-lamp': {
+    name: 'Lava Lamp',
+    type: 'canvas',
+    value: 'lava-lamp',
+    colors: ['#DF437A', '#3d57d6', '#a117fd', '#ec634b'],
+    preview: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDIwMCAxMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj48c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojREY0MzdBIiAvPjxzdG9wIG9mZnNldD0iMzMlIiBzdHlsZT0ic3RvcC1jb2xvcjojM2Q1N2Q2IiAvPjxzdG9wIG9mZnNldD0iNjYlIiBzdHlsZT0ic3RvcC1jb2xvcjojYTExN2ZkIiAvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6I2VjNjM0YiIgLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjEyMCIgZmlsbD0idXJsKCNncmFkKSIgcng9IjgiLz48L3N2Zz4='
+  },
+  // (tous les autres objets thèmes et backgrounds du bloc long d'origine)
+  'custom-animated-gradient': {
+    name: 'Custom Animated Gradient',
+    type: 'animated-gradient',
+    value: 'custom',
+    colors: ['#DF437A', '#3d57d6', '#a117fd', '#ec634b'],
+    preview: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDIwMCAxMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJhbmltYXRlZCIgeDI9IjEwMCUiIHkyPSIxMDAlIj48c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojREY0MzdBIiAvPjxzdG9wIG9mZnNldD0iMzMlIiBzdHlsZT0ic3RvcC1jb2xvcjojM2Q1N2Q2IiAvPjxzdG9wIG9mZnNldD0iNjYlIiBzdHlsZT0ic3RvcC1jb2xvcjojYTExN2ZkIiAvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6I2VjNjM0YiIgLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjEyMCIgZmlsbD0idXJsKCNhbmltYXRlZCkiIHJ4PSI4Ii8+PGNpcmNsZSBjeD0iMTAwIiBjeT0iNjAiIHI9IjMiIGZpbGw9IndoaXRlIiBvcGFjaXR5PSIwLjgiPjxhbmltYXRlIGF0dHJpYnV0ZU5hbWU9Im9wYWNpdHkiIHZhbHVlcz0iMC44OzAuMzswLjgiIGR1cj0iMnMiIHJlcGVhdENvdW50PSJpbmRlZmluaXRlIi8+PC9jaXJjbGU+PC9zdmc+'
+  }
+})
+
+// ... le reste de ton store (getters, setters, etc.)
   
   // Theme definitions with color palettes
   const themes = ref({
@@ -184,6 +217,52 @@ export const useAppStore = defineStore('app', () => {
     backgroundType.value = type
     backgroundValue.value = value
   }
+
+  function extractYouTubeId(url) {
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/
+    const match = url.match(regExp)
+    return (match && match[2].length === 11) ? match[2] : null
+  }
+
+  function setTheme(themeKey) {
+    const theme = themes.value[themeKey]
+    if (theme) {
+      currentTheme.value = themeKey
+      backgroundType.value = theme.type
+      backgroundValue.value = theme.value
+
+      // Set CSS variables for canvas themes
+      if (theme.colors) {
+        theme.colors.forEach((color, index) => {
+          document.documentElement.style.setProperty(`--gradient-color-${index + 1}`, color)
+        })
+      }
+    }
+  }
+
+  function setYouTubeBackground(youtubeUrl) {
+    const videoId = extractYouTubeId(youtubeUrl)
+    if (videoId) {
+      backgroundType.value = 'youtube'
+      backgroundValue.value = videoId
+      return true
+    }
+    return false
+  }
+
+  function setCustomGradientColors(colors) {
+    customGradientColors.value = [...colors]
+    // Update CSS variables for the animated gradient
+    colors.forEach((color, index) => {
+      document.documentElement.style.setProperty(`--custom-gradient-color-${index + 1}`, color)
+    })
+  }
+
+  function setAnimatedGradientBackground() {
+    backgroundType.value = 'animated-gradient'
+    backgroundValue.value = 'custom'
+    setCustomGradientColors(customGradientColors.value)
+  }
   
   function addTodo(todo) {
     todos.value.push({
@@ -283,6 +362,8 @@ export const useAppStore = defineStore('app', () => {
     backgroundType,
     backgroundValue,
     overlayOpacity,
+    themes,
+    customGradientColors,
     musicPlaying,
     currentTrack,
     volume,
@@ -306,6 +387,11 @@ export const useAppStore = defineStore('app', () => {
     toggleSidebar,
     setActiveTab,
     setBackground,
+    setTheme,
+    setYouTubeBackground,
+    extractYouTubeId,
+    setCustomGradientColors,
+    setAnimatedGradientBackground,
     addTodo,
     toggleTodo,
     deleteTodo,
