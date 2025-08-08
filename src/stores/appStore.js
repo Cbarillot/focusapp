@@ -411,6 +411,8 @@ export const useAppStore = defineStore('app', () => {
     setActiveTab,
     setBackground,
     setTheme,
+    setYouTubeBackground,
+    extractYouTubeId,
     addTodo,
     toggleTodo,
     deleteTodo
