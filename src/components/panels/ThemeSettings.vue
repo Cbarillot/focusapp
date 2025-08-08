@@ -316,7 +316,8 @@ function getThemesByCategory(category) {
 }
 
 .theme-card:hover .theme-image,
-.theme-card:hover .canvas-preview {
+.theme-card:hover .canvas-preview,
+.theme-card:hover .color-preview {
   transform: scale(1.05);
 }
 
