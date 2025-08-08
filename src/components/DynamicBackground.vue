@@ -57,7 +57,9 @@ const backgroundStyle = computed(() => {
       }
     case 'color':
       return {
-        backgroundColor: store.backgroundValue
+        backgroundColor: store.backgroundValue,
+        width: '100%',
+        height: '100%'
       }
     default:
       return {
