@@ -189,6 +189,22 @@ export const useAppStore = defineStore('app', () => {
     backgroundType.value = type
     backgroundValue.value = value
   }
+
+  function setTheme(themeKey) {
+    const theme = themes.value[themeKey]
+    if (theme) {
+      currentTheme.value = themeKey
+      backgroundType.value = theme.type
+      backgroundValue.value = theme.value
+
+      // Set CSS variables for canvas themes
+      if (theme.colors) {
+        theme.colors.forEach((color, index) => {
+          document.documentElement.style.setProperty(`--gradient-color-${index + 1}`, color)
+        })
+      }
+    }
+  }
   
   function addTodo(todo) {
     todos.value.push({
