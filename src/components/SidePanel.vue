@@ -21,7 +21,6 @@
       >
         <component :is="tab.icon" />
         <span>{{ tab.label }}</span>
-        <span v-if="tab.isNew" class="new-badge">New</span>
       </button>
     </nav>
     
