@@ -161,6 +161,59 @@
     </div>
 
     <div class="setting-group">
+      <h4>Custom Animated Gradient</h4>
+      <p class="setting-description">Create your own animated gradient background with custom colors.</p>
+
+      <div class="gradient-customizer">
+        <div class="color-inputs">
+          <div
+            v-for="(color, index) in gradientColors"
+            :key="index"
+            class="color-input-group"
+          >
+            <label class="color-label">Color {{ index + 1 }}</label>
+            <input
+              type="color"
+              :value="color"
+              @input="updateGradientColor(index, $event.target.value)"
+              class="color-picker"
+            />
+          </div>
+        </div>
+
+        <div class="gradient-preview">
+          <div class="preview-container" :style="getGradientPreviewStyle()">
+            <span class="preview-text">Preview</span>
+          </div>
+        </div>
+
+        <div class="gradient-actions">
+          <button @click="applyCustomGradient" class="apply-gradient-btn">
+            Apply Gradient Background
+          </button>
+          <button @click="resetToDefaults" class="reset-btn">
+            Reset to Default Colors
+          </button>
+        </div>
+
+        <div class="preset-gradients">
+          <h5>Quick Presets:</h5>
+          <div class="preset-buttons">
+            <button
+              v-for="preset in gradientPresets"
+              :key="preset.name"
+              @click="applyPreset(preset.colors)"
+              class="preset-btn"
+              :style="{ background: `linear-gradient(45deg, ${preset.colors.join(', ')})` }"
+            >
+              {{ preset.name }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="setting-group">
       <h4>Display Settings</h4>
       
       <div class="setting-item">
