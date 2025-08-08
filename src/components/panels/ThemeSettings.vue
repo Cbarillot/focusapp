@@ -224,7 +224,7 @@ function getThemesByCategory(category) {
   const ambientThemes = [
     'countryside-morning', 'toto-forest', 'lofi-clouds', 'dusk-peak',
     'tuscan-village', 'forest-retreat', 'cotton-candy-sky', 'countryside-night',
-    'underwater-reef'
+    'underwater-reef', 'enchanted-river', 'hobbit-home', 'golden-forest-cat'
   ]
 
   const animatedThemes = [
