@@ -198,6 +198,15 @@ export const useAppStore = defineStore('app', () => {
       type: 'image',
       value: 'https://cdn.builder.io/api/v1/image/assets%2F65e0ac12b2f240efbb50b7ef46d7e58e%2F2cc8dc38ac0949ac9d2af91847e6a0b6?format=webp&width=800',
       preview: 'https://cdn.builder.io/api/v1/image/assets%2F65e0ac12b2f240efbb50b7ef46d7e58e%2F2cc8dc38ac0949ac9d2af91847e6a0b6?format=webp&width=400'
+    },
+
+    // Custom Animated Gradient
+    'custom-animated-gradient': {
+      name: 'Custom Animated Gradient',
+      type: 'animated-gradient',
+      value: 'custom',
+      colors: ['#DF437A', '#3d57d6', '#a117fd', '#ec634b'],
+      preview: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDIwMCAxMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJhbmltYXRlZCIgeDI9IjEwMCUiIHkyPSIxMDAlIj48c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojREY0MzdBIiAvPjxzdG9wIG9mZnNldD0iMzMlIiBzdHlsZT0ic3RvcC1jb2xvcjojM2Q1N2Q2IiAvPjxzdG9wIG9mZnNldD0iNjYlIiBzdHlsZT0ic3RvcC1jb2xvcjojYTExN2ZkIiAvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6I2VjNjM0YiIgLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjEyMCIgZmlsbD0idXJsKCNhbmltYXRlZCkiIHJ4PSI4Ii8+PGNpcmNsZSBjeD0iMTAwIiBjeT0iNjAiIHI9IjMiIGZpbGw9IndoaXRlIiBvcGFjaXR5PSIwLjgiPjxhbmltYXRlIGF0dHJpYnV0ZU5hbWU9Im9wYWNpdHkiIHZhbHVlcz0iMC44OzAuMzswLjgiIGR1cj0iMnMiIHJlcGVhdENvdW50PSJpbmRlZmluaXRlIi8+PC9jaXJjbGU+PC9zdmc+'
     }
   })
   
