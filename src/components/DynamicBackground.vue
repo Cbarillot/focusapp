@@ -27,6 +27,16 @@
       playsinline
     ></video>
 
+    <!-- YouTube Video Background -->
+    <iframe
+      v-if="store.backgroundType === 'youtube' && store.backgroundValue"
+      class="background-youtube"
+      :src="getYouTubeEmbedUrl(store.backgroundValue)"
+      frameborder="0"
+      allow="autoplay; encrypted-media"
+      allowfullscreen
+    ></iframe>
+
     <!-- Canvas Background for animated effects -->
     <AnimatedCanvas
       v-if="store.backgroundType === 'canvas'"
