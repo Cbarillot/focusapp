@@ -165,27 +165,32 @@ const modes = [
 }
 
 .mode-tab {
-  padding: 12px 24px;
+  padding: 14px 28px;
   border-radius: var(--border-radius-full);
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  border: 0.641026px solid rgba(255, 255, 255, 0.1);
-  color: var(--color-text-secondary);
-  font-size: 14px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 15px;
   font-weight: 500;
-  line-height: 21px;
-  transition: all var(--transition-fast);
+  line-height: 1.4;
+  transition: all 0.2s ease;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .mode-tab:hover {
-  background: rgba(255, 255, 255, 0.15);
-  color: var(--color-text-primary);
+  background: rgba(255, 255, 255, 0.25);
+  color: rgba(255, 255, 255, 0.95);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .mode-tab.active {
-  background: rgb(139, 92, 246);
-  border: 0.641026px solid rgb(139, 92, 246);
-  color: var(--color-text-primary);
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  color: #6B46C1;
+  font-weight: 600;
+  box-shadow: 0 4px 16px rgba(255, 255, 255, 0.3);
 }
 
 .timer-display {
@@ -210,37 +215,41 @@ const modes = [
 }
 
 .control-btn {
-  padding: 16px 32px;
+  padding: 18px 36px;
   border-radius: var(--border-radius-full);
   font-size: 16px;
   font-weight: 600;
-  min-width: 120px;
-  transition: all var(--transition-fast);
+  min-width: 140px;
+  transition: all 0.2s ease;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  border: 1px solid transparent;
 }
 
 .control-btn.primary {
-  background: rgb(139, 92, 246);
-  color: var(--color-text-primary);
-  border: transparent;
+  background: rgba(255, 255, 255, 0.95);
+  color: #6B46C1;
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  box-shadow: 0 4px 16px rgba(255, 255, 255, 0.3);
 }
 
 .control-btn.primary:hover {
-  background: var(--color-primary-dark);
+  background: rgba(255, 255, 255, 1);
   transform: translateY(-2px);
-  box-shadow: var(--shadow-lg);
+  box-shadow: 0 6px 20px rgba(255, 255, 255, 0.4);
 }
 
 .control-btn.secondary {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  border: 0.641026px solid rgba(255, 255, 255, 0.1);
-  color: var(--color-text-secondary);
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.9);
 }
 
 .control-btn.secondary:hover {
-  background: rgba(255, 255, 255, 0.2);
-  color: var(--color-text-primary);
+  background: rgba(255, 255, 255, 0.25);
+  color: rgba(255, 255, 255, 1);
   transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 /* Footer */
