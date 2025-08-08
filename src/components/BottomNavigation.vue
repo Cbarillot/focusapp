@@ -1,81 +1,74 @@
 <template>
-  <nav class="bottom-navigation">
+  <nav class="bottom-navigation" role="navigation">
     <div class="nav-container">
-      <!-- Home Button -->
+      <!-- Home Button - Circular independent button -->
       <button 
         class="nav-button"
-        :class="{ active: store.currentTheme === 'home' }"
+        :class="{ active: currentActiveButton === 'home' }"
         @click="switchToHome"
-        title="Mode Home"
+        aria-label="Mode Home"
       >
         <HomeIcon />
-        <span class="nav-label">Home</span>
       </button>
 
-      <!-- Ambiance Button -->
+      <!-- Ambiance Button - Circular independent button -->
       <button 
         class="nav-button"
-        :class="{ active: store.currentTheme === 'ambiance' }"
+        :class="{ active: currentActiveButton === 'ambiance' }"
         @click="switchToAmbiance"
-        title="Mode Ambiance"
+        aria-label="Mode Ambiance"
       >
         <AmbianceIcon />
-        <span class="nav-label">Ambiance</span>
       </button>
 
-      <!-- Focus Button -->
+      <!-- Focus Button - Circular independent button -->
       <button 
         class="nav-button"
-        :class="{ active: store.currentTheme === 'focus' }"
+        :class="{ active: currentActiveButton === 'focus' }"
         @click="switchToFocus"
-        title="Mode Focus"
+        aria-label="Mode Focus"
       >
         <FocusIcon />
-        <span class="nav-label">Focus</span>
       </button>
 
-      <!-- Music Button -->
+      <!-- Music Button - Circular independent button -->
       <button 
         class="nav-button"
-        :class="{ active: store.activeTab === 'music' && store.sidebarOpen }"
+        :class="{ active: currentActiveButton === 'musique' }"
         @click="openMusic"
-        title="Musique"
+        aria-label="Musique"
       >
         <MusicIcon />
-        <span class="nav-label">Musique</span>
       </button>
 
-      <!-- Todo Button -->
+      <!-- Todo Button - Circular independent button -->
       <button 
         class="nav-button"
-        :class="{ active: store.activeTab === 'todo' && store.sidebarOpen }"
+        :class="{ active: currentActiveButton === 'to-do' }"
         @click="openTodo"
-        title="To-do"
+        aria-label="To-do"
       >
         <TodoIcon />
-        <span class="nav-label">To-do</span>
       </button>
 
-      <!-- Settings Button -->
+      <!-- Settings Button - Circular independent button -->
       <button 
         class="nav-button"
-        :class="{ active: store.sidebarOpen && ['timer', 'themes', 'background'].includes(store.activeTab) }"
+        :class="{ active: currentActiveButton === 'reglages' }"
         @click="openSettings"
-        title="Réglages"
+        aria-label="Réglages"
       >
         <SettingsIcon />
-        <span class="nav-label">Réglages</span>
       </button>
 
-      <!-- Fullscreen Button -->
+      <!-- Fullscreen Button - Circular independent button -->
       <button 
         class="nav-button"
-        :class="{ active: store.isFullscreen }"
+        :class="{ active: currentActiveButton === 'plein-ecran' }"
         @click="toggleFullscreen"
-        title="Plein écran"
+        aria-label="Plein écran"
       >
         <FullscreenIcon />
-        <span class="nav-label">Plein écran</span>
       </button>
     </div>
   </nav>
@@ -83,55 +76,96 @@
 
 <script setup>
 import { useAppStore } from '../stores/appStore'
+import { computed } from 'vue'
 
 const store = useAppStore()
 
-// Action handlers with user logic slots
+/**
+ * Props for activeButton state management
+ * Controls which button should be displayed as active
+ */
+const props = defineProps({
+  activeButton: {
+    type: String,
+    default: '',
+    validator: (value) => {
+      const validButtons = ['home', 'ambiance', 'focus', 'musique', 'to-do', 'reglages', 'plein-ecran']
+      return validButtons.includes(value) || value === ''
+    }
+  }
+})
+
+/**
+ * Computed property to determine active button based on store state
+ * Falls back to prop if no explicit state match
+ */
+const currentActiveButton = computed(() => {
+  // Check current theme state for theme buttons
+  if (store.currentTheme === 'home') return 'home'
+  if (store.currentTheme === 'ambiance') return 'ambiance'  
+  if (store.currentTheme === 'focus') return 'focus'
+  
+  // Check sidebar state for panel buttons
+  if (store.sidebarOpen && store.activeTab === 'music') return 'musique'
+  if (store.sidebarOpen && store.activeTab === 'todo') return 'to-do'
+  if (store.sidebarOpen && ['timer', 'themes', 'background'].includes(store.activeTab)) return 'reglages'
+  
+  // Check fullscreen state
+  if (store.isFullscreen) return 'plein-ecran'
+  
+  // Fallback to prop
+  return props.activeButton
+})
+
+// Action handlers with user logic slots for customization
 function switchToHome() {
   store.switchTheme('home')
-  // Slot for user-defined logic
+  // Slot for user-defined logic - can be extended by parent components
   console.log('Switched to Home theme')
 }
 
 function switchToAmbiance() {
   store.switchTheme('ambiance')
-  // Slot for user-defined logic
+  // Slot for user-defined logic - can be extended by parent components
   console.log('Switched to Ambiance theme')
 }
 
 function switchToFocus() {
   store.switchTheme('focus')
-  // Slot for user-defined logic
+  // Slot for user-defined logic - can be extended by parent components
   console.log('Switched to Focus theme')
 }
 
 function openMusic() {
   store.setActiveTab('music')
-  // Slot for user-defined logic
+  // Slot for user-defined logic - can be extended by parent components
   console.log('Opened Music panel')
 }
 
 function openTodo() {
   store.setActiveTab('todo')
-  // Slot for user-defined logic
+  // Slot for user-defined logic - can be extended by parent components
   console.log('Opened Todo panel')
 }
 
 function openSettings() {
   store.setActiveTab('timer')
-  // Slot for user-defined logic
+  // Slot for user-defined logic - can be extended by parent components
   console.log('Opened Settings panel')
 }
 
 function toggleFullscreen() {
   store.toggleFullscreen()
-  // Slot for user-defined logic
+  // Slot for user-defined logic - can be extended by parent components
   console.log('Toggled fullscreen mode')
 }
 </script>
 
 <script>
-// Dynamic icons that adapt to themes - placeholders for actual icons
+/**
+ * Dynamic SVG icons for navigation buttons
+ * These adapt to theme colors and states
+ */
 const HomeIcon = {
   template: `
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -208,7 +242,10 @@ export default {
 </script>
 
 <style scoped>
-/* Bottom Navigation - Clean, responsive design */
+/**
+ * Bottom Navigation - Circular buttons with blur effects
+ * Based on Builder.io design requirements
+ */
 .bottom-navigation {
   position: fixed;
   bottom: 20px;
@@ -218,60 +255,130 @@ export default {
   pointer-events: none;
 }
 
+/**
+ * Container with blur effect and translucent background
+ */
 .nav-container {
   display: flex;
   align-items: center;
-  gap: 8px;
+  justify-content: center;
+  gap: 12px;
   padding: 12px 16px;
-  background: rgba(0, 0, 0, 0.8);
+  
+  /* Blur effect and translucent background as per Builder.io requirements */
+  background: rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(20px);
-  border: 1px solid var(--color-border);
+  -webkit-backdrop-filter: blur(20px);
+  
+  /* Clear border as specified */
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: var(--border-radius-full);
-  box-shadow: var(--shadow-xl);
+  
+  /* Enhanced shadow for depth */
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    0 2px 8px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  
   pointer-events: auto;
+  
+  /* Smooth transitions */
+  transition: all var(--transition-normal);
 }
 
-/* Navigation buttons with rounded design */
+/**
+ * Individual circular navigation buttons
+ * Independent design without text labels, only SVG icons
+ */
 .nav-button {
+  /* Circular button design */
+  width: 48px;
+  height: 48px;
+  border-radius: var(--border-radius-full);
+  
+  /* Reset default button styles */
+  border: none;
+  background: transparent;
+  padding: 0;
+  
+  /* Flexbox for centering icon */
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 4px;
-  padding: 12px 16px;
-  min-width: 64px;
-  border-radius: var(--border-radius-lg);
-  background: transparent;
+  
+  /* Icon and interaction styling */
   color: var(--color-text-secondary);
-  font-size: 11px;
-  font-weight: 500;
-  transition: all var(--transition-fast);
   cursor: pointer;
+  
+  /* Smooth transitions for all interactions */
+  transition: all var(--transition-fast);
+  
+  /* Subtle border for definition */
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+/**
+ * Hover state with subtle background and scale effect
+ */
 .nav-button:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.12);
   color: var(--color-text-primary);
-  transform: translateY(-2px);
+  transform: scale(1.05);
+  border-color: rgba(255, 255, 255, 0.2);
 }
 
-/* Active state with dynamic theme colors */
+/**
+ * Active state - enhanced background, shadow, and accent color
+ * Uses theme color palette for dynamic styling
+ */
 .nav-button.active {
+  /* Enhanced background with theme primary color */
   background: var(--color-primary);
   color: var(--color-text-primary);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  
+  /* Enhanced shadow for active state */
+  box-shadow: 
+    0 4px 16px rgba(0, 0, 0, 0.4),
+    0 2px 8px rgba(0, 0, 0, 0.2),
+    0 0 0 1px var(--color-primary),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  
+  /* Slightly elevated */
+  transform: scale(1.08) translateY(-1px);
+  
+  /* Accent border */
+  border-color: rgba(255, 255, 255, 0.4);
 }
 
-.nav-label {
-  font-size: 10px;
-  font-weight: 500;
-  text-align: center;
-  line-height: 1;
-  white-space: nowrap;
+/**
+ * Focus state for accessibility
+ */
+.nav-button:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
 }
 
-/* Responsive design for mobile */
+/**
+ * SVG icon styling
+ */
+.nav-button svg {
+  width: 20px;
+  height: 20px;
+  stroke-width: 1.5;
+  transition: all var(--transition-fast);
+}
+
+/**
+ * Active button icon styling
+ */
+.nav-button.active svg {
+  stroke-width: 2;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
+}
+
+/**
+ * Responsive design for mobile devices
+ */
 @media (max-width: 768px) {
   .bottom-navigation {
     bottom: 16px;
@@ -283,20 +390,23 @@ export default {
   .nav-container {
     justify-content: space-between;
     padding: 10px 12px;
-    gap: 4px;
+    gap: 8px;
   }
   
   .nav-button {
-    min-width: auto;
-    padding: 10px 8px;
-    flex: 1;
+    width: 44px;
+    height: 44px;
   }
   
-  .nav-label {
-    font-size: 9px;
+  .nav-button svg {
+    width: 18px;
+    height: 18px;
   }
 }
 
+/**
+ * Compact mobile layout for smaller screens
+ */
 @media (max-width: 480px) {
   .bottom-navigation {
     bottom: 12px;
@@ -306,28 +416,86 @@ export default {
   
   .nav-container {
     padding: 8px 10px;
-    gap: 2px;
+    gap: 6px;
   }
   
   .nav-button {
-    padding: 8px 6px;
+    width: 40px;
+    height: 40px;
   }
   
-  .nav-label {
-    font-size: 8px;
+  .nav-button svg {
+    width: 16px;
+    height: 16px;
   }
 }
 
-/* Theme-specific customizations - placeholders for asset integration */
-.nav-button.active[title*="Home"] {
+/**
+ * Theme-specific active button styling
+ * Uses CSS custom properties for dynamic theme colors
+ */
+.nav-button.active[aria-label*="Home"] {
   background: var(--color-primary, #8B5CF6);
+  box-shadow: 
+    0 4px 16px rgba(139, 92, 246, 0.4),
+    0 2px 8px rgba(139, 92, 246, 0.2),
+    0 0 0 1px var(--color-primary, #8B5CF6);
 }
 
-.nav-button.active[title*="Ambiance"] {
+.nav-button.active[aria-label*="Ambiance"] {
   background: var(--color-primary, #10B981);
+  box-shadow: 
+    0 4px 16px rgba(16, 185, 129, 0.4),
+    0 2px 8px rgba(16, 185, 129, 0.2),
+    0 0 0 1px var(--color-primary, #10B981);
 }
 
-.nav-button.active[title*="Focus"] {
+.nav-button.active[aria-label*="Focus"] {
   background: var(--color-primary, #F59E0B);
+  box-shadow: 
+    0 4px 16px rgba(245, 158, 11, 0.4),
+    0 2px 8px rgba(245, 158, 11, 0.2),
+    0 0 0 1px var(--color-primary, #F59E0B);
+}
+
+/**
+ * Container hover effect for enhanced interactivity
+ */
+.nav-container:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+/**
+ * Accessibility enhancements
+ */
+@media (prefers-reduced-motion: reduce) {
+  .nav-button,
+  .nav-container {
+    transition: none;
+  }
+  
+  .nav-button:hover,
+  .nav-button.active {
+    transform: none;
+  }
+}
+
+/**
+ * High contrast mode support
+ */
+@media (prefers-contrast: high) {
+  .nav-container {
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    background: rgba(0, 0, 0, 0.8);
+  }
+  
+  .nav-button {
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+  
+  .nav-button.active {
+    border: 2px solid var(--color-primary);
+  }
 }
 </style>
