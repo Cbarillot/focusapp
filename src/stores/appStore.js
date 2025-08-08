@@ -19,7 +19,7 @@ export const useAppStore = defineStore('app', () => {
   const activeTab = ref('themes') // themes, clock, timer, stats, music, notepad, sounds, quotes
   
   // Theme & styling
-  const currentTheme = ref('lava-lamp')
+  const currentTheme = ref('toto-forest')
   const backgroundType = ref('canvas') // gradient, image, video, canvas, color
   const backgroundValue = ref('lava-lamp')
   const overlayOpacity = ref(0.1)
