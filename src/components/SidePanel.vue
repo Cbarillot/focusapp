@@ -78,13 +78,6 @@ const activeComponent = computed(() => {
 
 <script>
 // Flocus-style SVG Icon components
-const ClockIcon = {
-  template: `
-    <svg width="20" height="20" viewBox="0 0 36 36" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-      <path d="M18 4C10.268 4 4 10.268 4 18s6.268 14 14 14 14-6.268 14-14S25.732 4 18 4zm0 25.2c-6.176 0-11.2-5.024-11.2-11.2S11.824 6.8 18 6.8 29.2 11.824 29.2 18 24.176 29.2 18 29.2zm6.3-11.2h-6.3V10.5a1.4 1.4 0 1 0-2.8 0V19.4c0 .773.627 1.4 1.4 1.4h7.7a1.4 1.4 0 1 0 0-2.8z"/>
-    </svg>
-  `
-}
 
 const TimerIcon = {
   template: `
@@ -95,23 +88,7 @@ const TimerIcon = {
   `
 }
 
-const StatsIcon = {
-  template: `
-    <svg width="20" height="20" viewBox="0 0 36 36" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-      <path d="M30 30H6V6h2v22h22v2z"/>
-      <path d="M8 26h4V16H8v10zm6 0h4V12h-4v14zm6 0h4V8h-4v18zm6 0h4V20h-4v6z"/>
-    </svg>
-  `
-}
 
-const NotepadIcon = {
-  template: `
-    <svg width="20" height="20" viewBox="0 0 36 36" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-      <path d="M29 8.5L20.5 0H8c-1.1 0-2 .9-2 2v32c0 1.1.9 2 2 2h20c1.1 0 2-.9 2-2V8.5zM27 33H9V3h10v7h8v23z"/>
-      <path d="M11 13h14v2H11zM11 17h14v2H11zM11 21h14v2H11zM11 25h10v2H11z"/>
-    </svg>
-  `
-}
 
 const SoundsIcon = {
   template: `
@@ -124,14 +101,6 @@ const SoundsIcon = {
   `
 }
 
-const QuotesIcon = {
-  template: `
-    <svg width="20" height="20" viewBox="0 0 36 36" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-      <path d="M7.2 15.5c0-4.3 3.1-7.6 7-8.5L15 5.2c-5.4 1.2-9.5 6-9.5 11.8v11.5c0 1.7 1.3 3 3 3h6c1.7 0 3-1.3 3-3V21c0-1.7-1.3-3-3-3H8.5c-.7 0-1.3-.6-1.3-1.3v-1.2z"/>
-      <path d="M22.2 15.5c0-4.3 3.1-7.6 7-8.5L30 5.2c-5.4 1.2-9.5 6-9.5 11.8v11.5c0 1.7 1.3 3 3 3h6c1.7 0 3-1.3 3-3V21c0-1.7-1.3-3-3-3h-6c-.7 0-1.3-.6-1.3-1.3v-1.2z"/>
-    </svg>
-  `
-}
 
 const ThemeIcon = {
   template: `
@@ -170,14 +139,10 @@ const TodoIcon = {
 
 export default {
   components: {
-    ClockIcon,
     TimerIcon,
-    StatsIcon,
     ThemeIcon,
     MusicIcon,
-    NotepadIcon,
-    SoundsIcon,
-    QuotesIcon
+    SoundsIcon
   }
 }
 </script>
