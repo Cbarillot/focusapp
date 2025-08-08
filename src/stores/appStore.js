@@ -20,7 +20,7 @@ export const useAppStore = defineStore('app', () => {
   
   // Theme & styling
   const currentTheme = ref('toto-forest')
-  const backgroundType = ref('canvas') // gradient, image, video, canvas, color
+  const backgroundType = ref('canvas') // gradient, image, video, canvas, color, youtube
   const backgroundValue = ref('lava-lamp')
   const overlayOpacity = ref(0.1)
 
