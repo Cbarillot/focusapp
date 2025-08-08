@@ -369,6 +369,10 @@ function getThemesByCategory(category) {
   background: rgba(249, 115, 22, 0.8);
 }
 
+.theme-type-badge.color {
+  background: rgba(168, 85, 247, 0.8);
+}
+
 .theme-info {
   padding: 12px;
 }
