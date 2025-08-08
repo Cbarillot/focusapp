@@ -68,13 +68,9 @@ const tabs = [
 const activeComponent = computed(() => {
   switch (store.activeTab) {
     case 'themes': return ThemeSettings
-    case 'clock': return ClockSettings
     case 'timer': return TimerSettings
-    case 'stats': return StatsSettings
     case 'music': return MusicSettings
-    case 'notepad': return NotepadSettings
     case 'sounds': return SoundsSettings
-    case 'quotes': return QuotesSettings
     default: return ThemeSettings
   }
 })
