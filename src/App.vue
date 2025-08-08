@@ -55,9 +55,10 @@
         </div>
       </main>
       
-      <!-- Footer with Soundscapes -->
+      <!-- Footer with Bottom Navigation -->
       <footer class="app-footer">
         <SoundscapeControls />
+        <BottomNavigation />
       </footer>
     </div>
     
@@ -84,6 +85,7 @@ import { useAppStore } from './stores/appStore'
 import DynamicBackground from './components/DynamicBackground.vue'
 import SidePanel from './components/SidePanel.vue'
 import SoundscapeControls from './components/SoundscapeControls.vue'
+import BottomNavigation from './components/BottomNavigation.vue'
 
 const store = useAppStore()
 
@@ -249,11 +251,11 @@ const modes = [
   z-index: 10;
 }
 
-/* Sidebar */
+/* Sidebar - Moved to right side with improved tab navigation */
 .sidebar {
   position: fixed;
   top: 0;
-  left: 0;
+  right: 0;
   width: 400px;
   height: 100vh;
   background: rgba(0, 0, 0, 0.9);
@@ -310,7 +312,7 @@ const modes = [
   }
   
   .timer-area {
-    padding: 70px 15px 50px;
+    padding: 70px 15px 80px; /* Added bottom padding for bottom nav */
   }
   
   .mode-tabs {
