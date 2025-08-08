@@ -418,7 +418,7 @@ function getThemesByCategory(category) {
   const gradientThemes = [
     'aura-twilight', 'peach-aura-heart', 'light-pink-heart', 'flare',
     'minimalist-black', 'minimalist-white', 'heat-map', 'dark-purple-heart',
-    'light-purple-heart', 'grainy-gradient', 'lava-lamp', 'aurora'
+    'light-purple-heart', 'grainy-gradient', 'lava-lamp', 'aurora', 'custom-animated-gradient'
   ]
 
   const ambientThemes = [
