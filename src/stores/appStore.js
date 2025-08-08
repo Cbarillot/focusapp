@@ -178,6 +178,26 @@ export const useAppStore = defineStore('app', () => {
       value: 'aurora',
       colors: ['#00c9ff', '#92fe9d', '#ff9a9e', '#fecfef'],
       preview: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDIwMCAxMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJhdXJvcmEiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPjxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiMwMGM5ZmYiIC8+PHN0b3Agb2Zmc2V0PSIzMyUiIHN0eWxlPSJzdG9wLWNvbG9yOiM5MmZlOWQiIC8+PHN0b3Agb2Zmc2V0PSI2NiUiIHN0eWxlPSJzdG9wLWNvbG9yOiNmZjlhOWUiIC8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdHlsZT0ic3RvcC1jb2xvcjojZmVjZmVmIiAvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMTIwIiBmaWxsPSJ1cmwoI2F1cm9yYSkiIHJ4PSI4Ii8+PC9zdmc+'
+    },
+
+    // Custom Themes (nouveaux ajouts)
+    'enchanted-river': {
+      name: 'Enchanted River',
+      type: 'image',
+      value: 'https://cdn.builder.io/api/v1/image/assets%2F65e0ac12b2f240efbb50b7ef46d7e58e%2F0c503ef5af214ff6a16651be304d1f40?format=webp&width=800',
+      preview: 'https://cdn.builder.io/api/v1/image/assets%2F65e0ac12b2f240efbb50b7ef46d7e58e%2F0c503ef5af214ff6a16651be304d1f40?format=webp&width=400'
+    },
+    'hobbit-home': {
+      name: 'Hobbit Home',
+      type: 'image',
+      value: 'https://cdn.builder.io/api/v1/image/assets%2F65e0ac12b2f240efbb50b7ef46d7e58e%2F1f5f030c86ae4e0d81e4da399ae31cf1?format=webp&width=800',
+      preview: 'https://cdn.builder.io/api/v1/image/assets%2F65e0ac12b2f240efbb50b7ef46d7e58e%2F1f5f030c86ae4e0d81e4da399ae31cf1?format=webp&width=400'
+    },
+    'golden-forest-cat': {
+      name: 'Golden Forest Cat',
+      type: 'image',
+      value: 'https://cdn.builder.io/api/v1/image/assets%2F65e0ac12b2f240efbb50b7ef46d7e58e%2F2cc8dc38ac0949ac9d2af91847e6a0b6?format=webp&width=800',
+      preview: 'https://cdn.builder.io/api/v1/image/assets%2F65e0ac12b2f240efbb50b7ef46d7e58e%2F2cc8dc38ac0949ac9d2af91847e6a0b6?format=webp&width=400'
     }
   })
   
