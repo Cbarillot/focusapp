@@ -21,7 +21,7 @@ export const useAppStore = defineStore('app', () => {
   // Theme & styling
   const currentTheme = ref('purple')
   const backgroundType = ref('gradient') // gradient, image, video, color
-  const backgroundValue = ref('linear-gradient(135deg, #667eea 0%, #764ba2 100%)')
+  const backgroundValue = ref('linear-gradient(135deg, #8B5CF6 0%, #EC4899 50%, #F59E0B 100%)')
   const overlayOpacity = ref(0.3)
   
   // Music state
