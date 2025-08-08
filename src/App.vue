@@ -169,10 +169,11 @@ const modes = [
   border-radius: var(--border-radius-full);
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
-  border: 1px solid var(--color-border);
+  border: 0.641026px solid rgba(255, 255, 255, 0.1);
   color: var(--color-text-secondary);
   font-size: 14px;
   font-weight: 500;
+  line-height: 21px;
   transition: all var(--transition-fast);
 }
 
@@ -182,8 +183,8 @@ const modes = [
 }
 
 .mode-tab.active {
-  background: var(--color-primary);
-  border-color: var(--color-primary);
+  background: rgb(139, 92, 246);
+  border: 0.641026px solid rgb(139, 92, 246);
   color: var(--color-text-primary);
 }
 
@@ -218,8 +219,9 @@ const modes = [
 }
 
 .control-btn.primary {
-  background: var(--color-primary);
+  background: rgb(139, 92, 246);
   color: var(--color-text-primary);
+  border: transparent;
 }
 
 .control-btn.primary:hover {
@@ -231,7 +233,7 @@ const modes = [
 .control-btn.secondary {
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
-  border: 1px solid var(--color-border);
+  border: 0.641026px solid rgba(255, 255, 255, 0.1);
   color: var(--color-text-secondary);
 }
 
