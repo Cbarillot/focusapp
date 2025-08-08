@@ -265,6 +265,7 @@ export const useAppStore = defineStore('app', () => {
     toggleSidebar,
     setActiveTab,
     setBackground,
+    setTheme,
     addTodo,
     toggleTodo,
     deleteTodo
