@@ -245,6 +245,7 @@ export const useAppStore = defineStore('app', () => {
     backgroundType,
     backgroundValue,
     overlayOpacity,
+    themes,
     musicPlaying,
     currentTrack,
     volume,
