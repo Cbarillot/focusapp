@@ -19,10 +19,58 @@ export const useAppStore = defineStore('app', () => {
   const activeTab = ref('themes') // themes, clock, timer, stats, music, notepad, sounds, quotes
   
   // Theme & styling
-  const currentTheme = ref('purple')
-  const backgroundType = ref('gradient') // gradient, image, video, color
-  const backgroundValue = ref('linear-gradient(135deg, #8B5CF6 0%, #EC4899 50%, #F59E0B 100%)')
-  const overlayOpacity = ref(0.3)
+  const currentTheme = ref('lava-lamp')
+  const backgroundType = ref('canvas') // gradient, image, video, canvas, color
+  const backgroundValue = ref('lava-lamp')
+  const overlayOpacity = ref(0.1)
+
+  // Theme definitions with Flocus-style assets
+  const themes = ref({
+    'lava-lamp': {
+      name: 'Lava Lamp',
+      type: 'canvas',
+      value: 'lava-lamp',
+      colors: ['#DF437A', '#3d57d6', '#a117fd', '#ec634b'],
+      preview: '/themes/lava-lamp-preview.jpg'
+    },
+    'toto-forest': {
+      name: 'Toto Forest',
+      type: 'image',
+      value: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=2071&auto=format&fit=crop',
+      preview: '/themes/toto-forest-preview.jpg'
+    },
+    'cyberpunk-city': {
+      name: 'Cyberpunk City',
+      type: 'video',
+      value: 'https://player.vimeo.com/external/373465046.hd.mp4?s=ac9a1a4a47d98c2065e6a91c3b6b19d5b5e0d7a1&profile_id=174',
+      preview: '/themes/cyberpunk-preview.jpg'
+    },
+    'mountain-lake': {
+      name: 'Mountain Lake',
+      type: 'image',
+      value: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=2069&auto=format&fit=crop',
+      preview: '/themes/mountain-lake-preview.jpg'
+    },
+    'ocean-waves': {
+      name: 'Ocean Waves',
+      type: 'video',
+      value: 'https://player.vimeo.com/external/227468707.hd.mp4?s=39c64a4db9ce62f9eea3e754d8f4a8e8f1f5d2a1&profile_id=174',
+      preview: '/themes/ocean-waves-preview.jpg'
+    },
+    'aurora-gradient': {
+      name: 'Aurora',
+      type: 'canvas',
+      value: 'aurora',
+      colors: ['#00c9ff', '#92fe9d', '#ff9a9e', '#fecfef'],
+      preview: '/themes/aurora-preview.jpg'
+    },
+    'sunset-gradient': {
+      name: 'Sunset',
+      type: 'gradient',
+      value: 'linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%)',
+      preview: '/themes/sunset-preview.jpg'
+    }
+  })
   
   // Music state
   const musicPlaying = ref(false)
