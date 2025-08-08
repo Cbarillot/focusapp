@@ -137,18 +137,18 @@ export default {
 
 <style scoped>
 .soundscape-controls {
-  background: rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(20px);
-  border-top: 1px solid var(--color-border);
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(40px);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .soundscape-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 16px 20px;
+  padding: 20px 24px;
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 24px;
 }
 
 .soundscape-items {
@@ -164,27 +164,32 @@ export default {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 8px 12px;
+  padding: 10px 16px;
   border-radius: var(--border-radius-full);
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid var(--color-border);
-  color: var(--color-text-secondary);
-  font-size: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 13px;
   font-weight: 500;
   white-space: nowrap;
-  transition: all var(--transition-fast);
+  transition: all 0.2s ease;
   min-width: fit-content;
+  backdrop-filter: blur(10px);
 }
 
 .soundscape-btn:hover {
-  background: rgba(255, 255, 255, 0.1);
-  color: var(--color-text-primary);
+  background: rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.95);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
 .soundscape-btn.active {
-  background: var(--color-primary);
-  border-color: var(--color-primary);
-  color: var(--color-text-primary);
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  color: #6B46C1;
+  font-weight: 600;
+  box-shadow: 0 2px 12px rgba(255, 255, 255, 0.25);
 }
 
 .soundscape-label {
@@ -223,9 +228,9 @@ export default {
   display: flex;
   align-items: center;
   gap: 12px;
-  color: var(--color-text-secondary);
-  border-left: 1px solid var(--color-border);
-  padding-left: 20px;
+  color: rgba(255, 255, 255, 0.8);
+  border-left: 1px solid rgba(255, 255, 255, 0.15);
+  padding-left: 24px;
 }
 
 .master-slider {
