@@ -3,41 +3,117 @@
     <h3>Themes</h3>
     <p class="section-description">Choose from beautiful backgrounds to enhance your focus experience.</p>
     
-    <div class="themes-grid">
-      <div 
-        v-for="(theme, key) in store.themes" 
-        :key="key"
-        class="theme-card"
-        :class="{ active: store.currentTheme === key }"
-        @click="selectTheme(key)"
-      >
-        <div class="theme-preview">
-          <div 
-            v-if="theme.type === 'canvas'"
-            class="canvas-preview"
-            :style="{ background: getCanvasPreviewGradient(theme.colors) }"
+    <div class="theme-categories">
+      <div class="category-section">
+        <h4 class="category-title">🎨 Gradients & Colors</h4>
+        <div class="themes-grid">
+          <div
+            v-for="(theme, key) in getThemesByCategory('gradients')"
+            :key="key"
+            class="theme-card"
+            :class="{ active: store.currentTheme === key }"
+            @click="selectTheme(key)"
           >
-            <div class="canvas-indicator">✨</div>
-          </div>
-          <div 
-            v-else-if="theme.type === 'gradient'"
-            class="gradient-preview"
-            :style="{ background: theme.value }"
-          ></div>
-          <img 
-            v-else
-            :src="getPreviewImage(theme)"
-            :alt="theme.name"
-            class="theme-image"
-            @error="handleImageError"
-          />
-          <div class="theme-type-badge" :class="theme.type">
-            {{ getTypeBadge(theme.type) }}
+            <div class="theme-preview">
+              <div
+                v-if="theme.type === 'canvas'"
+                class="canvas-preview"
+                :style="{ background: getCanvasPreviewGradient(theme.colors) }"
+              >
+                <div class="canvas-indicator">✨</div>
+              </div>
+              <div
+                v-else-if="theme.type === 'gradient'"
+                class="gradient-preview"
+                :style="{ background: theme.value }"
+              ></div>
+              <div
+                v-else-if="theme.type === 'color'"
+                class="color-preview"
+                :style="{ backgroundColor: theme.value }"
+              ></div>
+              <img
+                v-else
+                :src="getPreviewImage(theme)"
+                :alt="theme.name"
+                class="theme-image"
+                @error="handleImageError"
+              />
+              <div class="theme-type-badge" :class="theme.type">
+                {{ getTypeBadge(theme.type) }}
+              </div>
+            </div>
+            <div class="theme-info">
+              <h4 class="theme-name">{{ theme.name }}</h4>
+              <p class="theme-type">{{ getTypeLabel(theme.type) }}</p>
+            </div>
           </div>
         </div>
-        <div class="theme-info">
-          <h4 class="theme-name">{{ theme.name }}</h4>
-          <p class="theme-type">{{ getTypeLabel(theme.type) }}</p>
+      </div>
+
+      <div class="category-section">
+        <h4 class="category-title">🏞️ Ambient Worlds</h4>
+        <div class="themes-grid">
+          <div
+            v-for="(theme, key) in getThemesByCategory('ambient')"
+            :key="key"
+            class="theme-card"
+            :class="{ active: store.currentTheme === key }"
+            @click="selectTheme(key)"
+          >
+            <div class="theme-preview">
+              <img
+                :src="getPreviewImage(theme)"
+                :alt="theme.name"
+                class="theme-image"
+                @error="handleImageError"
+              />
+              <div class="theme-type-badge" :class="theme.type">
+                {{ getTypeBadge(theme.type) }}
+              </div>
+            </div>
+            <div class="theme-info">
+              <h4 class="theme-name">{{ theme.name }}</h4>
+              <p class="theme-type">{{ getTypeLabel(theme.type) }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="category-section">
+        <h4 class="category-title">🎬 Animated</h4>
+        <div class="themes-grid">
+          <div
+            v-for="(theme, key) in getThemesByCategory('animated')"
+            :key="key"
+            class="theme-card"
+            :class="{ active: store.currentTheme === key }"
+            @click="selectTheme(key)"
+          >
+            <div class="theme-preview">
+              <div
+                v-if="theme.type === 'canvas'"
+                class="canvas-preview"
+                :style="{ background: getCanvasPreviewGradient(theme.colors) }"
+              >
+                <div class="canvas-indicator">✨</div>
+              </div>
+              <img
+                v-else
+                :src="getPreviewImage(theme)"
+                :alt="theme.name"
+                class="theme-image"
+                @error="handleImageError"
+              />
+              <div class="theme-type-badge" :class="theme.type">
+                {{ getTypeBadge(theme.type) }}
+              </div>
+            </div>
+            <div class="theme-info">
+              <h4 class="theme-name">{{ theme.name }}</h4>
+              <p class="theme-type">{{ getTypeLabel(theme.type) }}</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
