@@ -50,44 +50,22 @@ const tabs = [
   {
     key: 'themes',
     label: 'Themes',
-    icon: 'ThemeIcon',
-    isNew: true
-  },
-  {
-    key: 'clock',
-    label: 'Clock',
-    icon: 'ClockIcon'
+    icon: 'ThemeIcon'
   },
   {
     key: 'timer',
-    label: 'Focus Timer',
-    icon: 'TimerIcon',
-    isNew: true
-  },
-  {
-    key: 'stats',
-    label: 'Stats',
-    icon: 'StatsIcon'
+    label: 'Timer Settings',
+    icon: 'TimerIcon'
   },
   {
     key: 'music',
-    label: 'Music',
+    label: 'Music & Sounds',
     icon: 'MusicIcon'
   },
   {
-    key: 'notepad',
-    label: 'Notepad',
-    icon: 'NotepadIcon'
-  },
-  {
     key: 'sounds',
-    label: 'Sounds',
+    label: 'Ambient Sounds',
     icon: 'SoundsIcon'
-  },
-  {
-    key: 'quotes',
-    label: 'Quotes',
-    icon: 'QuotesIcon'
   }
 ]
 
