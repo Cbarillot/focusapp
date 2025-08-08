@@ -1020,5 +1020,31 @@ h5 {
   .example-links {
     grid-template-columns: 1fr;
   }
+
+  .color-inputs {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .color-picker {
+    width: 50px;
+    height: 50px;
+  }
+
+  .gradient-actions {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .preset-buttons {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+
+  .preset-btn {
+    padding: 8px 10px;
+    font-size: 11px;
+    min-height: 35px;
+  }
 }
 </style>
