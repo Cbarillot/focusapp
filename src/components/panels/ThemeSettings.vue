@@ -287,6 +287,35 @@ const youtubeExamples = [
   }
 ]
 
+const gradientColors = ref([...store.customGradientColors])
+
+const gradientPresets = [
+  {
+    name: 'Lava Lamp',
+    colors: ['#DF437A', '#3d57d6', '#a117fd', '#ec634b']
+  },
+  {
+    name: 'Ocean Breeze',
+    colors: ['#00c9ff', '#92fe9d', '#00d4ff', '#4facfe']
+  },
+  {
+    name: 'Sunset',
+    colors: ['#ff9a9e', '#fecfef', '#fad0c4', '#f093fb']
+  },
+  {
+    name: 'Forest',
+    colors: ['#134e5e', '#71b280', '#42a5f5', '#478ed1']
+  },
+  {
+    name: 'Royal',
+    colors: ['#667eea', '#764ba2', '#f093fb', '#f5576c']
+  },
+  {
+    name: 'Fire',
+    colors: ['#ff416c', '#ff4b2b', '#ff6b6b', '#ee5a24']
+  }
+]
+
 function selectTheme(themeKey) {
   store.setTheme(themeKey)
 }
