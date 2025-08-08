@@ -415,6 +415,12 @@ function applyPreset(colors) {
 }
 
 function getThemesByCategory(category) {
+  // === THEME CATEGORIZATION ===
+  // Pour ajouter de nouveaux thèmes dans les catégories :
+  // - gradientThemes : thèmes de type 'canvas', 'gradient', 'color', 'animated-gradient'
+  // - ambientThemes : thèmes de type 'image' pour les paysages et ambiances
+  // - animatedThemes : thèmes de type 'video' pour les vidéos animées
+  
   const gradientThemes = [
     'aura-twilight', 'peach-aura-heart', 'light-pink-heart', 'flare',
     'minimalist-black', 'minimalist-white', 'heat-map', 'dark-purple-heart',
@@ -424,11 +430,18 @@ function getThemesByCategory(category) {
   const ambientThemes = [
     'countryside-morning', 'toto-forest', 'lofi-clouds', 'dusk-peak',
     'tuscan-village', 'forest-retreat', 'cotton-candy-sky', 'countryside-night',
-    'underwater-reef', 'enchanted-river', 'hobbit-home', 'golden-forest-cat'
+    'underwater-reef', 'enchanted-river', 'hobbit-home', 'golden-forest-cat',
+    // New image themes from assets - ajoutez ici les nouveaux thèmes d'images
+    '3d-cartoon-door', 'digital-river-landscape', 'mysterious-forest-cat'
   ]
 
   const animatedThemes = [
-    'snowy-winter-cabin', 'rainy-lofi-cafe', 'flickering-fireplace'
+    'snowy-winter-cabin', 'rainy-lofi-cafe', 'flickering-fireplace',
+    // New video themes from assets - ajoutez ici les nouveaux thèmes vidéo
+    'castle-beyond-clouds', 'spirited-away-chihiro', 'coffee-shop-ambience',
+    'cozy-room', 'spirited-away-island', 'lofi-coffee-shop', 'lofi-girl-animated',
+    'morning-coffee', 'forest-house', 'spirited-away-train', 'train-spirited-away',
+    'zelda-forest-temple'
   ]
 
   const themes = {}
