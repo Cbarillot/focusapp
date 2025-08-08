@@ -19,20 +19,64 @@ export const useAppStore = defineStore('app', () => {
   const activeTab = ref('timer') // timer, themes, music, background, todo
   
   // Theme & styling
-  const currentTheme = ref('purple')
+  const currentTheme = ref('home') // home, ambiance, focus
   const backgroundType = ref('gradient') // gradient, image, video, color
   const backgroundValue = ref('linear-gradient(135deg, #667eea 0%, #764ba2 100%)')
   const overlayOpacity = ref(0.3)
   
+  // Theme definitions
+  const themes = ref({
+    home: {
+      name: 'Home',
+      colors: {
+        primary: '#8B5CF6',
+        primaryDark: '#7C3AED', 
+        secondary: '#A78BFA',
+        accent: '#DDD6FE'
+      },
+      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+    },
+    ambiance: {
+      name: 'Ambiance',
+      colors: {
+        primary: '#10B981',
+        primaryDark: '#059669',
+        secondary: '#34D399', 
+        accent: '#D1FAE5'
+      },
+      background: 'linear-gradient(135deg, #047857 0%, #065f46 100%)'
+    },
+    focus: {
+      name: 'Focus',
+      colors: {
+        primary: '#F97316',
+        primaryDark: '#EA580C',
+        secondary: '#FB923C',
+        accent: '#FED7AA'
+      },
+      background: 'linear-gradient(135deg, #c2410c 0%, #9a3412 100%)'
+    }
+  })
+  
   // Music state
   const musicPlaying = ref(false)
   const currentTrack = ref(null)
+  const currentPlatform = ref('youtube') // youtube, spotify, deezer, soundcloud
   const volume = ref(0.7)
+  const isFullscreen = ref(false)
   const soundscapes = ref({
     rain: { enabled: false, volume: 0.5 },
     forest: { enabled: false, volume: 0.5 },
     cafe: { enabled: false, volume: 0.5 },
     ocean: { enabled: false, volume: 0.5 }
+  })
+  
+  // Music platform links
+  const musicLinks = ref({
+    spotify: '',
+    deezer: '', 
+    youtube: '',
+    soundcloud: ''
   })
   
   // Todo state
@@ -137,6 +181,29 @@ export const useAppStore = defineStore('app', () => {
     }
   }
   
+  function setTheme(theme) {
+    currentTheme.value = theme
+    const themeConfig = themes.value[theme]
+    if (themeConfig) {
+      // Update CSS custom properties
+      document.documentElement.style.setProperty('--color-primary', themeConfig.colors.primary)
+      document.documentElement.style.setProperty('--color-primary-dark', themeConfig.colors.primaryDark)
+      document.documentElement.style.setProperty('--color-secondary', themeConfig.colors.secondary)
+      document.documentElement.style.setProperty('--color-accent', themeConfig.colors.accent)
+      // Update background
+      setBackground('gradient', themeConfig.background)
+    }
+  }
+  
+  function toggleFullscreen() {
+    isFullscreen.value = !isFullscreen.value
+    if (isFullscreen.value) {
+      document.documentElement.requestFullscreen?.()
+    } else {
+      document.exitFullscreen?.()
+    }
+  }
+  
   function setBackground(type, value) {
     backgroundType.value = type
     backgroundValue.value = value
@@ -178,13 +245,17 @@ export const useAppStore = defineStore('app', () => {
     sidebarOpen,
     activeTab,
     currentTheme,
+    themes,
     backgroundType,
     backgroundValue,
     overlayOpacity,
     musicPlaying,
     currentTrack,
+    currentPlatform,
     volume,
+    isFullscreen,
     soundscapes,
+    musicLinks,
     todos,
     todoFilter,
     todoSort,
@@ -199,7 +270,9 @@ export const useAppStore = defineStore('app', () => {
     switchMode,
     toggleSidebar,
     setActiveTab,
+    setTheme,
     setBackground,
+    toggleFullscreen,
     addTodo,
     toggleTodo,
     deleteTodo

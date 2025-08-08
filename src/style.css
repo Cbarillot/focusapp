@@ -4,6 +4,7 @@
   --color-primary: #8B5CF6;
   --color-primary-dark: #7C3AED;
   --color-secondary: #A78BFA;
+  --color-accent: #DDD6FE;
   --color-bg-dark: #1a1a1a;
   --color-bg-light: #ffffff;
   --color-text-primary: #ffffff;
@@ -11,6 +12,14 @@
   --color-text-muted: #a3a3a3;
   --color-border: rgba(255, 255, 255, 0.1);
   --color-overlay: rgba(0, 0, 0, 0.3);
+  
+  /* Theme-specific variables */
+  --theme-home-primary: #8B5CF6;
+  --theme-home-secondary: #A78BFA;
+  --theme-ambiance-primary: #10B981;
+  --theme-ambiance-secondary: #34D399;
+  --theme-focus-primary: #F97316;
+  --theme-focus-secondary: #FB923C;
   
   --border-radius-sm: 8px;
   --border-radius-md: 12px;

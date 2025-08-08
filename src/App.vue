@@ -55,15 +55,13 @@
         </div>
       </main>
       
-      <!-- Footer with Soundscapes -->
-      <footer class="app-footer">
-        <SoundscapeControls />
-      </footer>
+      <!-- Bottom Navigation -->
+      <BottomNavigation />
     </div>
     
-    <!-- Side Panel -->
-    <Transition name="slide">
-      <div v-if="store.sidebarOpen" class="sidebar">
+    <!-- Right Side Panel -->
+    <Transition name="slide-right">
+      <div v-if="store.sidebarOpen" class="sidebar right-sidebar">
         <SidePanel />
       </div>
     </Transition>
@@ -83,7 +81,7 @@
 import { useAppStore } from './stores/appStore'
 import DynamicBackground from './components/DynamicBackground.vue'
 import SidePanel from './components/SidePanel.vue'
-import SoundscapeControls from './components/SoundscapeControls.vue'
+import BottomNavigation from './components/BottomNavigation.vue'
 
 const store = useAppStore()
 
@@ -147,7 +145,7 @@ const modes = [
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 100px 20px 80px;
+  padding: 100px 20px 120px; /* Increased bottom padding for new bottom nav */
 }
 
 .timer-container {
@@ -249,17 +247,18 @@ const modes = [
   z-index: 10;
 }
 
-/* Sidebar */
-.sidebar {
+/* Right Sidebar */
+.right-sidebar {
   position: fixed;
   top: 0;
-  left: 0;
+  right: 0;
   width: 400px;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.9);
+  background: rgba(0, 0, 0, 0.92);
   backdrop-filter: blur(20px);
   z-index: 200;
   overflow-y: auto;
+  box-shadow: -4px 0 20px rgba(0, 0, 0, 0.3);
 }
 
 .sidebar-overlay {
@@ -274,12 +273,12 @@ const modes = [
 
 /* Responsive */
 @media (max-width: 768px) {
-  .sidebar {
+  .right-sidebar {
     width: 100vw;
   }
   
   .timer-area {
-    padding: 80px 20px 60px;
+    padding: 80px 20px 100px;
   }
   
   .mode-tabs {
@@ -310,7 +309,7 @@ const modes = [
   }
   
   .timer-area {
-    padding: 70px 15px 50px;
+    padding: 70px 15px 90px;
   }
   
   .mode-tabs {
@@ -332,5 +331,16 @@ const modes = [
     font-size: 14px;
     min-width: 90px;
   }
+}
+
+/* Transition animations */
+.slide-right-enter-active,
+.slide-right-leave-active {
+  transition: transform var(--transition-normal);
+}
+
+.slide-right-enter-from,
+.slide-right-leave-to {
+  transform: translateX(100%);
 }
 </style>
