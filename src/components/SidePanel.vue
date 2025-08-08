@@ -36,13 +36,9 @@
 import { computed } from 'vue'
 import { useAppStore } from '../stores/appStore'
 import ThemeSettings from './panels/ThemeSettings.vue'
-import ClockSettings from './panels/ClockSettings.vue'
 import TimerSettings from './panels/TimerSettings.vue'
-import StatsSettings from './panels/StatsSettings.vue'
 import MusicSettings from './panels/MusicSettings.vue'
-import NotepadSettings from './panels/NotepadSettings.vue'
 import SoundsSettings from './panels/SoundsSettings.vue'
-import QuotesSettings from './panels/QuotesSettings.vue'
 
 const store = useAppStore()
 
