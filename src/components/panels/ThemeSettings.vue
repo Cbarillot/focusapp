@@ -727,25 +727,44 @@ h5 {
     grid-template-columns: repeat(2, 1fr);
     gap: 10px;
   }
-  
+
   .theme-preview {
     height: 60px;
   }
-  
+
   .setting-item {
     flex-direction: column;
     align-items: flex-start;
     gap: 8px;
   }
-  
+
   .slider-container {
     align-self: stretch;
     justify-content: space-between;
   }
-  
+
   .slider {
     flex: 1;
     margin-right: 12px;
+  }
+
+  .input-group {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .youtube-input {
+    padding: 10px 12px;
+  }
+
+  .add-youtube-btn {
+    padding: 10px 16px;
+    align-self: stretch;
+    text-align: center;
+  }
+
+  .example-links {
+    grid-template-columns: 1fr;
   }
 }
 </style>
