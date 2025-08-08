@@ -292,6 +292,18 @@ export default {
   margin-bottom: 0;
 }
 
+.new-badge {
+  margin-left: auto;
+  background: var(--color-primary);
+  color: white;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
 .panel-content {
   flex: 1;
   overflow-y: auto;
