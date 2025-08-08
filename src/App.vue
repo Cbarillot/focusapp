@@ -147,20 +147,21 @@ const modes = [
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 100px 20px 80px;
+  padding: 120px 20px 100px;
+  min-height: 100vh;
 }
 
 .timer-container {
   text-align: center;
-  max-width: 600px;
+  max-width: 700px;
   width: 100%;
 }
 
 .mode-tabs {
   display: flex;
   justify-content: center;
-  gap: 8px;
-  margin-bottom: 60px;
+  gap: 12px;
+  margin-bottom: 80px;
   flex-wrap: wrap;
 }
 
@@ -194,7 +195,7 @@ const modes = [
 }
 
 .timer-display {
-  margin-bottom: 40px;
+  margin-bottom: 60px;
 }
 
 .time {
@@ -211,7 +212,7 @@ const modes = [
 .timer-controls {
   display: flex;
   justify-content: center;
-  gap: 16px;
+  gap: 20px;
   flex-wrap: wrap;
 }
 
