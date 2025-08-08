@@ -121,6 +121,18 @@ const modes = [
   { key: 'shortBreak', label: 'Short Break' },
   { key: 'longBreak', label: 'Long Break' }
 ]
+
+function toggleFullscreen() {
+  if (!document.fullscreenElement) {
+    document.documentElement.requestFullscreen()
+  } else {
+    document.exitFullscreen()
+  }
+}
+
+function openHelp() {
+  window.open('https://help.flocus.com', '_blank')
+}
 </script>
 
 <style scoped>
@@ -143,31 +155,45 @@ const modes = [
   position: fixed;
   top: 20px;
   left: 20px;
+  right: 20px;
   z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.settings-btn {
-  width: 48px;
-  height: 48px;
+.header-left,
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nav-btn {
+  width: 44px;
+  height: 44px;
   border-radius: var(--border-radius-full);
   background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  border: 1px solid var(--color-border);
-  color: var(--color-text-primary);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.9);
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all var(--transition-normal);
+  transition: all 0.2s ease;
 }
 
-.settings-btn:hover {
+.nav-btn:hover {
   background: rgba(255, 255, 255, 0.2);
-  transform: scale(1.05);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-.settings-btn.active {
-  background: var(--color-primary);
-  border-color: var(--color-primary);
+.nav-btn.active {
+  background: rgba(255, 255, 255, 0.9);
+  border-color: rgba(255, 255, 255, 0.9);
+  color: #6B46C1;
+  box-shadow: 0 4px 16px rgba(255, 255, 255, 0.3);
 }
 
 /* Timer Area */
