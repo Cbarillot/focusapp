@@ -105,6 +105,7 @@ const overlayStyle = computed(() => ({
   bottom: 0;
   transition: background-color var(--transition-normal);
   backdrop-filter: blur(1px);
+  width: 1194px;
 }
 
 @keyframes gradientShift {
