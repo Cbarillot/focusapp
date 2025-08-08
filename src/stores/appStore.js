@@ -24,51 +24,160 @@ export const useAppStore = defineStore('app', () => {
   const backgroundValue = ref('lava-lamp')
   const overlayOpacity = ref(0.1)
 
-  // Theme definitions with Flocus-style assets
+  // Authentic Flocus themes with official assets
   const themes = ref({
+    // Gradients & Couleurs
+    'aura-twilight': {
+      name: 'Aura Twilight',
+      type: 'image',
+      value: 'https://app.flocus.com/resources/images/themes/fc5d2c05dba5c17ea3fa.jpg',
+      preview: 'https://app.flocus.com/resources/images/themes/58caf7f5c0a933ebfcf7.jpg'
+    },
+    'peach-aura-heart': {
+      name: 'Peach Aura Heart',
+      type: 'image',
+      value: 'https://app.flocus.com/resources/images/themes/965c98510eb70fec097e.jpg',
+      preview: 'https://app.flocus.com/resources/images/themes/ccb0d385a36dc1178827.jpg'
+    },
+    'light-pink-heart': {
+      name: 'Light Pink Heart',
+      type: 'image',
+      value: 'https://app.flocus.com/resources/images/themes/00dc574ebb26a022627c.jpg',
+      preview: 'https://app.flocus.com/resources/images/themes/b0c91910b984527131f6.jpg'
+    },
+    'flare': {
+      name: 'Flare',
+      type: 'image',
+      value: 'https://app.flocus.com/resources/images/themes/115716ff2673a42650ae.jpg',
+      preview: 'https://app.flocus.com/resources/images/themes/792e25b707a50d2d7551.jpg'
+    },
+    'minimalist-black': {
+      name: 'Minimalist Black',
+      type: 'color',
+      value: '#000000',
+      preview: 'https://app.flocus.com/resources/images/themes/2d727f863f76cb1a139c.jpg'
+    },
+    'minimalist-white': {
+      name: 'Minimalist White',
+      type: 'color',
+      value: '#ffffff',
+      preview: 'https://app.flocus.com/resources/images/themes/5d61d93074b98cd7d14b.jpg'
+    },
+    'heat-map': {
+      name: 'Heat Map',
+      type: 'image',
+      value: 'https://app.flocus.com/resources/images/themes/ab5ca8f3b3764cc20004.jpg',
+      preview: 'https://app.flocus.com/resources/images/themes/cae695fe669d8ba55e7c.jpg'
+    },
+    'dark-purple-heart': {
+      name: 'Dark Purple Heart',
+      type: 'image',
+      value: 'https://app.flocus.com/resources/images/themes/7c723116a71b050b0b70.jpg',
+      preview: 'https://app.flocus.com/resources/images/themes/9ba61149de74b12d8966.jpg'
+    },
+    'light-purple-heart': {
+      name: 'Light Purple Heart',
+      type: 'image',
+      value: 'https://app.flocus.com/resources/images/themes/2acc7101e9ef5ef4bf80.jpg',
+      preview: 'https://app.flocus.com/resources/images/themes/c804c8491b9500138eac.jpg'
+    },
+    'grainy-gradient': {
+      name: 'Grainy Gradient',
+      type: 'image',
+      value: 'https://app.flocus.com/resources/images/themes/87223eadf66a7c8533bd.jpg',
+      preview: 'https://app.flocus.com/resources/images/themes/7f66742ba6d4d10c29b9.jpg'
+    },
+
+    // Mondes Ambiants (Images Statiques)
+    'countryside-morning': {
+      name: 'Countryside Morning',
+      type: 'image',
+      value: 'https://app.flocus.com/resources/images/themes/3e53804e0136d8ff63b8.jpg',
+      preview: 'https://app.flocus.com/resources/images/themes/334ccea6b7512b27afb1.jpg'
+    },
+    'toto-forest': {
+      name: 'Toto Forest',
+      type: 'image',
+      value: 'https://app.flocus.com/resources/images/themes/036dc091aa98dbd75448.jpg',
+      preview: 'https://app.flocus.com/resources/images/themes/08a988943a40a96f3643.jpg'
+    },
+    'lofi-clouds': {
+      name: 'Lofi Clouds',
+      type: 'image',
+      value: 'https://app.flocus.com/resources/images/themes/2079a04c9d9eacfad9a7.jpg',
+      preview: 'https://app.flocus.com/resources/images/themes/7abf9677d15105b172d0.jpg'
+    },
+    'dusk-peak': {
+      name: 'Dusk Peak',
+      type: 'image',
+      value: 'https://app.flocus.com/resources/images/themes/e94e6e0046be104ab9ac.jpg',
+      preview: 'https://app.flocus.com/resources/images/themes/7f3394286f7c042b834f.jpg'
+    },
+    'tuscan-village': {
+      name: 'Tuscan Village',
+      type: 'image',
+      value: 'https://app.flocus.com/resources/images/themes/62327872335dfebe5ceb.jpg',
+      preview: 'https://app.flocus.com/resources/images/themes/46d3613a152ee2e89ba7.jpg'
+    },
+    'forest-retreat': {
+      name: 'Forest Retreat',
+      type: 'image',
+      value: 'https://app.flocus.com/resources/images/themes/48e0089a1b940d6305bb.jpg',
+      preview: 'https://app.flocus.com/resources/images/themes/cddb17ec102f168f890f.jpg'
+    },
+    'cotton-candy-sky': {
+      name: 'Cotton Candy Sky',
+      type: 'image',
+      value: 'https://app.flocus.com/resources/images/themes/a8978a9cea4b37baa5d6.jpg',
+      preview: 'https://app.flocus.com/resources/images/themes/bd7d7112fbdeabc801f9.jpg'
+    },
+    'countryside-night': {
+      name: 'Countryside Night',
+      type: 'image',
+      value: 'https://app.flocus.com/resources/images/themes/d282ec9c6a6d989d73ce.jpg',
+      preview: 'https://app.flocus.com/resources/images/themes/c4d6817730566cdcbbbe.jpg'
+    },
+    'underwater-reef': {
+      name: 'Underwater Reef',
+      type: 'image',
+      value: 'https://app.flocus.com/resources/images/themes/2cf1a7cb698f4601bd00.jpg',
+      preview: 'https://app.flocus.com/resources/images/themes/ca29d2c7897474a7d57a.jpg'
+    },
+
+    // Mondes Ambiants (Vidéos)
+    'snowy-winter-cabin': {
+      name: 'Snowy Winter Cabin',
+      type: 'video',
+      value: 'https://app.flocus.com/resources/images/themes/39fdded69cd655331f55.mp4',
+      preview: 'https://app.flocus.com/resources/images/themes/1b651162dfdd425d13f7.jpg'
+    },
+    'rainy-lofi-cafe': {
+      name: 'Rainy Lofi Cafe',
+      type: 'video',
+      value: 'https://app.flocus.com/resources/images/themes/f578c6b4e6af48261e67.mp4',
+      preview: 'https://app.flocus.com/resources/images/themes/4faea10e2f2c6eb4d8bc.jpg'
+    },
+    'flickering-fireplace': {
+      name: 'Flickering Fireplace',
+      type: 'video',
+      value: 'https://app.flocus.com/resources/images/themes/5f776353fd8c17bd56ca.mp4',
+      preview: 'https://app.flocus.com/resources/images/themes/d992a6ca9a7eee1f8e8e.jpg'
+    },
+
+    // Canvas Animations (gardés pour la variété)
     'lava-lamp': {
       name: 'Lava Lamp',
       type: 'canvas',
       value: 'lava-lamp',
       colors: ['#DF437A', '#3d57d6', '#a117fd', '#ec634b'],
-      preview: '/themes/lava-lamp-preview.jpg'
+      preview: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDIwMCAxMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj48c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojREY0MzdBIiAvPjxzdG9wIG9mZnNldD0iMzMlIiBzdHlsZT0ic3RvcC1jb2xvcjojM2Q1N2Q2IiAvPjxzdG9wIG9mZnNldD0iNjYlIiBzdHlsZT0ic3RvcC1jb2xvcjojYTExN2ZkIiAvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6I2VjNjM0YiIgLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjEyMCIgZmlsbD0idXJsKCNncmFkKSIgcng9IjgiLz48L3N2Zz4='
     },
-    'toto-forest': {
-      name: 'Toto Forest',
-      type: 'image',
-      value: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=2071&auto=format&fit=crop',
-      preview: '/themes/toto-forest-preview.jpg'
-    },
-    'cyberpunk-city': {
-      name: 'Cyberpunk City',
-      type: 'video',
-      value: 'https://player.vimeo.com/external/373465046.hd.mp4?s=ac9a1a4a47d98c2065e6a91c3b6b19d5b5e0d7a1&profile_id=174',
-      preview: '/themes/cyberpunk-preview.jpg'
-    },
-    'mountain-lake': {
-      name: 'Mountain Lake',
-      type: 'image',
-      value: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=2069&auto=format&fit=crop',
-      preview: '/themes/mountain-lake-preview.jpg'
-    },
-    'ocean-waves': {
-      name: 'Ocean Waves',
-      type: 'video',
-      value: 'https://player.vimeo.com/external/227468707.hd.mp4?s=39c64a4db9ce62f9eea3e754d8f4a8e8f1f5d2a1&profile_id=174',
-      preview: '/themes/ocean-waves-preview.jpg'
-    },
-    'aurora-gradient': {
+    'aurora': {
       name: 'Aurora',
       type: 'canvas',
       value: 'aurora',
       colors: ['#00c9ff', '#92fe9d', '#ff9a9e', '#fecfef'],
-      preview: '/themes/aurora-preview.jpg'
-    },
-    'sunset-gradient': {
-      name: 'Sunset',
-      type: 'gradient',
-      value: 'linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%)',
-      preview: '/themes/sunset-preview.jpg'
+      preview: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDIwMCAxMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJhdXJvcmEiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPjxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiMwMGM5ZmYiIC8+PHN0b3Agb2Zmc2V0PSIzMyUiIHN0eWxlPSJzdG9wLWNvbG9yOiM5MmZlOWQiIC8+PHN0b3Agb2Zmc2V0PSI2NiUiIHN0eWxlPSJzdG9wLWNvbG9yOiNmZjlhOWUiIC8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdHlsZT0ic3RvcC1jb2xvcjojZmVjZmVmIiAvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMTIwIiBmaWxsPSJ1cmwoI2F1cm9yYSkiIHJ4PSI4Ii8+PC9zdmc+'
     }
   })
   
