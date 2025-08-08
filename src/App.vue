@@ -195,7 +195,10 @@ const modes = [
   margin-bottom: 40px;
   color: var(--color-text-primary);
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 1);
-  font: 119px/119px 'Be Vietnam Pro', sans-serif;
+  font-family: 'Be Vietnam Pro', sans-serif;
+  font-size: clamp(4rem, 12vw, 119px);
+  font-weight: 300;
+  line-height: 1;
 }
 
 .timer-controls {
