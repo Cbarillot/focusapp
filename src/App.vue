@@ -327,7 +327,7 @@ function openHelp() {
   position: fixed;
   top: 0;
   left: 0;
-  width: 400px;
+  width: 480px;
   height: 100vh;
   background: rgba(0, 0, 0, 0.9);
   backdrop-filter: blur(20px);
