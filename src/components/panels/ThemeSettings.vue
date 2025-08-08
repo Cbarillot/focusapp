@@ -117,7 +117,49 @@
         </div>
       </div>
     </div>
-    
+
+    <div class="setting-group">
+      <h4>Custom YouTube Background</h4>
+      <p class="setting-description">Add any YouTube video as your background. Perfect for lofi music, nature sounds, or ambient videos.</p>
+
+      <div class="youtube-input-section">
+        <div class="input-group">
+          <input
+            v-model="youtubeUrl"
+            type="url"
+            placeholder="Paste YouTube URL here (e.g., https://youtu.be/jfKfPfyJRdk)"
+            class="youtube-input"
+            @keyup.enter="addYouTubeBackground"
+          />
+          <button
+            @click="addYouTubeBackground"
+            class="add-youtube-btn"
+            :disabled="!youtubeUrl.trim()"
+          >
+            Add Background
+          </button>
+        </div>
+
+        <div v-if="youtubeError" class="error-message">
+          {{ youtubeError }}
+        </div>
+
+        <div class="youtube-examples">
+          <h5>Popular Ambient Videos:</h5>
+          <div class="example-links">
+            <button
+              v-for="example in youtubeExamples"
+              :key="example.id"
+              @click="useExampleVideo(example.url)"
+              class="example-btn"
+            >
+              {{ example.title }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="setting-group">
       <h4>Display Settings</h4>
       
