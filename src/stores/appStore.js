@@ -16,7 +16,7 @@ export const useAppStore = defineStore('app', () => {
   
   // UI state
   const sidebarOpen = ref(false)
-  const activeTab = ref('timer') // timer, themes, music, background, todo
+  const activeTab = ref('themes') // themes, clock, timer, stats, music, notepad, sounds, quotes
   
   // Theme & styling
   const currentTheme = ref('purple')
