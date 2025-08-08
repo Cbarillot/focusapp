@@ -43,41 +43,61 @@ import TodoSettings from './panels/TodoSettings.vue'
 const store = useAppStore()
 
 const tabs = [
-  { 
-    key: 'timer', 
-    label: 'Timer', 
-    icon: 'TimerIcon'
+  {
+    key: 'themes',
+    label: 'Themes',
+    icon: 'ThemeIcon',
+    isNew: true
   },
-  { 
-    key: 'themes', 
-    label: 'Themes', 
-    icon: 'ThemeIcon'
+  {
+    key: 'clock',
+    label: 'Clock',
+    icon: 'ClockIcon'
   },
-  { 
-    key: 'music', 
-    label: 'Music', 
+  {
+    key: 'timer',
+    label: 'Focus Timer',
+    icon: 'TimerIcon',
+    isNew: true
+  },
+  {
+    key: 'stats',
+    label: 'Stats',
+    icon: 'StatsIcon'
+  },
+  {
+    key: 'music',
+    label: 'Music',
     icon: 'MusicIcon'
   },
-  { 
-    key: 'background', 
-    label: 'Background', 
-    icon: 'BackgroundIcon'
+  {
+    key: 'notepad',
+    label: 'Notepad',
+    icon: 'NotepadIcon'
   },
-  { 
-    key: 'todo', 
-    label: 'To-do', 
-    icon: 'TodoIcon'
+  {
+    key: 'sounds',
+    label: 'Sounds',
+    icon: 'SoundsIcon'
+  },
+  {
+    key: 'quotes',
+    label: 'Quotes',
+    icon: 'QuotesIcon'
   }
 ]
 
 const activeComponent = computed(() => {
   switch (store.activeTab) {
-    case 'timer': return TimerSettings
     case 'themes': return ThemeSettings
+    case 'clock': return ClockSettings
+    case 'timer': return TimerSettings
+    case 'stats': return StatsSettings
     case 'music': return MusicSettings
-    case 'background': return BackgroundSettings
-    case 'todo': return TodoSettings
-    default: return TimerSettings
+    case 'notepad': return NotepadSettings
+    case 'sounds': return SoundsSettings
+    case 'quotes': return QuotesSettings
+    default: return ThemeSettings
   }
 })
 </script>
