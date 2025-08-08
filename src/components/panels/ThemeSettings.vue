@@ -281,6 +281,31 @@ function handleImageError(event) {
   event.target.parentElement.style.background = `linear-gradient(45deg, ${colors.join(', ')})`
 }
 
+function addYouTubeBackground() {
+  youtubeError.value = ''
+
+  if (!youtubeUrl.value.trim()) {
+    youtubeError.value = 'Please enter a YouTube URL'
+    return
+  }
+
+  const success = store.setYouTubeBackground(youtubeUrl.value)
+
+  if (success) {
+    youtubeUrl.value = ''
+    youtubeError.value = ''
+    // Optionally close the sidebar
+    // store.toggleSidebar()
+  } else {
+    youtubeError.value = 'Invalid YouTube URL. Please check the format and try again.'
+  }
+}
+
+function useExampleVideo(url) {
+  youtubeUrl.value = url
+  addYouTubeBackground()
+}
+
 function getThemesByCategory(category) {
   const gradientThemes = [
     'aura-twilight', 'peach-aura-heart', 'light-pink-heart', 'flare',
