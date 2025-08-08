@@ -94,6 +94,17 @@ function getYouTubeEmbedUrl(videoId) {
   return `https://www.youtube.com/embed/${videoId}?autoplay=1&loop=1&mute=1&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&playlist=${videoId}&vq=hd1080`
 }
 
+function getAnimatedGradientStyle() {
+  const colors = store.customGradientColors.length >= 4
+    ? store.customGradientColors
+    : ['#DF437A', '#3d57d6', '#a117fd', '#ec634b']
+
+  return {
+    background: `linear-gradient(45deg, ${colors.join(', ')})`,
+    backgroundSize: '400% 400%'
+  }
+}
+
 const overlayStyle = computed(() => ({
   backgroundColor: `rgba(0, 0, 0, ${store.overlayOpacity})`
 }))
@@ -141,6 +152,27 @@ const overlayStyle = computed(() => ({
   left: 50%;
   transform: translate(-50%, -50%);
   pointer-events: none;
+}
+
+.animated-gradient {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  animation: gradientAnimation 15s ease infinite;
+}
+
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 .overlay-layer {
