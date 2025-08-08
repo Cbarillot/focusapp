@@ -388,6 +388,32 @@ function useExampleVideo(url) {
   addYouTubeBackground()
 }
 
+function updateGradientColor(index, color) {
+  gradientColors.value[index] = color
+}
+
+function getGradientPreviewStyle() {
+  return {
+    background: `linear-gradient(45deg, ${gradientColors.value.join(', ')})`,
+    backgroundSize: '200% 200%',
+    animation: 'gradientAnimation 3s ease infinite'
+  }
+}
+
+function applyCustomGradient() {
+  store.setCustomGradientColors(gradientColors.value)
+  store.setAnimatedGradientBackground()
+}
+
+function resetToDefaults() {
+  gradientColors.value = ['#DF437A', '#3d57d6', '#a117fd', '#ec634b']
+}
+
+function applyPreset(colors) {
+  gradientColors.value = [...colors]
+  applyCustomGradient()
+}
+
 function getThemesByCategory(category) {
   const gradientThemes = [
     'aura-twilight', 'peach-aura-heart', 'light-pink-heart', 'flare',
