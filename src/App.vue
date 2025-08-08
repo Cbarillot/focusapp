@@ -17,7 +17,7 @@
               <path d="M6 8h24v3H6zM6 16.5h24v3H6zM6 25h24v3H6z"/>
             </svg>
           </button>
-          <button class="nav-btn stats-btn" @click="store.setActiveTab('stats')">
+          <button class="nav-btn themes-btn" @click="store.setActiveTab('themes')">
             <svg width="18" height="18" viewBox="0 0 36 36" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
               <path d="M30 30H6V6h2v22h22v2z"/>
               <path d="M8 26h4V16H8v10zm6 0h4V12h-4v14zm6 0h4V8h-4v18zm6 0h4V20h-4v6z"/>
