@@ -83,6 +83,10 @@ function getCurrentThemeColors() {
   return currentTheme?.colors || ['#8B5CF6', '#EC4899', '#F59E0B', '#10B981']
 }
 
+function getYouTubeEmbedUrl(videoId) {
+  return `https://www.youtube.com/embed/${videoId}?autoplay=1&loop=1&mute=1&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&playlist=${videoId}&vq=hd1080`
+}
+
 const overlayStyle = computed(() => ({
   backgroundColor: `rgba(0, 0, 0, ${store.overlayOpacity})`
 }))
@@ -110,7 +114,8 @@ const overlayStyle = computed(() => ({
 }
 
 .background-image,
-.background-video {
+.background-video,
+.background-youtube {
   position: absolute;
   top: 0;
   left: 0;
@@ -118,6 +123,17 @@ const overlayStyle = computed(() => ({
   height: 100%;
   object-fit: cover;
   object-position: center;
+}
+
+.background-youtube {
+  width: 100vw;
+  height: 56.25vw; /* 16:9 aspect ratio */
+  min-height: 100vh;
+  min-width: 177.78vh; /* 16:9 aspect ratio */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
 }
 
 .overlay-layer {
