@@ -54,6 +54,122 @@ const themes = ref({
     preview: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDIwMCAxMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJhbmltYXRlZCIgeDI9IjEwMCUiIHkyPSIxMDAlIj48c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojREY0MzdBIiAvPjxzdG9wIG9mZnNldD0iMzMlIiBzdHlsZT0ic3RvcC1jb2xvcjojM2Q1N2Q2IiAvPjxzdG9wIG9mZnNldD0iNjYlIiBzdHlsZT0ic3RvcC1jb2xvcjojYTExN2ZkIiAvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6I2VjNjM0YiIgLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjEyMCIgZmlsbD0idXJsKCNhbmltYXRlZCkiIHJ4PSI4Ii8+PGNpcmNsZSBjeD0iMTAwIiBjeT0iNjAiIHI9IjMiIGZpbGw9IndoaXRlIiBvcGFjaXR5PSIwLjgiPjxhbmltYXRlIGF0dHJpYnV0ZU5hbWU9Im9wYWNpdHkiIHZhbHVlcz0iMC44OzAuMzswLjgiIGR1cj0iMnMiIHJlcGVhdENvdW50PSJpbmRlZmluaXRlIi8+PC9jaXJjbGU+PC9zdmc+'
   },
 
+  // === NEW THEMES FROM ASSETS ===
+  // Pour ajouter de nouveaux thèmes :
+  // 1. Ajoutez les fichiers image/vidéo dans public/assets/themes/images/ ou public/assets/themes/videos/
+  // 2. Créez un objet thème ici avec : name, type ('image'/'video'), value (chemin du fichier), preview, category
+  // 3. Ajoutez la clé du thème dans l'array approprié dans ThemeSettings.vue (ambientThemes ou animatedThemes)
+  
+  // Image themes for Ambient Worlds category
+  '3d-cartoon-door': {
+    name: '3D Cartoon Door',
+    type: 'image',
+    value: '/assets/themes/images/3d-rendering-cartoon-welcome-door.jpg',
+    preview: '/assets/themes/images/3d-rendering-cartoon-welcome-door.jpg',
+    category: 'ambient'
+  },
+  'digital-river-landscape': {
+    name: 'Digital River Landscape',
+    type: 'image', 
+    value: '/assets/themes/images/digital-art-style-river-nature-landscape.jpg',
+    preview: '/assets/themes/images/digital-art-style-river-nature-landscape.jpg',
+    category: 'ambient'
+  },
+  'mysterious-forest-cat': {
+    name: 'Mysterious Forest Cat',
+    type: 'image',
+    value: '/assets/themes/images/mysterious-cat-sunny-forest.jpg', 
+    preview: '/assets/themes/images/mysterious-cat-sunny-forest.jpg',
+    category: 'ambient'
+  },
+
+  // Video themes for Animated category
+  'castle-beyond-clouds': {
+    name: 'Castle Beyond Clouds',
+    type: 'video',
+    value: '/assets/themes/videos/castle-beyond-the-clouds.1920x1080.mp4',
+    preview: '/assets/themes/videos/castle-beyond-the-clouds.1920x1080.mp4', // Will use first frame
+    category: 'animated'
+  },
+  'spirited-away-chihiro': {
+    name: 'Spirited Away - Chihiro',
+    type: 'video',
+    value: '/assets/themes/videos/chihiro-ogino-spirited-away.1920x1080.mp4',
+    preview: '/assets/themes/videos/chihiro-ogino-spirited-away.1920x1080.mp4',
+    category: 'animated'
+  },
+  'coffee-shop-ambience': {
+    name: 'Coffee Shop Ambience',
+    type: 'video',
+    value: '/assets/themes/videos/coffee-shop.1920x1080.mp4',
+    preview: '/assets/themes/videos/coffee-shop.1920x1080.mp4',
+    category: 'animated'
+  },
+  'cozy-room': {
+    name: 'Cozy Room',
+    type: 'video',
+    value: '/assets/themes/videos/cozy-room.1920x1080.mp4',
+    preview: '/assets/themes/videos/cozy-room.1920x1080.mp4',
+    category: 'animated'
+  },
+  'spirited-away-island': {
+    name: 'Spirited Away - Island House',
+    type: 'video',
+    value: '/assets/themes/videos/house-on-island-spirited-away.1920x1080.mp4',
+    preview: '/assets/themes/videos/house-on-island-spirited-away.1920x1080.mp4',
+    category: 'animated'
+  },
+  'lofi-coffee-shop': {
+    name: 'Lofi Coffee Shop',
+    type: 'video',
+    value: '/assets/themes/videos/lofi-coffee-shop.1920x1080.mp4',
+    preview: '/assets/themes/videos/lofi-coffee-shop.1920x1080.mp4',
+    category: 'animated'
+  },
+  'lofi-girl-animated': {
+    name: 'Lofi Girl Animated',
+    type: 'video',
+    value: '/assets/themes/videos/lofi-girl-animated.1920x1080.mp4',
+    preview: '/assets/themes/videos/lofi-girl-animated.1920x1080.mp4',
+    category: 'animated'
+  },
+  'morning-coffee': {
+    name: 'Morning Coffee',
+    type: 'video',
+    value: '/assets/themes/videos/morning-coffee.1920x1080.mp4',
+    preview: '/assets/themes/videos/morning-coffee.1920x1080.mp4',
+    category: 'animated'
+  },
+  'forest-house': {
+    name: 'Small House in Forest',
+    type: 'video',
+    value: '/assets/themes/videos/small-house-in-forest.1920x1080.mp4',
+    preview: '/assets/themes/videos/small-house-in-forest.1920x1080.mp4',
+    category: 'animated'
+  },
+  'spirited-away-train': {
+    name: 'Spirited Away - Train Travel',
+    type: 'video',
+    value: '/assets/themes/videos/spirited-away-train-travel.1920x1080.mp4',
+    preview: '/assets/themes/videos/spirited-away-train-travel.1920x1080.mp4',
+    category: 'animated'
+  },
+  'train-spirited-away': {
+    name: 'Train - Spirited Away',
+    type: 'video',
+    value: '/assets/themes/videos/train-spirited-away.1920x1080.mp4',
+    preview: '/assets/themes/videos/train-spirited-away.1920x1080.mp4',
+    category: 'animated'
+  },
+  'zelda-forest-temple': {
+    name: 'Zelda Forest Temple',
+    type: 'video',
+    value: '/assets/themes/videos/zelda-forest-temple.1920x1080.mp4',
+    preview: '/assets/themes/videos/zelda-forest-temple.1920x1080.mp4',
+    category: 'animated'
+  },
+  // === END NEW THEMES ===
+
   // Palette themes
   home: {
     name: 'Home',
