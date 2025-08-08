@@ -319,6 +319,12 @@ export const useAppStore = defineStore('app', () => {
     backgroundValue.value = value
   }
 
+  function extractYouTubeId(url) {
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/
+    const match = url.match(regExp)
+    return (match && match[2].length === 11) ? match[2] : null
+  }
+
   function setTheme(themeKey) {
     const theme = themes.value[themeKey]
     if (theme) {
@@ -333,6 +339,16 @@ export const useAppStore = defineStore('app', () => {
         })
       }
     }
+  }
+
+  function setYouTubeBackground(youtubeUrl) {
+    const videoId = extractYouTubeId(youtubeUrl)
+    if (videoId) {
+      backgroundType.value = 'youtube'
+      backgroundValue.value = videoId
+      return true
+    }
+    return false
   }
   
   function addTodo(todo) {
