@@ -343,23 +343,39 @@ function openHelp() {
 
 /* Responsive */
 @media (max-width: 768px) {
+  .app-header {
+    top: 15px;
+    left: 15px;
+    right: 15px;
+  }
+
+  .nav-btn {
+    width: 40px;
+    height: 40px;
+  }
+
+  .header-left,
+  .header-right {
+    gap: 6px;
+  }
+
   .sidebar {
     width: 100vw;
   }
-  
+
   .timer-area {
     padding: 80px 20px 60px;
   }
-  
+
   .mode-tabs {
     margin-bottom: 40px;
   }
-  
+
   .mode-tab {
     padding: 10px 20px;
     font-size: 13px;
   }
-  
+
   .control-btn {
     padding: 14px 28px;
     font-size: 15px;
@@ -369,33 +385,38 @@ function openHelp() {
 
 @media (max-width: 480px) {
   .app-header {
-    top: 15px;
-    left: 15px;
+    top: 12px;
+    left: 12px;
+    right: 12px;
   }
-  
-  .settings-btn {
-    width: 44px;
-    height: 44px;
+
+  .nav-btn {
+    width: 36px;
+    height: 36px;
   }
-  
+
+  .header-right .nav-btn:not(.menu-btn):not(.stats-btn) {
+    display: none;
+  }
+
   .timer-area {
     padding: 70px 15px 50px;
   }
-  
+
   .mode-tabs {
     gap: 6px;
     margin-bottom: 30px;
   }
-  
+
   .mode-tab {
     padding: 8px 16px;
     font-size: 12px;
   }
-  
+
   .timer-controls {
     gap: 12px;
   }
-  
+
   .control-btn {
     padding: 12px 24px;
     font-size: 14px;
