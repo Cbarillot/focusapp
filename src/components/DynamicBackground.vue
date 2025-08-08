@@ -44,6 +44,13 @@
       :colors="getCurrentThemeColors()"
     />
 
+    <!-- Animated Gradient Background -->
+    <div
+      v-if="store.backgroundType === 'animated-gradient'"
+      class="animated-gradient"
+      :style="getAnimatedGradientStyle()"
+    ></div>
+
     <!-- Overlay Layer -->
     <div
       class="overlay-layer"
