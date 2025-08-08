@@ -111,8 +111,14 @@ import { useAppStore } from './stores/appStore'
 import DynamicBackground from './components/DynamicBackground.vue'
 import SidePanel from './components/SidePanel.vue'
 import SoundscapeControls from './components/SoundscapeControls.vue'
+import { onMounted } from 'vue'
 
 const store = useAppStore()
+
+// Initialize default theme
+onMounted(() => {
+  store.setTheme(store.currentTheme)
+})
 
 const modes = [
   { key: 'pomodoro', label: 'Pomodoro' },
