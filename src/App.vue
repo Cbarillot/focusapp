@@ -192,12 +192,10 @@ const modes = [
 }
 
 .time {
-  font-size: clamp(4rem, 12vw, 8rem);
-  font-weight: 300;
-  line-height: 1;
   margin-bottom: 40px;
   color: var(--color-text-primary);
-  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 1);
+  font: 119px/119px 'Be Vietnam Pro', sans-serif;
 }
 
 .timer-controls {
