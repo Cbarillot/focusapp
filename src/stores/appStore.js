@@ -440,6 +440,8 @@ export const useAppStore = defineStore('app', () => {
     setTheme,
     setYouTubeBackground,
     extractYouTubeId,
+    setCustomGradientColors,
+    setAnimatedGradientBackground,
     addTodo,
     toggleTodo,
     deleteTodo
