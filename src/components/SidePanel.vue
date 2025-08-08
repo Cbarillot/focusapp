@@ -21,6 +21,7 @@
       >
         <component :is="tab.icon" />
         <span>{{ tab.label }}</span>
+        <span v-if="tab.isNew" class="new-badge">New</span>
       </button>
     </nav>
     
@@ -34,11 +35,14 @@
 <script setup>
 import { computed } from 'vue'
 import { useAppStore } from '../stores/appStore'
-import TimerSettings from './panels/TimerSettings.vue'
 import ThemeSettings from './panels/ThemeSettings.vue'
+import ClockSettings from './panels/ClockSettings.vue'
+import TimerSettings from './panels/TimerSettings.vue'
+import StatsSettings from './panels/StatsSettings.vue'
 import MusicSettings from './panels/MusicSettings.vue'
-import BackgroundSettings from './panels/BackgroundSettings.vue'
-import TodoSettings from './panels/TodoSettings.vue'
+import NotepadSettings from './panels/NotepadSettings.vue'
+import SoundsSettings from './panels/SoundsSettings.vue'
+import QuotesSettings from './panels/QuotesSettings.vue'
 
 const store = useAppStore()
 
