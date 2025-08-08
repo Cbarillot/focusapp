@@ -398,7 +398,7 @@ function openHelp() {
     height: 36px;
   }
 
-  .header-right .nav-btn:not(.menu-btn):not(.stats-btn) {
+  .header-right .nav-btn:not(.menu-btn):not(.themes-btn) {
     display: none;
   }
 
