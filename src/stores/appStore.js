@@ -24,6 +24,9 @@ export const useAppStore = defineStore('app', () => {
   const backgroundValue = ref('lava-lamp')
   const overlayOpacity = ref(0.1)
 
+  // Custom gradient colors
+  const customGradientColors = ref(['#DF437A', '#3d57d6', '#a117fd', '#ec634b'])
+
   // Authentic Flocus themes with official assets
   const themes = ref({
     // Gradients & Couleurs
