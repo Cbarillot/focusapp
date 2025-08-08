@@ -208,6 +208,31 @@ const store = useAppStore()
 const overlayOpacity = ref(store.overlayOpacity)
 const autoChangeThemes = ref(false)
 const changeInterval = ref('hour')
+const youtubeUrl = ref('')
+const youtubeError = ref('')
+
+const youtubeExamples = [
+  {
+    id: 1,
+    title: 'Lofi Hip Hop',
+    url: 'https://www.youtube.com/watch?v=jfKfPfyJRdk'
+  },
+  {
+    id: 2,
+    title: 'Rain Sounds',
+    url: 'https://www.youtube.com/watch?v=mPZkdNFkNps'
+  },
+  {
+    id: 3,
+    title: 'Forest Ambience',
+    url: 'https://www.youtube.com/watch?v=xNN7iTA57jM'
+  },
+  {
+    id: 4,
+    title: 'Ocean Waves',
+    url: 'https://www.youtube.com/watch?v=V1Pl8CzNzCw'
+  }
+]
 
 function selectTheme(themeKey) {
   store.setTheme(themeKey)
