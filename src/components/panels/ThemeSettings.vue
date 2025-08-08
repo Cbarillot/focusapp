@@ -190,7 +190,8 @@ function getTypeBadge(type) {
     'canvas': '✨',
     'video': '🎬',
     'image': '🖼️',
-    'gradient': '🌈'
+    'gradient': '🌈',
+    'color': '🎨'
   }
   return badges[type] || '🎨'
 }
@@ -200,7 +201,8 @@ function getTypeLabel(type) {
     'canvas': 'Animated',
     'video': 'Video',
     'image': 'Photo',
-    'gradient': 'Gradient'
+    'gradient': 'Gradient',
+    'color': 'Solid Color'
   }
   return labels[type] || 'Custom'
 }
