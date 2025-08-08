@@ -55,11 +55,8 @@
         </div>
       </main>
       
-      <!-- Footer with Bottom Navigation -->
-      <footer class="app-footer">
-        <SoundscapeControls />
-        <BottomNavigation />
-      </footer>
+      <!-- Corner Navigation - replaces footer for cleaner layout -->
+      <CornerNavigation />
     </div>
     
     <!-- Side Panel -->
@@ -85,8 +82,7 @@ import { ref } from 'vue'
 import { useAppStore } from './stores/appStore'
 import DynamicBackground from './components/DynamicBackground.vue'
 import SidePanel from './components/SidePanel.vue'
-import SoundscapeControls from './components/SoundscapeControls.vue'
-import BottomNavigation from './components/BottomNavigation.vue'
+import CornerNavigation from './components/CornerNavigation.vue'
 
 // Variables fusionnées pour la gestion des thèmes, du background et du fullscreen
 const activeTab = ref('themes') // themes, clock, timer, stats, music, notepad, sounds, quotes, background, todo
@@ -282,14 +278,8 @@ const modes = [
   transform: translateY(-2px);
 }
 
-/* Footer */
-.app-footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 10;
-}
+/* Footer - No longer needed as navigation is in corners */
+/* Removed .app-footer styles as they're replaced by corner navigation */
 
 /* Sidebar - Moved to right side with improved tab navigation */
 .sidebar {
