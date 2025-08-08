@@ -362,6 +362,20 @@ export const useAppStore = defineStore('app', () => {
     }
     return false
   }
+
+  function setCustomGradientColors(colors) {
+    customGradientColors.value = [...colors]
+    // Update CSS variables for the animated gradient
+    colors.forEach((color, index) => {
+      document.documentElement.style.setProperty(`--custom-gradient-color-${index + 1}`, color)
+    })
+  }
+
+  function setAnimatedGradientBackground() {
+    backgroundType.value = 'animated-gradient'
+    backgroundValue.value = 'custom'
+    setCustomGradientColors(customGradientColors.value)
+  }
   
   function addTodo(todo) {
     todos.value.push({
