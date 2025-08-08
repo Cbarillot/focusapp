@@ -4,5 +4,13 @@ import App from './App.vue'
 import './style.css'
 
 const app = createApp(App)
-app.use(createPinia())
-app.mount('#app')
+const pinia = createPinia()
+app.use(pinia)
+
+// Initialize theme colors after mounting
+const mountedApp = app.mount('#app')
+
+// Apply initial theme colors
+import { useAppStore } from './stores/appStore'
+const store = useAppStore()
+store.applyThemeColors()
