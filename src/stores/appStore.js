@@ -28,7 +28,7 @@ const overlayOpacity = ref(0.2) // compromis entre 0.1 et 0.3
 // Custom gradient colors (utilisé pour les backgrounds personnalisés)
 const customGradientColors = ref(['#DF437A', '#3d57d6', '#a117fd', '#ec634b'])
 
-// Authentic Flocus themes with official assets + custom and canvas/animated themes
+// Authentic Flocus themes with official assets + custom, canvas/animated themes, and color palettes
 const themes = ref({
   // Gradients & Couleurs
   'aura-twilight': {
@@ -46,51 +46,46 @@ const themes = ref({
     colors: ['#DF437A', '#3d57d6', '#a117fd', '#ec634b'],
     preview: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDIwMCAxMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj48c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojREY0MzdBIiAvPjxzdG9wIG9mZnNldD0iMzMlIiBzdHlsZT0ic3RvcC1jb2xvcjojM2Q1N2Q2IiAvPjxzdG9wIG9mZnNldD0iNjYlIiBzdHlsZT0ic3RvcC1jb2xvcjojYTExN2ZkIiAvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6I2VjNjM0YiIgLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjEyMCIgZmlsbD0idXJsKCNncmFkKSIgcng9IjgiLz48L3N2Zz4='
   },
-  // (tous les autres objets thèmes et backgrounds du bloc long d'origine)
   'custom-animated-gradient': {
     name: 'Custom Animated Gradient',
     type: 'animated-gradient',
     value: 'custom',
     colors: ['#DF437A', '#3d57d6', '#a117fd', '#ec634b'],
     preview: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDIwMCAxMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJhbmltYXRlZCIgeDI9IjEwMCUiIHkyPSIxMDAlIj48c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojREY0MzdBIiAvPjxzdG9wIG9mZnNldD0iMzMlIiBzdHlsZT0ic3RvcC1jb2xvcjojM2Q1N2Q2IiAvPjxzdG9wIG9mZnNldD0iNjYlIiBzdHlsZT0ic3RvcC1jb2xvcjojYTExN2ZkIiAvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6I2VjNjM0YiIgLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjEyMCIgZmlsbD0idXJsKCNhbmltYXRlZCkiIHJ4PSI4Ii8+PGNpcmNsZSBjeD0iMTAwIiBjeT0iNjAiIHI9IjMiIGZpbGw9IndoaXRlIiBvcGFjaXR5PSIwLjgiPjxhbmltYXRlIGF0dHJpYnV0ZU5hbWU9Im9wYWNpdHkiIHZhbHVlcz0iMC44OzAuMzswLjgiIGR1cj0iMnMiIHJlcGVhdENvdW50PSJpbmRlZmluaXRlIi8+PC9jaXJjbGU+PC9zdmc+'
+  },
+
+  // Palette themes
+  home: {
+    name: 'Home',
+    colors: {
+      primary: '#8B5CF6',
+      primaryDark: '#7C3AED',
+      secondary: '#A78BFA',
+      accent: '#EC4899',
+      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+    }
+  },
+  ambiance: {
+    name: 'Ambiance',
+    colors: {
+      primary: '#10B981',
+      primaryDark: '#059669',
+      secondary: '#6EE7B7',
+      accent: '#34D399',
+      background: 'linear-gradient(135deg, #065f46 0%, #047857 100%)'
+    }
+  },
+  focus: {
+    name: 'Focus',
+    colors: {
+      primary: '#F59E0B',
+      primaryDark: '#D97706',
+      secondary: '#FCD34D',
+      accent: '#FBBF24',
+      background: 'linear-gradient(135deg, #92400e 0%, #b45309 100%)'
+    }
   }
 })
-
-// ... le reste de ton store (getters, setters, etc.)
-  
-  // Theme definitions with color palettes
-  const themes = ref({
-    home: {
-      name: 'Home',
-      colors: {
-        primary: '#8B5CF6',
-        primaryDark: '#7C3AED',
-        secondary: '#A78BFA',
-        accent: '#EC4899',
-        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
-      }
-    },
-    ambiance: {
-      name: 'Ambiance',
-      colors: {
-        primary: '#10B981',
-        primaryDark: '#059669',
-        secondary: '#6EE7B7',
-        accent: '#34D399',
-        background: 'linear-gradient(135deg, #065f46 0%, #047857 100%)'
-      }
-    },
-    focus: {
-      name: 'Focus',
-      colors: {
-        primary: '#F59E0B',
-        primaryDark: '#D97706',
-        secondary: '#FCD34D',
-        accent: '#FBBF24',
-        background: 'linear-gradient(135deg, #92400e 0%, #b45309 100%)'
-      }
-    }
-  })
   
   // Music state - Universal music component with URL support
   const musicPlaying = ref(false)
