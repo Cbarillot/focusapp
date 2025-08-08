@@ -107,77 +107,74 @@ const activeComponent = computed(() => {
 </script>
 
 <script>
-// Icon components
+// Flocus-style SVG Icon components
 const ClockIcon = {
   template: `
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
-      <path d="M12 6V12L16 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <svg width="20" height="20" viewBox="0 0 36 36" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <path d="M18 4C10.268 4 4 10.268 4 18s6.268 14 14 14 14-6.268 14-14S25.732 4 18 4zm0 25.2c-6.176 0-11.2-5.024-11.2-11.2S11.824 6.8 18 6.8 29.2 11.824 29.2 18 24.176 29.2 18 29.2zm6.3-11.2h-6.3V10.5a1.4 1.4 0 1 0-2.8 0V19.4c0 .773.627 1.4 1.4 1.4h7.7a1.4 1.4 0 1 0 0-2.8z"/>
     </svg>
   `
 }
 
 const TimerIcon = {
   template: `
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M10 2H14M12 6V12L16 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      <circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="2"/>
+    <svg width="20" height="20" viewBox="0 0 36 36" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <path d="M18 6c-6.075 0-11 4.925-11 11s4.925 11 11 11 11-4.925 11-11S24.075 6 18 6zm0 19.25c-4.558 0-8.25-3.692-8.25-8.25S13.442 8.75 18 8.75 26.25 12.442 26.25 17 22.558 25.25 18 25.25zm3.438-8.25H18V12.125a1.375 1.375 0 1 0-2.75 0V18.375c0 .758.617 1.375 1.375 1.375h4.813a1.375 1.375 0 1 0 0-2.75z"/>
+      <path d="M14.5 3h7v2h-7zM16.25 0h3.5v1.5h-3.5z"/>
     </svg>
   `
 }
 
 const StatsIcon = {
   template: `
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M3 3V21H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      <path d="M9 9L12 6L16 10L21 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <svg width="20" height="20" viewBox="0 0 36 36" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <path d="M30 30H6V6h2v22h22v2z"/>
+      <path d="M8 26h4V16H8v10zm6 0h4V12h-4v14zm6 0h4V8h-4v18zm6 0h4V20h-4v6z"/>
     </svg>
   `
 }
 
 const NotepadIcon = {
   template: `
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M14 2H6C4.89543 2 4 2.89543 4 4V20C4 21.1046 4.89543 22 6 22H18C19.1046 22 20 21.1046 20 20V8L14 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      <path d="M14 2V8H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      <path d="M16 13H8M16 17H8M10 9H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <svg width="20" height="20" viewBox="0 0 36 36" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <path d="M29 8.5L20.5 0H8c-1.1 0-2 .9-2 2v32c0 1.1.9 2 2 2h20c1.1 0 2-.9 2-2V8.5zM27 33H9V3h10v7h8v23z"/>
+      <path d="M11 13h14v2H11zM11 17h14v2H11zM11 21h14v2H11zM11 25h10v2H11z"/>
     </svg>
   `
 }
 
 const SoundsIcon = {
   template: `
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      <path d="M15.54 8.46C16.4731 9.39309 17.0018 10.6691 17.0018 11.995C17.0018 13.3209 16.4731 14.5969 15.54 15.53" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      <path d="M19.07 4.93C20.9447 6.80528 21.9979 9.34836 21.9979 12C21.9979 14.6516 20.9447 17.1947 19.07 19.07" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <svg width="20" height="20" viewBox="0 0 36 36" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <path d="M10.3 12.8L15 8.1c.4-.4 1-.1 1 .4v18.9c0 .6-.6.8-1 .4l-4.7-4.7H5c-.6 0-1-.4-1-1v-8.6c0-.6.4-1 1-1h5.3z"/>
+      <path d="M19.5 12c1.4 1.4 1.4 3.6 0 5s-3.6 1.4-5 0"/>
+      <path d="M23.1 8.4c2.8 2.8 2.8 7.4 0 10.2s-7.4 2.8-10.2 0"/>
+      <path d="M26.7 4.8c4.2 4.2 4.2 11 0 15.2s-11 4.2-15.2 0"/>
     </svg>
   `
 }
 
 const QuotesIcon = {
   template: `
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M3 21C3 17.9 5.9 15 9 15C6.9 15 6 13.1 6 11C6 7.9 8.9 5 12 5S18 7.9 18 11C18 13.1 17.1 15 15 15C18.1 15 21 17.9 21 21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <svg width="20" height="20" viewBox="0 0 36 36" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <path d="M7.2 15.5c0-4.3 3.1-7.6 7-8.5L15 5.2c-5.4 1.2-9.5 6-9.5 11.8v11.5c0 1.7 1.3 3 3 3h6c1.7 0 3-1.3 3-3V21c0-1.7-1.3-3-3-3H8.5c-.7 0-1.3-.6-1.3-1.3v-1.2z"/>
+      <path d="M22.2 15.5c0-4.3 3.1-7.6 7-8.5L30 5.2c-5.4 1.2-9.5 6-9.5 11.8v11.5c0 1.7 1.3 3 3 3h6c1.7 0 3-1.3 3-3V21c0-1.7-1.3-3-3-3h-6c-.7 0-1.3-.6-1.3-1.3v-1.2z"/>
     </svg>
   `
 }
 
 const ThemeIcon = {
   template: `
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M12 1V3M12 21V23M4.22 4.22L5.64 5.64M18.36 18.36L19.78 19.78M1 12H3M21 12H23M4.22 19.78L5.64 18.36M18.36 5.64L19.78 4.22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      <circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2"/>
+    <svg width="20" height="20" viewBox="0 0 36 36" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <path d="M18 2.5c-.4 0-.8.1-1.2.3L7.6 7.6c-.8.4-1.3 1.3-1.3 2.2v16.4c0 .9.5 1.8 1.3 2.2l9.2 4.8c.8.4 1.7.4 2.4 0l9.2-4.8c.8-.4 1.3-1.3 1.3-2.2V9.8c0-.9-.5-1.8-1.3-2.2L19.2 2.8c-.4-.2-.8-.3-1.2-.3zm0 3.2l7.8 4.1v14.4L18 28.3V5.7z"/>
     </svg>
   `
 }
 
 const MusicIcon = {
   template: `
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M9 18V5L21 3V16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      <circle cx="6" cy="18" r="3" stroke="currentColor" stroke-width="2"/>
-      <circle cx="18" cy="16" r="3" stroke="currentColor" stroke-width="2"/>
+    <svg width="20" height="20" viewBox="0 0 36 36" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <path d="M33 6.5c0-.8-.7-1.5-1.5-1.5-.3 0-.5.1-.8.2L13 9.8c-.8.3-1.3 1-1.3 1.8v13.9c-1-.6-2.2-1-3.7-1-3.3 0-6 1.8-6 4s2.7 4 6 4 6-1.8 6-4V16.2l16.5-5.5v8.8c-1-.6-2.2-1-3.7-1-3.3 0-6 1.8-6 4s2.7 4 6 4 6-1.8 6-4V6.5z"/>
     </svg>
   `
 }
