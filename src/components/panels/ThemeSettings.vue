@@ -100,20 +100,8 @@ function updateOverlay() {
 }
 
 function getPreviewImage(theme) {
-  // Use high-quality placeholder images that match the theme style
-  const placeholderImages = {
-    'toto-forest': 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=400&auto=format&fit=crop&ixlib=rb-4.0.3',
-    'mountain-lake': 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=400&auto=format&fit=crop&ixlib=rb-4.0.3',
-    'cyberpunk-city': 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?q=80&w=400&auto=format&fit=crop&ixlib=rb-4.0.3',
-    'ocean-waves': 'https://images.unsplash.com/photo-1439066615861-d1af74d74000?q=80&w=400&auto=format&fit=crop&ixlib=rb-4.0.3'
-  }
-  
-  const key = Object.keys(placeholderImages).find(k => 
-    theme.name.toLowerCase().replace(/\s+/g, '-').includes(k.split('-')[0]) ||
-    k.includes(theme.name.toLowerCase().replace(/\s+/g, '-'))
-  )
-  
-  return key ? placeholderImages[key] : theme.value
+  // Use authentic Flocus preview images
+  return theme.preview || theme.value
 }
 
 function getCanvasPreviewGradient(colors) {
