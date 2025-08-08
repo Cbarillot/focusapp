@@ -198,13 +198,14 @@ const modes = [
 }
 
 .time {
-  margin-bottom: 40px;
-  color: var(--color-text-primary);
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 1);
-  font-family: 'Be Vietnam Pro', sans-serif;
-  font-size: clamp(4rem, 12vw, 119px);
-  font-weight: 300;
-  line-height: 1;
+  margin-bottom: 50px;
+  color: rgba(255, 255, 255, 0.95);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2);
+  font-family: 'Be Vietnam Pro', system-ui, -apple-system, sans-serif;
+  font-size: clamp(5rem, 15vw, 140px);
+  font-weight: 200;
+  line-height: 0.9;
+  letter-spacing: -0.02em;
 }
 
 .timer-controls {
