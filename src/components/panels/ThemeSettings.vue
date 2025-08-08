@@ -250,11 +250,27 @@ function getThemesByCategory(category) {
 </script>
 
 <style scoped>
+.theme-categories {
+  margin-bottom: 32px;
+}
+
+.category-section {
+  margin-bottom: 40px;
+}
+
+.category-title {
+  margin: 0 0 20px 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 8px;
+}
+
 .themes-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
   gap: 16px;
-  margin-bottom: 32px;
 }
 
 .theme-card {
