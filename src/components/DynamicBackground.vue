@@ -1,19 +1,23 @@
 <template>
-  <div class="dynamic-background">
-    <!-- Background Layer -->
-    <div 
+  <div id="bg-wrapper" class="dynamic-background">
+    <!-- Background Layer for gradients and colors -->
+    <div
+      v-if="store.backgroundType === 'gradient' || store.backgroundType === 'color'"
       class="background-layer"
       :style="backgroundStyle"
     ></div>
-    
-    <!-- Overlay Layer -->
-    <div 
-      class="overlay-layer"
-      :style="overlayStyle"
-    ></div>
-    
-    <!-- Video Background (if video type) -->
-    <video 
+
+    <!-- Image Background -->
+    <img
+      v-if="store.backgroundType === 'image' && store.backgroundValue"
+      class="background-image"
+      :src="store.backgroundValue"
+      alt="Background"
+    />
+
+    <!-- Video Background -->
+    <video
+      id="bg-video"
       v-if="store.backgroundType === 'video' && store.backgroundValue"
       class="background-video"
       :src="store.backgroundValue"
@@ -22,12 +26,26 @@
       muted
       playsinline
     ></video>
+
+    <!-- Canvas Background for animated effects -->
+    <AnimatedCanvas
+      v-if="store.backgroundType === 'canvas'"
+      :animation-type="store.backgroundValue"
+      :colors="getCurrentThemeColors()"
+    />
+
+    <!-- Overlay Layer -->
+    <div
+      class="overlay-layer"
+      :style="overlayStyle"
+    ></div>
   </div>
 </template>
 
 <script setup>
 import { computed } from 'vue'
 import { useAppStore } from '../stores/appStore'
+import AnimatedCanvas from './AnimatedCanvas.vue'
 
 const store = useAppStore()
 
@@ -41,23 +59,17 @@ const backgroundStyle = computed(() => {
       return {
         backgroundColor: store.backgroundValue
       }
-    case 'image':
-      return {
-        backgroundImage: `url(${store.backgroundValue})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat'
-      }
-    case 'video':
-      return {
-        background: 'linear-gradient(135deg, #8B5CF6 0%, #EC4899 50%, #F59E0B 100%)'
-      }
     default:
       return {
-        background: 'linear-gradient(135deg, #8B5CF6 0%, #EC4899 50%, #F59E0B 100%)'
+        background: 'transparent'
       }
   }
 })
+
+function getCurrentThemeColors() {
+  const currentTheme = store.themes[store.currentTheme]
+  return currentTheme?.colors || ['#8B5CF6', '#EC4899', '#F59E0B', '#10B981']
+}
 
 const overlayStyle = computed(() => ({
   backgroundColor: `rgba(0, 0, 0, ${store.overlayOpacity})`
