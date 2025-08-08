@@ -303,11 +303,16 @@ function getThemesByCategory(category) {
 
 .theme-image,
 .canvas-preview,
-.gradient-preview {
+.gradient-preview,
+.color-preview {
   width: 100%;
   height: 100%;
   object-fit: cover;
   transition: transform 0.2s ease;
+}
+
+.color-preview {
+  border-radius: 4px;
 }
 
 .theme-card:hover .theme-image,
