@@ -211,6 +211,42 @@ function handleImageError(event) {
   event.target.style.display = 'none'
   event.target.parentElement.style.background = `linear-gradient(45deg, ${colors.join(', ')})`
 }
+
+function getThemesByCategory(category) {
+  const gradientThemes = [
+    'aura-twilight', 'peach-aura-heart', 'light-pink-heart', 'flare',
+    'minimalist-black', 'minimalist-white', 'heat-map', 'dark-purple-heart',
+    'light-purple-heart', 'grainy-gradient', 'lava-lamp', 'aurora'
+  ]
+
+  const ambientThemes = [
+    'countryside-morning', 'toto-forest', 'lofi-clouds', 'dusk-peak',
+    'tuscan-village', 'forest-retreat', 'cotton-candy-sky', 'countryside-night',
+    'underwater-reef'
+  ]
+
+  const animatedThemes = [
+    'snowy-winter-cabin', 'rainy-lofi-cafe', 'flickering-fireplace'
+  ]
+
+  const themes = {}
+
+  if (category === 'gradients') {
+    gradientThemes.forEach(key => {
+      if (store.themes[key]) themes[key] = store.themes[key]
+    })
+  } else if (category === 'ambient') {
+    ambientThemes.forEach(key => {
+      if (store.themes[key]) themes[key] = store.themes[key]
+    })
+  } else if (category === 'animated') {
+    animatedThemes.forEach(key => {
+      if (store.themes[key]) themes[key] = store.themes[key]
+    })
+  }
+
+  return themes
+}
 </script>
 
 <style scoped>
