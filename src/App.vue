@@ -135,19 +135,19 @@
               </button>
             </div>
           </div>
-          
-          <!-- Settings Button -->
-          <button 
-            class="ambiance-settings-btn"
-            @click="openAmbianceSettings"
-            title="Paramètres"
-          >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/>
-              <path d="M19.4 15C19.2669 15.3016 19.2272 15.6362 19.286 15.9606C19.3448 16.285 19.4995 16.5843 19.73 16.82L19.79 16.88C19.976 17.0657 20.1235 17.2863 20.2241 17.5291C20.3248 17.7719 20.3766 18.0322 20.3766 18.295C20.3766 18.5578 20.3248 18.8181 20.2241 19.0609C20.1235 19.3037 19.976 19.5243 19.79 19.71C19.6043 19.896 19.3837 20.0435 19.1409 20.1441C18.8981 20.2448 18.6378 20.2966 18.375 20.2966C18.1122 20.2966 17.8519 20.2448 17.6091 20.1441C17.3663 20.0435 17.1457 19.896 16.96 19.71L16.9 19.65C16.6643 19.4195 16.365 19.2648 16.0406 19.206C15.7162 19.1472 15.3816 19.1869 15.08 19.32C14.7842 19.4468 14.532 19.6572 14.3543 19.9255C14.1766 20.1938 14.0813 20.5082 14.08 20.83V21C14.08 21.5304 13.8693 22.0391 13.4942 22.4142C13.1191 22.7893 12.6104 23 12.08 23C11.5496 23 11.0409 22.7893 10.6658 22.4142C10.2907 22.0391 10.08 21.5304 10.08 21V20.91C10.0723 20.579 9.96512 20.2573 9.77251 19.9887C9.5799 19.7201 9.31074 19.5176 9 19.41C8.69838 19.2769 8.36381 19.2372 8.03941 19.296C7.71502 19.3548 7.41568 19.5095 7.18 19.74L7.12 19.8C6.93425 19.986 6.71368 20.1335 6.47088 20.2341C6.22808 20.3348 5.96783 20.3866 5.705 20.3866C5.44217 20.3866 5.18192 20.3348 4.93912 20.2341C4.69632 20.1335 4.47575 19.986 4.29 19.8C4.10405 19.6143 3.95653 19.3937 3.85588 19.1509C3.75523 18.9081 3.70343 18.6478 3.70343 18.385C3.70343 18.1222 3.75523 17.8619 3.85588 17.6191C3.95653 17.3763 4.10405 17.1557 4.29 16.97L4.35 16.91C4.58054 16.6743 4.73519 16.375 4.794 16.0506C4.85282 15.7262 4.81312 15.3916 4.68 15.09C4.55324 14.7942 4.34276 14.542 4.07447 14.3543C3.80618 14.1766 3.49179 14.0813 3.17 14.08H3C2.46957 14.08 1.96086 13.8693 1.58579 13.4942C1.21071 13.1191 1 12.6104 1 12.08C1 11.5496 1.21071 11.0409 1.58579 10.6658C1.96086 10.2907 2.46957 10.08 3 10.08H3.09C3.42099 10.0723 3.74269 9.96512 4.01133 9.77251C4.27998 9.5799 4.48249 9.31074 4.59 9C4.72312 8.69838 4.76282 8.36381 4.704 8.03941C4.64519 7.71502 4.49054 7.41568 4.26 7.18L4.2 7.12C4.01405 6.93425 3.86653 6.71368 3.76588 6.47088C3.66523 6.22808 3.61343 5.96783 3.61343 5.705C3.61343 5.44217 3.66523 5.18192 3.76588 4.93912C3.86653 4.69632 4.01405 4.47575 4.2 4.29C4.38575 4.10405 4.60632 3.95653 4.84912 3.85588C5.09192 3.75523 5.35217 3.70343 5.615 3.70343C5.87783 3.70343 6.13808 3.75523 6.38088 3.85588C6.62368 3.95653 6.84425 4.10405 7.03 4.29L7.09 4.35C7.32568 4.58054 7.62502 4.73519 7.94941 4.794C8.27381 4.85282 8.60838 4.81312 8.91 4.68H9C9.29577 4.55324 9.54802 4.34276 9.73563 4.07447C9.92325 3.80618 10.0187 3.49179 10.02 3.17V3C10.02 2.46957 10.2307 1.96086 10.6058 1.58579C10.9809 1.21071 11.4896 1 12.02 1C12.5504 1 13.0591 1.21071 13.4342 1.58579C13.8093 1.96086 14.02 2.46957 14.02 3V3.09C14.0213 3.41179 14.1168 3.72618 14.3044 3.99447C14.492 4.26276 14.7443 4.47324 15.04 4.6C15.3416 4.73312 15.6762 4.77282 16.0006 4.714C16.325 4.65519 16.6243 4.50054 16.86 4.27L16.92 4.21C17.1057 4.02405 17.3263 3.87653 17.5691 3.77588C17.8119 3.67523 18.0722 3.62343 18.335 3.62343C18.5978 3.62343 18.8581 3.67523 19.1009 3.77588C19.3437 3.87653 19.5643 4.02405 19.75 4.21C19.936 4.39575 20.0835 4.61632 20.1841 4.85912C20.2848 5.10192 20.3366 5.36217 20.3366 5.625C20.3366 5.88783 20.2848 6.14808 20.1841 6.39088C20.0835 6.63368 19.936 6.85425 19.75 7.04L19.69 7.1C19.4595 7.33568 19.3048 7.63502 19.246 7.95941C19.1872 8.28381 19.2269 8.61838 19.36 8.92V9C19.4868 9.29577 19.6972 9.54802 19.9655 9.73563C20.2338 9.92325 20.5482 10.0187 20.87 10.02H21C21.5304 10.02 22.0391 10.2307 22.4142 10.6058C22.7893 10.9809 23 11.4896 23 12.02C23 12.5504 22.7893 13.0591 22.4142 13.4342C22.0391 13.8093 21.5304 14.02 21 14.02H20.91C20.5882 14.0213 20.2738 14.1168 20.0055 14.3044C19.7372 14.492 19.5268 14.7443 19.4 15.04V15Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </button>
         </div>
+
+        <!-- Settings Button (Top Right) -->
+        <button 
+          class="ambiance-settings-btn"
+          @click="openAmbianceSettings"
+          title="Paramètres"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/>
+            <path d="M19.4 15C19.2669 15.3016 19.2272 15.6362 19.286 15.9606C19.3448 16.285 19.4995 16.5843 19.73 16.82L19.79 16.88C19.976 17.0657 20.1235 17.2863 20.2241 17.5291C20.3248 17.7719 20.3766 18.0322 20.3766 18.295C20.3766 18.5578 20.3248 18.8181 20.2241 19.0609C20.1235 19.3037 19.976 19.5243 19.79 19.71C19.6043 19.896 19.3837 20.0435 19.1409 20.1441C18.8981 20.2448 18.6378 20.2966 18.375 20.2966C18.1122 20.2966 17.8519 20.2448 17.6091 20.1441C17.3663 20.0435 17.1457 19.896 16.96 19.71L16.9 19.65C16.6643 19.4195 16.365 19.2648 16.0406 19.206C15.7162 19.1472 15.3816 19.1869 15.08 19.32C14.7842 19.4468 14.532 19.6572 14.3543 19.9255C14.1766 20.1938 14.0813 20.5082 14.08 20.83V21C14.08 21.5304 13.8693 22.0391 13.4942 22.4142C13.1191 22.7893 12.6104 23 12.08 23C11.5496 23 11.0409 22.7893 10.6658 22.4142C10.2907 22.0391 10.08 21.5304 10.08 21V20.91C10.0723 20.579 9.96512 20.2573 9.77251 19.9887C9.5799 19.7201 9.31074 19.5176 9 19.41C8.69838 19.2769 8.36381 19.2372 8.03941 19.296C7.71502 19.3548 7.41568 19.5095 7.18 19.74L7.12 19.8C6.93425 19.986 6.71368 20.1335 6.47088 20.2341C6.22808 20.3348 5.96783 20.3866 5.705 20.3866C5.44217 20.3866 5.18192 20.3348 4.93912 20.2341C4.69632 20.1335 4.47575 19.986 4.29 19.8C4.10405 19.6143 3.95653 19.3937 3.85588 19.1509C3.75523 18.9081 3.70343 18.6478 3.70343 18.385C3.70343 18.1222 3.75523 17.8619 3.85588 17.6191C3.95653 17.3763 4.10405 17.1557 4.29 16.97L4.35 16.91C4.58054 16.6743 4.73519 16.375 4.794 16.0506C4.85282 15.7262 4.81312 15.3916 4.68 15.09C4.55324 14.7942 4.34276 14.542 4.07447 14.3543C3.80618 14.1766 3.49179 14.0813 3.17 14.08H3C2.46957 14.08 1.96086 13.8693 1.58579 13.4942C1.21071 13.1191 1 12.6104 1 12.08C1 11.5496 1.21071 11.0409 1.58579 10.6658C1.96086 10.2907 2.46957 10.08 3 10.08H3.09C3.42099 10.0723 3.74269 9.96512 4.01133 9.77251C4.27998 9.5799 4.48249 9.31074 4.59 9C4.72312 8.69838 4.76282 8.36381 4.704 8.03941C4.64519 7.71502 4.49054 7.41568 4.26 7.18L4.2 7.12C4.01405 6.93425 3.86653 6.71368 3.76588 6.47088C3.66523 6.22808 3.61343 5.96783 3.61343 5.705C3.61343 5.44217 3.66523 5.18192 3.76588 4.93912C3.86653 4.69632 4.01405 4.47575 4.2 4.29C4.38575 4.10405 4.60632 3.95653 4.84912 3.85588C5.09192 3.75523 5.35217 3.70343 5.615 3.70343C5.87783 3.70343 6.13808 3.75523 6.38088 3.85588C6.62368 3.95653 6.84425 4.10405 7.03 4.29L7.09 4.35C7.32568 4.58054 7.62502 4.73519 7.94941 4.794C8.27381 4.85282 8.60838 4.81312 8.91 4.68H9C9.29577 4.55324 9.54802 4.34276 9.73563 4.07447C9.92325 3.80618 10.0187 3.49179 10.02 3.17V3C10.02 2.46957 10.2307 1.96086 10.6058 1.58579C10.9809 1.21071 11.4896 1 12.02 1C12.5504 1 13.0591 1.21071 13.4342 1.58579C13.8093 1.96086 14.02 2.46957 14.02 3V3.09C14.0213 3.41179 14.1168 3.72618 14.3044 3.99447C14.492 4.26276 14.7443 4.47324 15.04 4.6C15.3416 4.73312 15.6762 4.77282 16.0006 4.714C16.325 4.65519 16.6243 4.50054 16.86 4.27L16.92 4.21C17.1057 4.02405 17.3263 3.87653 17.5691 3.77588C17.8119 3.67523 18.0722 3.62343 18.335 3.62343C18.5978 3.62343 18.8581 3.67523 19.1009 3.77588C19.3437 3.87653 19.5643 4.02405 19.75 4.21C19.936 4.39575 20.0835 4.61632 20.1841 4.85912C20.2848 5.10192 20.3366 5.36217 20.3366 5.625C20.3366 5.88783 20.2848 6.14808 20.1841 6.39088C20.0835 6.63368 19.936 6.85425 19.75 7.04L19.69 7.1C19.4595 7.33568 19.3048 7.63502 19.246 7.95941C19.1872 8.28381 19.2269 8.61838 19.36 8.92V9C19.4868 9.29577 19.6972 9.54802 19.9655 9.73563C20.2338 9.92325 20.5482 10.0187 20.87 10.02H21C21.5304 10.02 22.0391 10.2307 22.4142 10.6058C22.7893 10.9809 23 11.4896 23 12.02C23 12.5504 22.7893 13.0591 22.4142 13.4342C22.0391 13.8093 21.5304 14.02 21 14.02H20.91C20.5882 14.0213 20.2738 14.1168 20.0055 14.3044C19.7372 14.492 19.5268 14.7443 19.4 15.04V15Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
 
         <!-- Ambiance Left Sidebar -->
         <div class="ambiance-left-sidebar" :class="{ expanded: ambianceLeftExpanded }">
@@ -253,23 +253,71 @@
 
           <!-- Expanded Content -->
           <div v-if="ambianceLeftExpanded" class="ambiance-expanded-content">
-            <!-- Todo List -->
+            <!-- Todo List Interface -->
             <div class="expanded-todo-section">
-              <h4>Tâches rapides</h4>
-              <div class="todo-quick-list">
+              <h4>Gestion des Tâches</h4>
+              
+              <!-- Add Task Form -->
+              <div class="add-task-form">
+                <input 
+                  v-model="newTaskText"
+                  @keyup.enter="addNewTask"
+                  type="text" 
+                  placeholder="Nouvelle tâche..." 
+                  class="task-input"
+                />
+                <div class="task-options">
+                  <div class="eisenhower-matrix">
+                    <label class="checkbox-label">
+                      <input v-model="newTaskUrgent" type="checkbox" />
+                      <span>Urgent</span>
+                    </label>
+                    <label class="checkbox-label">
+                      <input v-model="newTaskImportant" type="checkbox" />
+                      <span>Important</span>
+                    </label>
+                  </div>
+                  <select v-model="newTaskEstimatedTime" class="time-select">
+                    <option value="15">15min</option>
+                    <option value="25">25min</option>
+                    <option value="30">30min</option>
+                    <option value="45">45min</option>
+                    <option value="60">1h</option>
+                  </select>
+                </div>
+                <button @click="addNewTask" class="add-task-btn">Ajouter</button>
+              </div>
+
+              <!-- Task List -->
+              <div class="todo-list">
                 <div 
-                  v-for="task in incompleteTasks.slice(0, 5)"
+                  v-for="task in incompleteTasks"
                   :key="task.id"
-                  class="quick-task-item"
-                  :class="`priority-${task.priority}`"
+                  class="task-item"
+                  :class="getTaskPriorityClass(task)"
                 >
-                  <button @click="store.toggleTodo(task.id)" class="quick-task-check">
-                    <svg v-if="task.completed" width="10" height="10" viewBox="0 0 24 24" fill="none">
+                  <button @click="store.toggleTodo(task.id)" class="task-check">
+                    <svg v-if="task.completed" width="12" height="12" viewBox="0 0 24 24" fill="none">
                       <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                   </button>
-                  <span class="quick-task-text">{{ task.text }}</span>
-                  <button @click="store.deleteTodo(task.id)" class="quick-task-delete">×</button>
+                  
+                  <div class="task-info">
+                    <span class="task-text">{{ task.text }}</span>
+                    <div class="task-meta">
+                      <span class="task-time">{{ task.estimatedTime }}min</span>
+                      <div class="task-flags">
+                        <span v-if="task.urgent" class="flag urgent">U</span>
+                        <span v-if="task.important" class="flag important">I</span>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <button @click="store.deleteTodo(task.id)" class="task-delete">×</button>
+                </div>
+                
+                <div v-if="incompleteTasks.length === 0" class="no-tasks">
+                  Aucune tâche en cours
                 </div>
               </div>
             </div>
@@ -423,6 +471,12 @@ let previewTimeouts = {}
 
 const currentTime = computed(() => currentTimeString.value)
 
+// New task form data
+const newTaskText = ref('')
+const newTaskUrgent = ref(false)
+const newTaskImportant = ref(false)
+const newTaskEstimatedTime = ref(25)
+
 // Computed properties for tasks
 const incompleteTasks = computed(() => {
   return store.todos.filter(task => !task.completed)
@@ -449,6 +503,31 @@ onUnmounted(() => {
 function updateCurrentTime() {
   const now = new Date()
   currentTimeString.value = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+}
+
+// Todo management functions
+function addNewTask() {
+  if (newTaskText.value.trim()) {
+    store.addTodo({
+      text: newTaskText.value.trim(),
+      urgent: newTaskUrgent.value,
+      important: newTaskImportant.value,
+      estimatedTime: newTaskEstimatedTime.value
+    })
+    
+    // Reset form
+    newTaskText.value = ''
+    newTaskUrgent.value = false
+    newTaskImportant.value = false
+    newTaskEstimatedTime.value = 25
+  }
+}
+
+function getTaskPriorityClass(task) {
+  if (task.urgent && task.important) return 'priority-urgent-important'
+  if (!task.urgent && task.important) return 'priority-important'
+  if (task.urgent && !task.important) return 'priority-urgent'
+  return 'priority-low'
 }
 
 // Ambiance mode functions
@@ -497,10 +576,17 @@ function openAmbianceSettings() {
 }
 
 function openAmbianceMusic() {
-  store.setActiveTab('music')
-  if (!store.sidebarOpen) {
-    store.toggleSidebar()
+  // For now, cycle through Deezer playlists or open music options
+  const currentPlaylist = store.currentTrack
+  let nextPlaylistIndex = 0
+  
+  if (currentPlaylist) {
+    const currentIndex = store.deezerPlaylists.findIndex(p => p.name === currentPlaylist)
+    nextPlaylistIndex = (currentIndex + 1) % store.deezerPlaylists.length
   }
+  
+  const nextPlaylist = store.deezerPlaylists[nextPlaylistIndex]
+  store.playDeezerPlaylist(nextPlaylist.id)
 }
 
 function openAmbianceSound() {
@@ -768,7 +854,7 @@ const modes = [
 .ambiance-pomodoro-module {
   position: fixed;
   top: 20px;
-  right: 20px;
+  right: 80px;
   z-index: 100;
   display: flex;
   flex-direction: column;
@@ -867,11 +953,11 @@ const modes = [
 }
 
 .ambiance-settings-btn {
-  position: absolute;
-  top: 16px;
-  right: -50px;
-  width: 36px;
-  height: 36px;
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 48px;
+  height: 48px;
   border-radius: var(--border-radius-full);
   background: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(20px);
@@ -1050,30 +1136,109 @@ const modes = [
   border-radius: var(--border-radius-lg);
   padding: 16px;
   margin-top: 12px;
-  max-height: 300px;
+  max-height: 400px;
   overflow-y: auto;
 }
 
 .expanded-todo-section h4 {
-  margin: 0 0 12px 0;
+  margin: 0 0 16px 0;
   color: rgba(255, 255, 255, 0.9);
   font-size: 14px;
   font-weight: 600;
 }
 
-.quick-task-item {
+/* Add Task Form */
+.add-task-form {
+  margin-bottom: 20px;
+}
+
+.task-input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: var(--border-radius-sm);
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 12px;
+  margin-bottom: 8px;
+}
+
+.task-input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.task-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  gap: 12px;
+}
+
+.eisenhower-matrix {
+  display: flex;
+  gap: 8px;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+}
+
+.checkbox-label input[type="checkbox"] {
+  width: 12px;
+  height: 12px;
+}
+
+.time-select {
+  padding: 4px 8px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: var(--border-radius-sm);
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 11px;
+}
+
+.add-task-btn {
+  width: 100%;
+  padding: 6px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: var(--border-radius-sm);
+  background: rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 11px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.add-task-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Task List */
+.todo-list {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.task-item {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 6px 0;
+  padding: 8px 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.quick-task-item:last-child {
+.task-item:last-child {
   border-bottom: none;
 }
 
-.quick-task-check {
+.task-check {
   width: 16px;
   height: 16px;
   border-radius: 3px;
@@ -1087,14 +1252,58 @@ const modes = [
   flex-shrink: 0;
 }
 
-.quick-task-text {
+.task-info {
   flex: 1;
+  min-width: 0;
+}
+
+.task-text {
+  display: block;
   font-size: 12px;
   color: rgba(255, 255, 255, 0.9);
   line-height: 1.3;
+  word-break: break-word;
 }
 
-.quick-task-delete {
+.task-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2px;
+}
+
+.task-time {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.task-flags {
+  display: flex;
+  gap: 2px;
+}
+
+.flag {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: 2px;
+  font-size: 8px;
+  font-weight: bold;
+  text-align: center;
+  line-height: 14px;
+}
+
+.flag.urgent {
+  background: #ef4444;
+  color: white;
+}
+
+.flag.important {
+  background: #f59e0b;
+  color: white;
+}
+
+.task-delete {
   width: 20px;
   height: 20px;
   border-radius: 3px;
@@ -1106,13 +1315,34 @@ const modes = [
   transition: all 0.2s ease;
 }
 
-.quick-task-item:hover .quick-task-delete {
+.task-item:hover .task-delete {
   opacity: 1;
 }
 
-.quick-task-delete:hover {
+.task-delete:hover {
   background: rgba(239, 68, 68, 0.2);
   color: rgba(239, 68, 68, 0.8);
+}
+
+/* Priority-based styling */
+.priority-urgent-important {
+  border-left: 3px solid #ef4444;
+  background: rgba(239, 68, 68, 0.05);
+}
+
+.priority-important {
+  border-left: 3px solid #f59e0b;
+  background: rgba(245, 158, 11, 0.05);
+}
+
+.priority-urgent {
+  border-left: 3px solid #ec4899;
+  background: rgba(236, 72, 153, 0.05);
+}
+
+.priority-low {
+  border-left: 3px solid #10b981;
+  background: rgba(16, 185, 129, 0.05);
 }
 
 /* Theme Mode Switcher (Bottom Center) */

@@ -327,6 +327,27 @@ const themes = ref({
   const currentThemeColors = computed(() => {
     return themes.value[currentTheme.value]?.colors || themes.value.home.colors
   })
+
+  // Todo computed properties
+  const incompleteTasks = computed(() => {
+    return todos.value.filter(todo => !todo.completed)
+  })
+
+  const urgentImportantTasks = computed(() => {
+    return todos.value.filter(todo => !todo.completed && todo.urgent && todo.important)
+  })
+
+  const importantNotUrgentTasks = computed(() => {
+    return todos.value.filter(todo => !todo.completed && todo.important && !todo.urgent)
+  })
+
+  const urgentNotImportantTasks = computed(() => {
+    return todos.value.filter(todo => !todo.completed && todo.urgent && !todo.important)
+  })
+
+  const neitherUrgentNorImportantTasks = computed(() => {
+    return todos.value.filter(todo => !todo.completed && !todo.urgent && !todo.important)
+  })
   
   // Timer functions
   function tick() {
@@ -463,7 +484,11 @@ const themes = ref({
   function addTodo(todo) {
     todos.value.push({
       id: Date.now(),
-      ...todo,
+      text: todo.text || '',
+      priority: todo.priority || 'low', // low, medium, high
+      urgent: todo.urgent || false,
+      important: todo.important || false,
+      estimatedTime: todo.estimatedTime || 25, // minutes
       completed: false,
       created: new Date(),
       subtasks: []
@@ -524,6 +549,62 @@ const themes = ref({
     return ''
   }
 
+  // Predefined Deezer playlists
+  const deezerPlaylists = ref([
+    {
+      name: 'Warm Melancholia',
+      url: 'https://link.deezer.com/s/30I4s94Syhp5iuS3T0NW9',
+      id: 'warm-melancholia'
+    },
+    {
+      name: 'Classical Music', 
+      url: 'https://link.deezer.com/s/30I4sTHKDNbVCXriMGGJY',
+      id: 'classical-music'
+    },
+    {
+      name: 'Dance Music',
+      url: 'https://link.deezer.com/s/30I4tfQt1D3eTJ7FZKjpn', 
+      id: 'dance-music'
+    },
+    {
+      name: 'Coup de Coeur',
+      url: 'https://link.deezer.com/s/30HLLIhq7W7gERuNFubDG',
+      id: 'coup-de-coeur'
+    }
+  ])
+
+  function playDeezerPlaylist(playlistId) {
+    const playlist = deezerPlaylists.value.find(p => p.id === playlistId)
+    if (playlist) {
+      setMusicUrl(playlist.url)
+      currentTrack.value = playlist.name
+      musicPlaying.value = true
+      // Open the Deezer link in a new tab for background playback
+      if (typeof window !== 'undefined') {
+        window.open(playlist.url, '_blank')
+      }
+    }
+  }
+
+  function playYouTubePlaylist(url, title) {
+    setMusicUrl(url)
+    currentTrack.value = title
+    musicPlaying.value = true
+    // Open YouTube in a new tab for background playback
+    if (typeof window !== 'undefined') {
+      window.open(url, '_blank')
+    }
+  }
+
+  function stopMusic() {
+    musicPlaying.value = false
+    currentTrack.value = null
+  }
+
+  function toggleMusicPlayback() {
+    musicPlaying.value = !musicPlaying.value
+  }
+
   // Fullscreen management
   function toggleFullscreen() {
     if (typeof document !== 'undefined') {
@@ -568,6 +649,7 @@ const themes = ref({
     musicPlatform,
     musicError,
     soundscapes,
+    deezerPlaylists,
     todos,
     todoFilter,
     todoSort,
@@ -576,6 +658,11 @@ const themes = ref({
     displayTime,
     currentModeTime,
     currentThemeColors,
+    incompleteTasks,
+    urgentImportantTasks,
+    importantNotUrgentTasks,
+    urgentNotImportantTasks,
+    neitherUrgentNorImportantTasks,
     
     // Actions
     toggleTimer,
@@ -596,6 +683,10 @@ const themes = ref({
     applyThemeColors,
     setMusicUrl,
     detectMusicPlatform,
+    playDeezerPlaylist,
+    playYouTubePlaylist,
+    stopMusic,
+    toggleMusicPlayback,
     toggleFullscreen,
     setTimerDisplayMode: (mode) => { timerDisplayMode.value = mode }
   }
