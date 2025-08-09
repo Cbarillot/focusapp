@@ -4,6 +4,8 @@
     <button 
       class="sidebar-toggle"
       @click="toggleSidebar"
+      @mouseenter="showPreview"
+      @mouseleave="hidePreviewDelayed"
       :title="isExpanded ? 'Réduire' : 'Tâches rapides'"
     >
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -12,6 +14,47 @@
       </svg>
       <span class="task-count" v-if="!isExpanded">{{ incompleteTasks.length }}</span>
     </button>
+
+    <!-- Task Preview Dropdown -->
+    <div 
+      class="task-preview"
+      v-if="showTaskPreview && !isExpanded"
+      @mouseenter="showPreview"
+      @mouseleave="hidePreviewDelayed"
+    >
+      <div class="preview-header">
+        <span>Tâches à faire</span>
+        <span class="preview-count">{{ incompleteTasks.length }}</span>
+      </div>
+      <div class="preview-list">
+        <div 
+          v-for="task in previewTasks"
+          :key="task.id"
+          class="preview-task-item"
+        >
+          <button 
+            @click="store.toggleTodo(task.id)"
+            class="preview-task-check"
+          >
+            <svg v-if="task.completed" width="8" height="8" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <span class="preview-task-text">{{ task.text }}</span>
+        </div>
+        <div v-if="incompleteTasks.length === 0" class="preview-empty">
+          Aucune tâche
+        </div>
+        <div v-if="incompleteTasks.length > 3" class="preview-more">
+          +{{ incompleteTasks.length - 3 }} autres...
+        </div>
+      </div>
+      <div class="preview-actions">
+        <button @click="toggleSidebar" class="preview-action-btn">
+          Tout voir
+        </button>
+      </div>
+    </div>
 
     <!-- Expanded Sidebar Content -->
     <div class="sidebar-content" v-if="isExpanded">
@@ -92,6 +135,8 @@ const isExpanded = ref(false)
 const showAddTask = ref(false)
 const newTaskText = ref('')
 const taskInput = ref(null)
+const showTaskPreview = ref(false)
+let previewTimeout = null
 
 // Computed properties
 const recentTasks = computed(() => {
@@ -102,12 +147,33 @@ const incompleteTasks = computed(() => {
   return store.todos.filter(task => !task.completed)
 })
 
+const previewTasks = computed(() => {
+  return incompleteTasks.value.slice(0, 3)
+})
+
 // Methods
 function toggleSidebar() {
   isExpanded.value = !isExpanded.value
+  showTaskPreview.value = false
   if (!isExpanded.value) {
     showAddTask.value = false
   }
+}
+
+function showPreview() {
+  if (previewTimeout) {
+    clearTimeout(previewTimeout)
+    previewTimeout = null
+  }
+  if (!isExpanded.value) {
+    showTaskPreview.value = true
+  }
+}
+
+function hidePreviewDelayed() {
+  previewTimeout = setTimeout(() => {
+    showTaskPreview.value = false
+  }, 300)
 }
 
 function addQuickTask() {
@@ -148,6 +214,9 @@ function handleClickOutside(event) {
   if (isExpanded.value && !event.target.closest('.todo-sidebar')) {
     isExpanded.value = false
     showAddTask.value = false
+  }
+  if (showTaskPreview.value && !event.target.closest('.todo-sidebar')) {
+    showTaskPreview.value = false
   }
 }
 
@@ -215,6 +284,121 @@ if (typeof document !== 'undefined') {
   align-items: center;
   justify-content: center;
   line-height: 1;
+}
+
+/* Task Preview Dropdown */
+.task-preview {
+  position: absolute;
+  left: 50px;
+  top: 0;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 12px;
+  padding: 8px;
+  width: 200px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  z-index: 120;
+}
+
+.preview-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 8px 6px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  margin-bottom: 6px;
+}
+
+.preview-header span {
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.preview-count {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  padding: 2px 6px;
+  font-size: 9px;
+}
+
+.preview-list {
+  max-height: 120px;
+  overflow-y: auto;
+}
+
+.preview-task-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 0;
+  font-size: 11px;
+}
+
+.preview-task-check {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.preview-task-check:hover {
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+.preview-task-text {
+  flex: 1;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.preview-empty {
+  text-align: center;
+  padding: 12px;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 11px;
+}
+
+.preview-more {
+  text-align: center;
+  padding: 4px;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 10px;
+  font-style: italic;
+}
+
+.preview-actions {
+  margin-top: 6px;
+  padding-top: 6px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  text-align: center;
+}
+
+.preview-action-btn {
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.preview-action-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 1);
 }
 
 .sidebar-content {
@@ -458,6 +642,11 @@ if (typeof document !== 'undefined') {
   .todo-sidebar.expanded {
     width: 250px;
   }
+  
+  .task-preview {
+    left: 45px;
+    width: 180px;
+  }
 }
 
 @media (max-width: 480px) {
@@ -470,6 +659,11 @@ if (typeof document !== 'undefined') {
   .todo-sidebar.expanded {
     width: calc(100vw - 80px);
     max-width: 220px;
+  }
+  
+  .task-preview {
+    left: 45px;
+    width: 160px;
   }
 }
 </style>

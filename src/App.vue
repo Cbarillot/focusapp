@@ -10,14 +10,46 @@
         <!-- Timer Mode Switcher (centered) -->
         <div class="timer-mode-switcher">
           <button 
-            v-for="mode in timerModes" 
-            :key="mode.key"
             class="mode-switcher-btn"
-            :class="{ active: store.timerDisplayMode === mode.key }"
-            @click="store.setTimerDisplayMode(mode.key)"
-            :title="mode.name"
+            :class="{ active: store.timerDisplayMode === 'home' }"
+            @click="store.setTimerDisplayMode('home')"
+            title="Home"
           >
-            <component :is="mode.icon" />
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M9 22V12H15V22" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <button 
+            class="mode-switcher-btn"
+            :class="{ active: store.timerDisplayMode === 'focus' }"
+            @click="store.setTimerDisplayMode('focus')"
+            title="Focus"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 18V5"></path>
+              <path d="M15 13a4.17 4.17 0 0 1-3-4 4.17 4.17 0 0 1-3 4"></path>
+              <path d="M17.598 6.5A3 3 0 1 0 12 5a3 3 0 1 0-5.598 1.5"></path>
+              <path d="M17.997 5.125a4 4 0 0 1 2.526 5.77"></path>
+              <path d="M18 18a4 4 0 0 0 2-7.464"></path>
+              <path d="M19.967 17.483A4 4 0 1 1 12 18a4 4 0 1 1-7.967-.517"></path>
+              <path d="M6 18a4 4 0 0 1-2-7.464"></path>
+              <path d="M6.003 5.125a4 4 0 0 0-2.526 5.77"></path>
+            </svg>
+          </button>
+          <button 
+            class="mode-switcher-btn"
+            :class="{ active: store.timerDisplayMode === 'ambiance' }"
+            @click="store.setTimerDisplayMode('ambiance')"
+            title="Ambiance"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 5a3 3 0 1 1 3 3m-3-3a3 3 0 1 0-3 3m3-3v1M9 8a3 3 0 1 0 3 3M9 8h1m5 0a3 3 0 1 1-3 3m3-3h-1m-2 3v-1"></path>
+              <circle cx="12" cy="8" r="2"></circle>
+              <path d="M12 10v12"></path>
+              <path d="M12 22c4.2 0 7-1.667 7-5-4.2 0-7 1.667-7 5Z"></path>
+              <path d="M12 22c-4.2 0-7-1.667-7-5 4.2 0 7 1.667 7 5Z"></path>
+            </svg>
           </button>
         </div>
       </header>
@@ -111,6 +143,9 @@
       <!-- Todo Sidebar - Available in all modes -->
       <TodoSidebar />
       
+      <!-- Theme Selector - Bottom Center -->
+      <ThemeSelector />
+      
       <!-- Corner Navigation - replaces footer for cleaner layout -->
       <CornerNavigation />
     </div>
@@ -138,12 +173,13 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onUnmounted, watch, nextTick } from 'vue'
+import { ref, computed, onMounted, onUnmounted, watch, nextTick, h } from 'vue'
 import { useAppStore } from './stores/appStore'
 import DynamicBackground from './components/DynamicBackground.vue'
 import SidePanel from './components/SidePanel.vue'
 import CornerNavigation from './components/CornerNavigation.vue'
 import TodoSidebar from './components/TodoSidebar.vue'
+import ThemeSelector from './components/ThemeSelector.vue'
 
 const store = useAppStore()
 
@@ -204,62 +240,9 @@ const modes = [
   { key: 'shortBreak', label: 'Short Break' },
   { key: 'longBreak', label: 'Long Break' }
 ]
-
-const timerModes = [
-  { 
-    key: 'home', 
-    name: 'Home', 
-    icon: 'HomeIcon' 
-  },
-  { 
-    key: 'focus', 
-    name: 'Focus', 
-    icon: 'FocusIcon' 
-  },
-  { 
-    key: 'ambiance', 
-    name: 'Ambiance', 
-    icon: 'AmbianceIcon' 
-  }
-]
 </script>
 
-<script>
-// Timer Mode Icons
-const HomeIcon = {
-  template: `
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      <path d="M9 22V12H15V22" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-  `
-}
 
-const FocusIcon = {
-  template: `
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="12" cy="12" r="10" stroke="white" stroke-width="2"/>
-      <path d="M12 6V12L16 14" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-  `
-}
-
-const AmbianceIcon = {
-  template: `
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M22 16.92V12C22 6.48 17.52 2 12 2S2 6.48 2 12V16.92C2 18.07 2.93 19 4.08 19H5C5.55 19 6 18.55 6 18V14C6 13.45 5.55 13 5 13H4V12C4 7.58 7.58 4 12 4S20 7.58 20 12V13H19C18.45 13 18 13.45 18 14V18C18 18.55 18.45 19 19 19H19.92C21.07 19 22 18.07 22 16.92Z" fill="white"/>
-    </svg>
-  `
-}
-
-export default {
-  components: {
-    HomeIcon,
-    FocusIcon,
-    AmbianceIcon
-  }
-}
-</script>
 
 <style scoped>
 .app {
@@ -537,7 +520,7 @@ export default {
 /* Home Mode - Digital clock display at top with reduced opacity */
 .home-clock {
   position: fixed;
-  top: 20px;
+  top: 90px; /* Moved down to avoid overlap with timer mode switcher */
   left: 50%;
   transform: translateX(-50%);
   z-index: 50;
@@ -679,7 +662,7 @@ export default {
   }
 
   .home-clock {
-    top: 15px;
+    top: 80px; /* Adjusted for mobile */
   }
 
   .clock-container {
@@ -753,7 +736,7 @@ export default {
   }
   
   .home-clock {
-    top: 12px;
+    top: 75px; /* Adjusted for very small mobile */
   }
   
   .current-time {
