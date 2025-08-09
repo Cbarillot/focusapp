@@ -372,6 +372,11 @@
           </div>
         </div>
 
+        <!-- Deezer Widget (appears when music button is clicked) -->
+        <div v-if="showDeezerWidget" class="deezer-widget-container">
+          <DeezerWidget @close="showDeezerWidget = false" />
+        </div>
+
         <!-- Fullscreen Button (Bottom Right) -->
         <div class="ambiance-fullscreen">
           <button 
@@ -452,6 +457,7 @@ import SidePanel from './components/SidePanel.vue'
 import CornerNavigation from './components/CornerNavigation.vue'
 import TodoSidebar from './components/TodoSidebar.vue'
 import ThemeSelector from './components/ThemeSelector.vue'
+import DeezerWidget from './components/DeezerWidget.vue'
 
 const store = useAppStore()
 
@@ -467,6 +473,7 @@ const ambianceLeftExpanded = ref(false)
 const showTodoPreview = ref(false)
 const showMusicPreview = ref(false)
 const showSoundPreview = ref(false)
+const showDeezerWidget = ref(false)
 let previewTimeouts = {}
 
 const currentTime = computed(() => currentTimeString.value)
@@ -576,17 +583,7 @@ function openAmbianceSettings() {
 }
 
 function openAmbianceMusic() {
-  // For now, cycle through Deezer playlists or open music options
-  const currentPlaylist = store.currentTrack
-  let nextPlaylistIndex = 0
-  
-  if (currentPlaylist) {
-    const currentIndex = store.deezerPlaylists.findIndex(p => p.name === currentPlaylist)
-    nextPlaylistIndex = (currentIndex + 1) % store.deezerPlaylists.length
-  }
-  
-  const nextPlaylist = store.deezerPlaylists[nextPlaylistIndex]
-  store.playDeezerPlaylist(nextPlaylist.id)
+  showDeezerWidget.value = !showDeezerWidget.value
 }
 
 function openAmbianceSound() {
@@ -1343,6 +1340,26 @@ const modes = [
 .priority-low {
   border-left: 3px solid #10b981;
   background: rgba(16, 185, 129, 0.05);
+}
+
+/* Deezer Widget Container */
+.deezer-widget-container {
+  position: fixed;
+  bottom: 100px;
+  right: 20px;
+  z-index: 200;
+  animation: slideInUp 0.3s ease-out;
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Theme Mode Switcher (Bottom Center) */
