@@ -381,7 +381,12 @@ const themes = ref({
       ...todo,
       completed: false,
       created: new Date(),
-      subtasks: []
+      subtasks: [],
+      // Ensure backward compatibility
+      estimatedPomodoros: todo.estimatedPomodoros || Math.ceil((todo.estimatedMinutes || 30) / 25),
+      // New fields with defaults
+      estimatedMinutes: todo.estimatedMinutes || 30,
+      type: todo.type || 'work'
     })
   }
   

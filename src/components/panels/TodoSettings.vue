@@ -1,5 +1,40 @@
 <template>
   <div class="todo-settings">
+    <!-- Microsoft To-Do Integration Section -->
+    <div class="section">
+      <h3 class="section-title">Microsoft To-Do Integration</h3>
+      
+      <div class="integration-options">
+        <div class="integration-card">
+          <div class="integration-header">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M9 11L12 14L22 4" stroke="#0078D4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M21 12V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H16" stroke="#0078D4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span>Microsoft To-Do</span>
+          </div>
+          <p class="integration-description">
+            Connect to Microsoft To-Do for advanced task management and cross-device sync.
+          </p>
+          <button @click="openMicrosoftToDo" class="integration-btn">
+            Open Microsoft To-Do
+          </button>
+        </div>
+        
+        <div class="integration-toggle">
+          <label class="toggle-container">
+            <span>Use local tasks as fallback</span>
+            <input 
+              v-model="useLocalFallback" 
+              type="checkbox"
+              class="toggle-input"
+            />
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+      </div>
+    </div>
+
     <div class="section">
       <h3 class="section-title">Add New Task</h3>
       
@@ -19,14 +54,55 @@
             <option value="high">High Priority</option>
           </select>
           
-          <input 
-            v-model="newTask.estimatedPomodoros"
-            type="number"
-            min="1"
-            max="20"
-            placeholder="Est. pomodoros"
-            class="pomodoro-input"
-          />
+          <!-- Time Estimation with Clock Icons -->
+          <div class="time-estimation">
+            <label class="estimation-label">Time Estimate:</label>
+            <div class="time-options">
+              <button 
+                v-for="option in timeOptions"
+                :key="option.minutes"
+                type="button"
+                class="time-btn"
+                :class="{ active: newTask.estimatedMinutes === option.minutes }"
+                @click="newTask.estimatedMinutes = option.minutes"
+                :title="`${option.minutes} minutes`"
+              >
+                <div class="clock-icons">
+                  <svg 
+                    v-for="n in option.clocks"
+                    :key="n"
+                    width="16" 
+                    height="16" 
+                    viewBox="0 0 24 24" 
+                    fill="none" 
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                    <path d="M12 6V12L16 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+                <span>{{ option.minutes }}min</span>
+              </button>
+            </div>
+          </div>
+          
+          <!-- Task Type Toggle -->
+          <div class="task-type">
+            <label class="type-label">Task Type:</label>
+            <div class="type-options">
+              <button 
+                v-for="type in taskTypes"
+                :key="type.key"
+                type="button"
+                class="type-btn"
+                :class="{ active: newTask.type === type.key }"
+                @click="newTask.type = type.key"
+              >
+                <span class="type-icon">{{ type.icon }}</span>
+                <span>{{ type.label }}</span>
+              </button>
+            </div>
+          </div>
         </div>
         
         <div class="task-tags">
@@ -110,8 +186,25 @@
                 >
                   {{ todo.priority }}
                 </span>
-                <span v-if="todo.estimatedPomodoros" class="pomodoro-estimate">
-                  🍅 {{ todo.estimatedPomodoros }}
+                <span v-if="todo.estimatedMinutes" class="time-estimate">
+                  <div class="clock-icons">
+                    <svg 
+                      v-for="n in getClockCount(todo.estimatedMinutes)"
+                      :key="n"
+                      width="12" 
+                      height="12" 
+                      viewBox="0 0 24 24" 
+                      fill="none" 
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                      <path d="M12 6V12L16 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </div>
+                  {{ todo.estimatedMinutes }}min
+                </span>
+                <span v-if="todo.type" class="task-type-badge" :class="todo.type">
+                  {{ getTypeInfo(todo.type).icon }} {{ getTypeInfo(todo.type).label }}
                 </span>
               </div>
             </div>
@@ -172,15 +265,37 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useAppStore } from '../../stores/appStore'
 
 const store = useAppStore()
 
+// Microsoft To-Do Integration
+const useLocalFallback = ref(true) // Always enabled as fallback
+
+// Time estimation options with clock icons (15, 30, 45, 60 minutes = 1, 2, 3, 4 clocks)
+const timeOptions = [
+  { minutes: 15, clocks: 1 },
+  { minutes: 30, clocks: 2 },
+  { minutes: 45, clocks: 3 },
+  { minutes: 60, clocks: 4 }
+]
+
+// Task types with icons
+const taskTypes = [
+  { key: 'work', label: 'Work', icon: '💼' },
+  { key: 'personal', label: 'Personal', icon: '🏠' },
+  { key: 'study', label: 'Study', icon: '📚' },
+  { key: 'health', label: 'Health', icon: '💪' },
+  { key: 'creative', label: 'Creative', icon: '🎨' },
+  { key: 'other', label: 'Other', icon: '📝' }
+]
+
 const newTask = ref({
   title: '',
   priority: 'medium',
-  estimatedPomodoros: 1,
+  estimatedMinutes: 30, // Default to 30 minutes
+  type: 'work', // Default to work
   tags: []
 })
 
@@ -215,7 +330,8 @@ const filteredTodos = computed(() => {
       filtered = [...filtered].sort((a, b) => a.title.localeCompare(b.title))
       break
     case 'pomodoros':
-      filtered = [...filtered].sort((a, b) => (b.estimatedPomodoros || 0) - (a.estimatedPomodoros || 0))
+      // Sort by estimated minutes instead of pomodoros
+      filtered = [...filtered].sort((a, b) => (b.estimatedMinutes || 0) - (a.estimatedMinutes || 0))
       break
     case 'created':
     default:
@@ -225,18 +341,100 @@ const filteredTodos = computed(() => {
   return filtered
 })
 
+// Microsoft To-Do Integration
+/**
+ * Opens Microsoft To-Do in a new tab/window
+ * This provides the primary task management experience with full Microsoft ecosystem integration
+ * Future enhancement: Could embed Microsoft To-Do using iframe or webview for seamless experience
+ */
+function openMicrosoftToDo() {
+  try {
+    // Open Microsoft To-Do in new tab
+    window.open('https://to-do.office.com/tasks/', '_blank', 'noopener,noreferrer')
+    
+    // Optional: Could implement deeper integration in future
+    // - Microsoft Graph API integration for task sync
+    // - OAuth authentication for user-specific task lists
+    // - Real-time synchronization between local and Microsoft tasks
+    console.log('Opened Microsoft To-Do - Future: implement sync capabilities')
+  } catch (error) {
+    console.error('Failed to open Microsoft To-Do:', error)
+    // Fallback to local functionality is already enabled
+  }
+}
+
+// Helper functions
+function getClockCount(minutes) {
+  const option = timeOptions.find(opt => opt.minutes === minutes)
+  return option ? Array.from({ length: option.clocks }, (_, i) => i + 1) : [1]
+}
+
+function getTypeInfo(typeKey) {
+  return taskTypes.find(type => type.key === typeKey) || taskTypes[0]
+}
+
+// Local storage persistence
+function saveToLocalStorage() {
+  if (typeof localStorage !== 'undefined') {
+    try {
+      localStorage.setItem('focusapp-todos', JSON.stringify(store.todos))
+      localStorage.setItem('focusapp-todo-settings', JSON.stringify({
+        useLocalFallback: useLocalFallback.value,
+        todoFilter: store.todoFilter,
+        todoSort: store.todoSort
+      }))
+    } catch (error) {
+      console.error('Failed to save todos to localStorage:', error)
+    }
+  }
+}
+
+function loadFromLocalStorage() {
+  if (typeof localStorage !== 'undefined') {
+    try {
+      const savedTodos = localStorage.getItem('focusapp-todos')
+      if (savedTodos) {
+        const todos = JSON.parse(savedTodos)
+        // Migrate old todos to new format if needed
+        const migratedTodos = todos.map(todo => ({
+          ...todo,
+          estimatedMinutes: todo.estimatedMinutes || (todo.estimatedPomodoros ? todo.estimatedPomodoros * 25 : 30),
+          type: todo.type || 'work'
+        }))
+        store.todos = migratedTodos
+      }
+      
+      const savedSettings = localStorage.getItem('focusapp-todo-settings')
+      if (savedSettings) {
+        const settings = JSON.parse(savedSettings)
+        useLocalFallback.value = settings.useLocalFallback ?? true
+        store.todoFilter = settings.todoFilter || 'all'
+        store.todoSort = settings.todoSort || 'created'
+      }
+    } catch (error) {
+      console.error('Failed to load todos from localStorage:', error)
+    }
+  }
+}
+
 function addTask() {
   if (newTask.value.title.trim()) {
-    store.addTodo({
+    const task = {
       ...newTask.value,
-      title: newTask.value.title.trim()
-    })
+      title: newTask.value.title.trim(),
+      // Keep backwards compatibility
+      estimatedPomodoros: Math.ceil(newTask.value.estimatedMinutes / 25)
+    }
+    
+    store.addTodo(task)
+    saveToLocalStorage() // Persist to localStorage
     
     // Reset form
     newTask.value = {
       title: '',
       priority: 'medium',
-      estimatedPomodoros: 1,
+      estimatedMinutes: 30,
+      type: 'work',
       tags: []
     }
   }
@@ -256,6 +454,8 @@ function removeTag(tagToRemove) {
 
 function editTask(todo) {
   // TODO: Implement edit functionality
+  // Future enhancement: Add modal or inline editing for tasks
+  // Could integrate with Microsoft To-Do for editing synced tasks
   console.log('Edit task:', todo)
 }
 
@@ -265,11 +465,12 @@ function toggleSubtask(todoId, subtaskId) {
     const subtask = todo.subtasks.find(s => s.id === subtaskId)
     if (subtask) {
       subtask.completed = !subtask.completed
+      saveToLocalStorage() // Persist changes
     }
   }
 }
 
-// Drag and drop functionality
+// Enhanced drag and drop functionality
 let draggedItem = null
 
 function onDragStart(event, todo) {
@@ -288,14 +489,290 @@ function onDrop(event, targetTodo) {
     todos.splice(targetIndex, 0, removed)
     
     store.todos = todos
+    saveToLocalStorage() // Persist reorder
   }
   draggedItem = null
 }
+
+// Watch for changes to persist data
+import { watch } from 'vue'
+
+watch(() => store.todos, saveToLocalStorage, { deep: true })
+watch(() => store.todoFilter, saveToLocalStorage)
+watch(() => store.todoSort, saveToLocalStorage)
+watch(useLocalFallback, saveToLocalStorage)
+
+// Load data on component mount
+onMounted(() => {
+  loadFromLocalStorage()
+})
+
+/**
+ * EXTENSIBILITY NOTES:
+ * 
+ * This TODO component is designed to be easily extended with additional task management integrations:
+ * 
+ * 1. MICROSOFT TO-DO INTEGRATION:
+ *    - Current: Opens Microsoft To-Do in new tab
+ *    - Future: Microsoft Graph API integration for real-time sync
+ *    - Implementation: Add OAuth flow and Graph API calls in openMicrosoftToDo()
+ * 
+ * 2. OTHER INTEGRATIONS:
+ *    - Google Tasks: Add similar integration following the Microsoft To-Do pattern
+ *    - Todoist: Implement Todoist API integration
+ *    - Notion: Connect to Notion databases for task management
+ *    - Trello: Board-based task management integration
+ * 
+ * 3. ADDING NEW INTEGRATIONS:
+ *    - Add integration card in the template (similar to Microsoft To-Do)
+ *    - Create integration function following openMicrosoftToDo() pattern
+ *    - Add integration settings to localStorage persistence
+ *    - Implement sync logic in background service
+ * 
+ * 4. SYNC ARCHITECTURE:
+ *    - Local tasks serve as fallback and cache
+ *    - External service tasks can be synced bidirectionally
+ *    - Conflict resolution for concurrent edits
+ *    - Offline-first approach with sync when online
+ * 
+ * 5. UI EXTENSIONS:
+ *    - Add integration status indicators
+ *    - Show sync progress and conflicts
+ *    - Allow per-task integration selection
+ *    - Implement bulk operations (import/export)
+ */
 </script>
 
 <style scoped>
 .todo-settings {
   color: var(--color-text-primary);
+}
+
+/* Microsoft To-Do Integration Styles */
+.integration-options {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.integration-card {
+  padding: 20px;
+  border-radius: var(--border-radius-md);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--color-border);
+  transition: all var(--transition-fast);
+}
+
+.integration-card:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: #0078D4;
+}
+
+.integration-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.integration-description {
+  margin: 0 0 16px 0;
+  color: var(--color-text-secondary);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.integration-btn {
+  padding: 12px 24px;
+  border-radius: var(--border-radius-sm);
+  background: #0078D4;
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all var(--transition-fast);
+}
+
+.integration-btn:hover {
+  background: #106ebe;
+  transform: translateY(-1px);
+}
+
+.integration-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  border-radius: var(--border-radius-md);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--color-border);
+}
+
+.toggle-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--color-text-secondary);
+}
+
+.toggle-input {
+  display: none;
+}
+
+.toggle-slider {
+  position: relative;
+  width: 44px;
+  height: 24px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  transition: all var(--transition-fast);
+}
+
+.toggle-slider::before {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  left: 2px;
+  top: 2px;
+  background: white;
+  border-radius: 50%;
+  transition: all var(--transition-fast);
+}
+
+.toggle-input:checked + .toggle-slider {
+  background: var(--color-primary);
+}
+
+.toggle-input:checked + .toggle-slider::before {
+  transform: translateX(20px);
+}
+
+/* Time Estimation Styles */
+.time-estimation {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.estimation-label,
+.type-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.time-options,
+.type-options {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.time-btn,
+.type-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 12px;
+  border-radius: var(--border-radius-sm);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-secondary);
+  font-size: 12px;
+  font-weight: 500;
+  transition: all var(--transition-fast);
+  min-width: 60px;
+}
+
+.time-btn:hover,
+.type-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--color-text-primary);
+  border-color: var(--color-primary);
+}
+
+.time-btn.active,
+.type-btn.active {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-text-primary);
+}
+
+.clock-icons {
+  display: flex;
+  gap: 2px;
+}
+
+.type-icon {
+  font-size: 16px;
+}
+
+.task-type {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Enhanced task display styles */
+.time-estimate {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: var(--color-text-muted);
+}
+
+.time-estimate .clock-icons {
+  display: flex;
+  gap: 1px;
+}
+
+.task-type-badge {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.task-type-badge.work {
+  background: #0078D4;
+  color: white;
+}
+
+.task-type-badge.personal {
+  background: #10B981;
+  color: white;
+}
+
+.task-type-badge.study {
+  background: #8B5CF6;
+  color: white;
+}
+
+.task-type-badge.health {
+  background: #F59E0B;
+  color: white;
+}
+
+.task-type-badge.creative {
+  background: #EF4444;
+  color: white;
+}
+
+.task-type-badge.other {
+  background: #6B7280;
+  color: white;
 }
 
 .section {
