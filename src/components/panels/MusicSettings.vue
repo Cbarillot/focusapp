@@ -1,5 +1,44 @@
 <template>
   <div class="music-settings">
+    <!-- Deezer Playlists -->
+    <div class="section">
+      <h3 class="section-title">Deezer Playlists</h3>
+      <p class="section-description">Access curated playlists directly on Deezer.</p>
+      
+      <div class="deezer-section">
+        <div class="playlist-grid">
+          <div 
+            v-for="playlist in deezerPlaylists"
+            :key="playlist.id"
+            class="playlist-card"
+            @click="openDeezerPlaylist(playlist.url)"
+          >
+            <div class="playlist-cover">
+              <div class="playlist-image">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" fill="#FF6600"/>
+                  <path d="M8 5V19L19 12L8 5Z" fill="white"/>
+                </svg>
+              </div>
+              <div class="play-overlay">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M8 5V19L19 12L8 5Z" fill="currentColor"/>
+                </svg>
+              </div>
+            </div>
+            <div class="playlist-info">
+              <h5 class="playlist-name">{{ playlist.title }}</h5>
+              <p class="playlist-description">{{ playlist.description }}</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="deezer-note">
+          <p>🎵 Click any playlist to open it directly in Deezer</p>
+        </div>
+      </div>
+    </div>
+    
     <!-- Universal Music Component -->
     <div class="section">
       <UniversalMusic />
@@ -112,17 +151,46 @@ import UniversalMusic from '../UniversalMusic.vue'
 
 const store = useAppStore()
 
+// Deezer playlists with direct links
+const deezerPlaylists = ref([
+  {
+    id: 1,
+    title: 'Warm Melancholia',
+    description: 'Atmospheric and emotional tracks',
+    url: 'https://link.deezer.com/s/30I4s94Syhp5iuS3T0NW9'
+  },
+  {
+    id: 2,
+    title: 'Classical Music',
+    description: 'Timeless classical compositions',
+    url: 'https://link.deezer.com/s/30I4sTHKDNbVCXriMGGJY'
+  },
+  {
+    id: 3,
+    title: 'Dance Music',
+    description: 'Energetic beats for focus',
+    url: 'https://link.deezer.com/s/30I4tfQt1D3eTJ7FZKjpn'
+  },
+  {
+    id: 4,
+    title: 'Coup de Coeur',
+    description: 'Handpicked favorites',
+    url: 'https://link.deezer.com/s/30HLLIhq7W7gERuNFubDG'
+  }
+])
+
+// YouTube integration
 const youtubeUrl = ref('')
 const currentVideoId = ref('')
 const localAudioSrc = ref('')
 
 const youtubePresets = [
-  { id: 'dQw4w9WgXcQ', title: 'Lofi Hip Hop' },
-  { id: 'jfKfPfyJRdk', title: 'Café Jazz' },
-  { id: '4xDzrJKXOOY', title: 'Classical Focus' },
-  { id: '5yx6BWlEVcY', title: 'Nature Sounds' },
-  { id: 'lTRiuFIWV54', title: 'Ambient Space' },
-  { id: 'hHW1oY26kxQ', title: 'Study Piano' }
+  { id: 'zhDwjnYZiCo', title: 'Lofi Study', url: 'https://www.youtube.com/live/zhDwjnYZiCo?si=ZuFZCpaBymXSSoQG' },
+  { id: 'Rik8YhvH09M', title: 'Home Cosy Ambiance', url: 'https://youtu.be/Rik8YhvH09M?si=1ZLAf8IbMfZ4Zlh3' },
+  { id: 'kfZyQ4K2vcw', title: 'Forest Witch Ambiance', url: 'https://youtu.be/kfZyQ4K2vcw?si=_8pTMJePBKbLMmkU' },
+  { id: '0L38Z9hIi5s', title: 'Coffee Piano Ambiance', url: 'https://youtu.be/0L38Z9hIi5s?si=l48HxC1vUNXa4rFG' },
+  { id: 'PMMGwSJsHfU', title: 'Medieval Village', url: 'https://youtu.be/PMMGwSJsHfU?si=egnG7zejirdD1Zk8' },
+  { id: 'XFGgeltLaks', title: 'Hogwarts Music', url: 'https://youtu.be/XFGgeltLaks?si=QvQEv9OV1owmTpnt' }
 ]
 
 function loadYouTube() {
@@ -161,6 +229,12 @@ function loadLocalMusic(event) {
     store.musicPlaying = true
   }
 }
+
+// Deezer functions
+function openDeezerPlaylist(url) {
+  // Open the Deezer playlist in a new tab
+  window.open(url, '_blank', 'noopener,noreferrer')
+}
 </script>
 
 <style scoped>
@@ -181,6 +255,118 @@ function loadLocalMusic(event) {
   font-size: 16px;
   font-weight: 600;
   color: var(--color-text-primary);
+}
+
+.section-description {
+  margin: 0 0 16px 0;
+  font-size: 14px;
+  color: var(--color-text-secondary);
+}
+
+/* Deezer Playlists Styles */
+.deezer-section {
+  border-radius: var(--border-radius-md);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--color-border);
+  overflow: hidden;
+  padding: 20px;
+}
+
+.playlist-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.playlist-card {
+  cursor: pointer;
+  border-radius: var(--border-radius-md);
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--color-border);
+  transition: all 0.2s ease;
+}
+
+.playlist-card:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.playlist-cover {
+  position: relative;
+  aspect-ratio: 1;
+  overflow: hidden;
+  background: linear-gradient(135deg, #FF6600, #FF8533);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.playlist-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.play-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40px;
+  height: 40px;
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: var(--border-radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  color: white;
+}
+
+.playlist-card:hover .play-overlay {
+  opacity: 1;
+}
+
+.playlist-info {
+  padding: 12px;
+}
+
+.playlist-name {
+  margin: 0 0 4px 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.playlist-description {
+  margin: 0;
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  line-height: 1.4;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.deezer-note {
+  text-align: center;
+  padding: 12px;
+  background: rgba(255, 102, 0, 0.1);
+  border-radius: var(--border-radius-sm);
+  border: 1px solid rgba(255, 102, 0, 0.3);
+}
+
+.deezer-note p {
+  margin: 0;
+  font-size: 14px;
+  color: var(--color-text-secondary);
 }
 
 .youtube-section {

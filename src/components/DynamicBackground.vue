@@ -13,6 +13,9 @@
       class="background-image"
       :src="store.backgroundValue"
       alt="Background"
+      loading="lazy"
+      @load="onImageLoad"
+      @error="onImageError"
     />
 
     <!-- Video Background -->
@@ -21,10 +24,12 @@
       v-if="store.backgroundType === 'video' && store.backgroundValue"
       class="background-video"
       :src="store.backgroundValue"
-      autoplay
       loop
       muted
       playsinline
+      preload="metadata"
+      @loadeddata="onVideoLoad"
+      @error="onVideoError"
     ></video>
 
     <!-- YouTube Video Background -->
@@ -92,6 +97,28 @@ function getCurrentThemeColors() {
 
 function getYouTubeEmbedUrl(videoId) {
   return `https://www.youtube.com/embed/${videoId}?autoplay=1&loop=1&mute=1&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&playlist=${videoId}&vq=hd1080`
+}
+
+// Optimize background loading
+function onImageLoad() {
+  // Image loaded successfully - could add fade-in effect here
+  console.log('Background image loaded')
+}
+
+function onImageError() {
+  console.warn('Failed to load background image')
+}
+
+function onVideoLoad() {
+  // Auto-play video once loaded
+  const video = document.getElementById('bg-video')
+  if (video) {
+    video.play().catch(e => console.warn('Video autoplay failed:', e))
+  }
+}
+
+function onVideoError() {
+  console.warn('Failed to load background video')
 }
 
 function getAnimatedGradientStyle() {
