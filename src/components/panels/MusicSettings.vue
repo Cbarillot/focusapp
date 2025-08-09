@@ -1,119 +1,40 @@
 <template>
   <div class="music-settings">
-    <!-- Deezer Integration -->
+    <!-- Deezer Playlists -->
     <div class="section">
-      <h3 class="section-title">Deezer Music</h3>
-      <p class="section-description">Connect to your Deezer account and control your playlists.</p>
+      <h3 class="section-title">Deezer Playlists</h3>
+      <p class="section-description">Access curated playlists directly on Deezer.</p>
       
       <div class="deezer-section">
-        <div class="deezer-login" v-if="!deezerConnected">
-          <button @click="connectDeezer" class="connect-btn">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" fill="currentColor"/>
-            </svg>
-            Connect to Deezer
-          </button>
-          <p class="connect-description">Sign in with your Deezer account to access your playlists and control music playback.</p>
-        </div>
-        
-        <div class="deezer-player" v-else>
-          <div class="player-header">
-            <div class="now-playing">
-              <div class="track-info">
-                <h4 class="track-title">{{ currentTrack.title || 'No track selected' }}</h4>
-                <p class="artist-name">{{ currentTrack.artist || '' }}</p>
-              </div>
-              <div class="album-art" v-if="currentTrack.albumArt">
-                <img :src="currentTrack.albumArt" alt="Album art" />
-              </div>
-            </div>
-            
-            <div class="player-controls">
-              <button @click="previousTrack" class="control-btn">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M6 4L20 12L6 20V4Z" fill="currentColor" transform="rotate(180 12 12)"/>
-                  <rect x="4" y="4" width="2" height="16" fill="currentColor"/>
+        <div class="playlist-grid">
+          <div 
+            v-for="playlist in deezerPlaylists"
+            :key="playlist.id"
+            class="playlist-card"
+            @click="openDeezerPlaylist(playlist.url)"
+          >
+            <div class="playlist-cover">
+              <div class="playlist-image">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" fill="#FF6600"/>
+                  <path d="M8 5V19L19 12L8 5Z" fill="white"/>
                 </svg>
-              </button>
-              
-              <button @click="togglePlayPause" class="control-btn play-pause">
-                <svg v-if="!isPlaying" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              </div>
+              <div class="play-overlay">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M8 5V19L19 12L8 5Z" fill="currentColor"/>
                 </svg>
-                <svg v-else width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <rect x="6" y="4" width="4" height="16" fill="currentColor"/>
-                  <rect x="14" y="4" width="4" height="16" fill="currentColor"/>
-                </svg>
-              </button>
-              
-              <button @click="nextTrack" class="control-btn">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M6 4L20 12L6 20V4Z" fill="currentColor"/>
-                  <rect x="18" y="4" width="2" height="16" fill="currentColor"/>
-                </svg>
-              </button>
-            </div>
-            
-            <div class="volume-control">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M11 5L6 9H2V15H6L11 19V5Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-                <path d="M19.07 4.93A10 10 0 0 1 19.07 19.07" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-              <input 
-                type="range" 
-                min="0" 
-                max="100" 
-                v-model="volume"
-                @input="updateVolume"
-                class="volume-slider"
-              />
-            </div>
-          </div>
-          
-          <div class="playlist-section">
-            <h4 class="playlist-title">My Playlists</h4>
-            <div class="playlist-grid">
-              <div 
-                v-for="playlist in deezerPlaylists"
-                :key="playlist.id"
-                class="playlist-card"
-                :class="{ active: currentPlaylist?.id === playlist.id }"
-                @click="selectPlaylist(playlist)"
-              >
-                <div class="playlist-cover">
-                  <img :src="playlist.picture_medium" :alt="playlist.title" />
-                  <div class="play-overlay">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M8 5V19L19 12L8 5Z" fill="currentColor"/>
-                    </svg>
-                  </div>
-                </div>
-                <div class="playlist-info">
-                  <h5 class="playlist-name">{{ playlist.title }}</h5>
-                  <p class="track-count">{{ playlist.nb_tracks }} tracks</p>
-                </div>
               </div>
+            </div>
+            <div class="playlist-info">
+              <h5 class="playlist-name">{{ playlist.title }}</h5>
+              <p class="playlist-description">{{ playlist.description }}</p>
             </div>
           </div>
         </div>
         
-        <!-- Mini Player for Fullscreen Mode -->
-        <div v-if="store.isFullscreen && isPlaying" class="mini-player">
-          <div class="mini-track-info">
-            <span class="mini-track-title">{{ currentTrack.title }}</span>
-            <span class="mini-artist">{{ currentTrack.artist }}</span>
-          </div>
-          <div class="mini-controls">
-            <button @click="togglePlayPause" class="mini-control-btn">
-              <svg v-if="!isPlaying" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M8 5V19L19 12L8 5Z" fill="currentColor"/>
-              </svg>
-              <svg v-else width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect x="6" y="4" width="4" height="16" fill="currentColor"/>
-                <rect x="14" y="4" width="4" height="16" fill="currentColor"/>
-              </svg>
-            </button>
-          </div>
+        <div class="deezer-note">
+          <p>🎵 Click any playlist to open it directly in Deezer</p>
         </div>
       </div>
     </div>
@@ -230,35 +151,31 @@ import UniversalMusic from '../UniversalMusic.vue'
 
 const store = useAppStore()
 
-// Deezer integration
-const deezerConnected = ref(false)
-const isPlaying = ref(false)
-const volume = ref(70)
-const currentTrack = ref({
-  title: '',
-  artist: '',
-  albumArt: ''
-})
-const currentPlaylist = ref(null)
+// Deezer playlists with direct links
 const deezerPlaylists = ref([
-  // Mock data - in real implementation, this would come from Deezer API
   {
     id: 1,
-    title: 'Focus Beats',
-    picture_medium: 'https://via.placeholder.com/150x150/8B5CF6/FFFFFF?text=Focus',
-    nb_tracks: 25
+    title: 'Warm Melancholia',
+    description: 'Atmospheric and emotional tracks',
+    url: 'https://link.deezer.com/s/30I4s94Syhp5iuS3T0NW9'
   },
   {
     id: 2,
-    title: 'Chill Lofi',
-    picture_medium: 'https://via.placeholder.com/150x150/10B981/FFFFFF?text=Lofi',
-    nb_tracks: 18
+    title: 'Classical Music',
+    description: 'Timeless classical compositions',
+    url: 'https://link.deezer.com/s/30I4sTHKDNbVCXriMGGJY'
   },
   {
     id: 3,
-    title: 'Study Piano',
-    picture_medium: 'https://via.placeholder.com/150x150/F59E0B/FFFFFF?text=Piano',
-    nb_tracks: 32
+    title: 'Dance Music',
+    description: 'Energetic beats for focus',
+    url: 'https://link.deezer.com/s/30I4tfQt1D3eTJ7FZKjpn'
+  },
+  {
+    id: 4,
+    title: 'Coup de Coeur',
+    description: 'Handpicked favorites',
+    url: 'https://link.deezer.com/s/30HLLIhq7W7gERuNFubDG'
   }
 ])
 
@@ -314,45 +231,9 @@ function loadLocalMusic(event) {
 }
 
 // Deezer functions
-function connectDeezer() {
-  // In a real implementation, this would initiate OAuth flow with Deezer
-  // For demo purposes, we'll simulate connection
-  deezerConnected.value = true
-  // Mock current track
-  currentTrack.value = {
-    title: 'Lofi Study Session',
-    artist: 'ChillBeats',
-    albumArt: 'https://via.placeholder.com/60x60/8B5CF6/FFFFFF?text=♪'
-  }
-}
-
-function togglePlayPause() {
-  isPlaying.value = !isPlaying.value
-  store.musicPlaying = isPlaying.value
-}
-
-function nextTrack() {
-  // Mock next track functionality
-  console.log('Next track')
-}
-
-function previousTrack() {
-  // Mock previous track functionality  
-  console.log('Previous track')
-}
-
-function updateVolume() {
-  store.volume = volume.value / 100
-}
-
-function selectPlaylist(playlist) {
-  currentPlaylist.value = playlist
-  // Mock playlist selection
-  currentTrack.value = {
-    title: `Playing from ${playlist.title}`,
-    artist: 'Various Artists',
-    albumArt: playlist.picture_medium
-  }
+function openDeezerPlaylist(url) {
+  // Open the Deezer playlist in a new tab
+  window.open(url, '_blank', 'noopener,noreferrer')
 }
 </script>
 
@@ -382,160 +263,20 @@ function selectPlaylist(playlist) {
   color: var(--color-text-secondary);
 }
 
-/* Deezer Integration Styles */
+/* Deezer Playlists Styles */
 .deezer-section {
   border-radius: var(--border-radius-md);
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid var(--color-border);
   overflow: hidden;
-}
-
-.deezer-login {
-  padding: 32px;
-  text-align: center;
-}
-
-.connect-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 24px;
-  background: #FF6600; /* Deezer orange */
-  color: white;
-  border: none;
-  border-radius: var(--border-radius-md);
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.connect-btn:hover {
-  background: #E55A00;
-  transform: translateY(-2px);
-}
-
-.connect-description {
-  margin-top: 16px;
-  font-size: 14px;
-  color: var(--color-text-secondary);
-}
-
-.deezer-player {
   padding: 20px;
-}
-
-.player-header {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  margin-bottom: 24px;
-  padding-bottom: 20px;
-  border-bottom: 1px solid var(--color-border);
-}
-
-.now-playing {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  flex: 1;
-}
-
-.track-info h4 {
-  margin: 0 0 4px 0;
-  font-size: 16px;
-  color: var(--color-text-primary);
-}
-
-.track-info p {
-  margin: 0;
-  font-size: 14px;
-  color: var(--color-text-secondary);
-}
-
-.album-art {
-  width: 50px;
-  height: 50px;
-  border-radius: var(--border-radius-sm);
-  overflow: hidden;
-}
-
-.album-art img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.player-controls {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.control-btn {
-  width: 40px;
-  height: 40px;
-  border-radius: var(--border-radius-full);
-  border: 1px solid var(--color-border);
-  background: rgba(255, 255, 255, 0.05);
-  color: var(--color-text-primary);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.control-btn:hover {
-  background: rgba(255, 255, 255, 0.1);
-  transform: scale(1.05);
-}
-
-.control-btn.play-pause {
-  width: 48px;
-  height: 48px;
-  background: var(--color-primary);
-  border-color: var(--color-primary);
-}
-
-.volume-control {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  min-width: 120px;
-}
-
-.volume-slider {
-  flex: 1;
-  height: 4px;
-  border-radius: 2px;
-  background: rgba(255, 255, 255, 0.2);
-  outline: none;
-  appearance: none;
-}
-
-.volume-slider::-webkit-slider-thumb {
-  appearance: none;
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  background: var(--color-primary);
-  cursor: pointer;
-}
-
-.playlist-section {
-  margin-top: 20px;
-}
-
-.playlist-title {
-  margin: 0 0 16px 0;
-  font-size: 16px;
-  color: var(--color-text-primary);
 }
 
 .playlist-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
   gap: 16px;
+  margin-bottom: 16px;
 }
 
 .playlist-card {
@@ -550,23 +291,23 @@ function selectPlaylist(playlist) {
 .playlist-card:hover {
   background: rgba(255, 255, 255, 0.1);
   transform: translateY(-2px);
-}
-
-.playlist-card.active {
-  border-color: var(--color-primary);
-  background: rgba(139, 92, 246, 0.1);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 }
 
 .playlist-cover {
   position: relative;
   aspect-ratio: 1;
   overflow: hidden;
+  background: linear-gradient(135deg, #FF6600, #FF8533);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.playlist-cover img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+.playlist-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .play-overlay {
@@ -583,6 +324,7 @@ function selectPlaylist(playlist) {
   justify-content: center;
   opacity: 0;
   transition: opacity 0.2s ease;
+  color: white;
 }
 
 .playlist-card:hover .play-overlay {
@@ -596,82 +338,35 @@ function selectPlaylist(playlist) {
 .playlist-name {
   margin: 0 0 4px 0;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 600;
   color: var(--color-text-primary);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.track-count {
+.playlist-description {
   margin: 0;
   font-size: 12px;
   color: var(--color-text-secondary);
+  line-height: 1.4;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-/* Mini Player for Fullscreen */
-.mini-player {
-  position: fixed;
-  bottom: 20px;
-  left: 20px;
-  right: 20px;
-  background: rgba(0, 0, 0, 0.9);
-  backdrop-filter: blur(20px);
-  border-radius: var(--border-radius-md);
-  padding: 12px 16px;
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  z-index: 1000;
-  border: 1px solid var(--color-border);
+.deezer-note {
+  text-align: center;
+  padding: 12px;
+  background: rgba(255, 102, 0, 0.1);
+  border-radius: var(--border-radius-sm);
+  border: 1px solid rgba(255, 102, 0, 0.3);
 }
 
-.mini-track-info {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.mini-track-title {
+.deezer-note p {
+  margin: 0;
   font-size: 14px;
-  font-weight: 500;
-  color: var(--color-text-primary);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.mini-artist {
-  font-size: 12px;
   color: var(--color-text-secondary);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.mini-controls {
-  display: flex;
-  align-items: center;
-}
-
-.mini-control-btn {
-  width: 36px;
-  height: 36px;
-  border-radius: var(--border-radius-full);
-  border: none;
-  background: var(--color-primary);
-  color: var(--color-text-primary);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.mini-control-btn:hover {
-  background: var(--color-primary-dark);
-  transform: scale(1.05);
 }
 
 .youtube-section {
