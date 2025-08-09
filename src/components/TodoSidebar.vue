@@ -162,7 +162,7 @@ if (typeof document !== 'undefined') {
   left: 20px;
   top: 50%;
   transform: translateY(-50%);
-  z-index: 80;
+  z-index: 110; /* Higher than corner navigation which is z-index: 100 */
   width: 40px;
   transition: all 0.3s ease;
 }
@@ -452,6 +452,7 @@ if (typeof document !== 'undefined') {
 @media (max-width: 768px) {
   .todo-sidebar {
     left: 15px;
+    top: 45%;
   }
   
   .todo-sidebar.expanded {
@@ -462,6 +463,8 @@ if (typeof document !== 'undefined') {
 @media (max-width: 480px) {
   .todo-sidebar {
     left: 12px;
+    top: 35%;
+    z-index: 120; /* Even higher on mobile */
   }
   
   .todo-sidebar.expanded {
