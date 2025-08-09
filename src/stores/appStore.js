@@ -549,7 +549,7 @@ const themes = ref({
     return ''
   }
 
-  // Predefined Deezer playlists
+  // Predefined playlists - Both Deezer and YouTube options
   const deezerPlaylists = ref([
     {
       name: 'Warm Melancholia',
@@ -573,6 +573,37 @@ const themes = ref({
     }
   ])
 
+  const youtubePlaylists = ref([
+    {
+      id: 'lofi-study',
+      name: 'Lo-Fi Study Music',
+      shortName: 'Lo-Fi',
+      videoId: 'jfKfPfyJRdk',
+      url: 'https://www.youtube.com/watch?v=jfKfPfyJRdk'
+    },
+    {
+      id: 'classical-focus', 
+      name: 'Classical Focus',
+      shortName: 'Classical',
+      videoId: '6p0DAz_30qQ',
+      url: 'https://www.youtube.com/watch?v=6p0DAz_30qQ'
+    },
+    {
+      id: 'ambient-chill',
+      name: 'Ambient Chill',
+      shortName: 'Ambient',
+      videoId: '5qap5aO4i9A',
+      url: 'https://www.youtube.com/watch?v=5qap5aO4i9A'
+    },
+    {
+      id: 'nature-sounds',
+      name: 'Nature Sounds',
+      shortName: 'Nature',
+      videoId: 'eKFTSSKCzWA',
+      url: 'https://www.youtube.com/watch?v=eKFTSSKCzWA'
+    }
+  ])
+
   function playDeezerPlaylist(playlistId) {
     const playlist = deezerPlaylists.value.find(p => p.id === playlistId)
     if (playlist) {
@@ -586,13 +617,23 @@ const themes = ref({
     }
   }
 
-  function playYouTubePlaylist(url, title) {
-    setMusicUrl(url)
-    currentTrack.value = title
-    musicPlaying.value = true
-    // Open YouTube in a new tab for background playback
-    if (typeof window !== 'undefined') {
-      window.open(url, '_blank')
+  function playYouTubePlaylist(playlistIdOrUrl, title) {
+    // Check if it's a predefined playlist ID
+    const playlist = youtubePlaylists.value.find(p => p.id === playlistIdOrUrl)
+    if (playlist) {
+      setMusicUrl(playlist.url)
+      currentTrack.value = playlist.name
+      musicPlaying.value = true
+      return playlist
+    } else {
+      // Direct URL usage
+      setMusicUrl(playlistIdOrUrl)
+      currentTrack.value = title || 'YouTube Playlist'
+      musicPlaying.value = true
+      // Open YouTube in a new tab for background playback  
+      if (typeof window !== 'undefined') {
+        window.open(playlistIdOrUrl, '_blank')
+      }
     }
   }
 
@@ -649,7 +690,9 @@ const themes = ref({
     musicPlatform,
     musicError,
     soundscapes,
+    // Playlist data
     deezerPlaylists,
+    youtubePlaylists,
     todos,
     todoFilter,
     todoSort,

@@ -5,58 +5,10 @@
     
     <!-- Main Layout -->
     <div class="main-layout">
-      <!-- Header with Timer Mode Switcher -->
-      <header class="app-header">
-        <!-- Timer Mode Switcher (centered) -->
-        <div class="timer-mode-switcher">
-          <button 
-            class="mode-switcher-btn"
-            :class="{ active: store.timerDisplayMode === 'home' }"
-            @click="store.setTimerDisplayMode('home')"
-            title="Home"
-          >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M9 22V12H15V22" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </button>
-          <button 
-            class="mode-switcher-btn"
-            :class="{ active: store.timerDisplayMode === 'focus' }"
-            @click="store.setTimerDisplayMode('focus')"
-            title="Focus"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 18V5"></path>
-              <path d="M15 13a4.17 4.17 0 0 1-3-4 4.17 4.17 0 0 1-3 4"></path>
-              <path d="M17.598 6.5A3 3 0 1 0 12 5a3 3 0 1 0-5.598 1.5"></path>
-              <path d="M17.997 5.125a4 4 0 0 1 2.526 5.77"></path>
-              <path d="M18 18a4 4 0 0 0 2-7.464"></path>
-              <path d="M19.967 17.483A4 4 0 1 1 12 18a4 4 0 1 1-7.967-.517"></path>
-              <path d="M6 18a4 4 0 0 1-2-7.464"></path>
-              <path d="M6.003 5.125a4 4 0 0 0-2.526 5.77"></path>
-            </svg>
-          </button>
-          <button 
-            class="mode-switcher-btn"
-            :class="{ active: store.timerDisplayMode === 'ambiance' }"
-            @click="store.setTimerDisplayMode('ambiance')"
-            title="Ambiance"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 5a3 3 0 1 1 3 3m-3-3a3 3 0 1 0-3 3m3-3v1M9 8a3 3 0 1 0 3 3M9 8h1m5 0a3 3 0 1 1-3 3m3-3h-1m-2 3v-1"></path>
-              <circle cx="12" cy="8" r="2"></circle>
-              <path d="M12 10v12"></path>
-              <path d="M12 22c4.2 0 7-1.667 7-5-4.2 0-7 1.667-7 5Z"></path>
-              <path d="M12 22c-4.2 0-7-1.667-7-5 4.2 0 7 1.667 7 5Z"></path>
-            </svg>
-          </button>
-        </div>
-      </header>
-      
-      <!-- Central Timer Area - Focus Mode -->
-      <main v-if="store.timerDisplayMode === 'focus'" class="timer-area focus-mode">
-        <div class="timer-container">
+      <!-- Central Timer Area -->
+      <main class="timer-area" :class="`mode-${store.timerDisplayMode}`">
+        <!-- Focus Mode - Full Pomodoro Timer -->
+        <div v-if="store.timerDisplayMode === 'focus'" class="timer-container">
           <!-- Mode Tabs -->
           <div class="mode-tabs">
             <button 
@@ -89,10 +41,71 @@
             </div>
           </div>
         </div>
+
+        <!-- Home Mode - Large Digital Clock -->
+        <div v-else-if="store.timerDisplayMode === 'home'" class="clock-container">
+          <div class="current-time">{{ currentTime }}</div>
+          <div class="session-info">
+            <span class="session-type">{{ modes.find(m => m.key === store.timerMode)?.label }}</span>
+            <span class="session-time">{{ store.displayTime }}</span>
+            <div class="session-controls">
+              <button 
+                class="session-control-btn"
+                @click="store.toggleTimer()"
+              >
+                {{ store.isRunning ? '⏸️' : '▶️' }}
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ambiance Mode - Complete pomodoro module in top-right -->
+        <div v-else-if="store.timerDisplayMode === 'ambiance'" class="ambiance-timer-module">
+          <!-- Mode Tabs -->
+          <div class="ambiance-mode-tabs">
+            <button 
+              v-for="mode in modes" 
+              :key="mode.key"
+              class="ambiance-mode-tab"
+              :class="{ active: store.timerMode === mode.key }"
+              @click="store.switchMode(mode.key)"
+            >
+              {{ mode.label.charAt(0) }}
+            </button>
+          </div>
+          
+          <!-- Timer Display -->
+          <div class="ambiance-timer-display">
+            <div class="ambiance-time">{{ store.displayTime }}</div>
+            <div class="ambiance-timer-controls">
+              <button 
+                class="ambiance-control-btn primary"
+                @click="store.toggleTimer()"
+              >
+                <svg v-if="!store.isRunning" width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M8 5V19L19 12L8 5Z" fill="currentColor"/>
+                </svg>
+                <svg v-else width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="6" y="4" width="4" height="16" fill="currentColor"/>
+                  <rect x="14" y="4" width="4" height="16" fill="currentColor"/>
+                </svg>
+              </button>
+              <button 
+                class="ambiance-control-btn secondary"
+                @click="store.resetTimer()"
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12Z" stroke="currentColor" stroke-width="2"/>
+                  <path d="M12 7V12L15 15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
       </main>
 
-      <!-- Ambiance Mode - Complete pomodoro module in top-right -->
-      <div v-else-if="store.timerDisplayMode === 'ambiance'" class="ambiance-layout">
+      <!-- Unified Left Sidebar (All Modes) -->
+      <div class="unified-left-sidebar" :class="{ expanded: unifiedLeftExpanded }">
         <!-- Complete Pomodoro Module -->
         <div class="ambiance-pomodoro-module">
           <!-- Mode Tabs -->
@@ -457,7 +470,7 @@ import SidePanel from './components/SidePanel.vue'
 import CornerNavigation from './components/CornerNavigation.vue'
 import TodoSidebar from './components/TodoSidebar.vue'
 import ThemeSelector from './components/ThemeSelector.vue'
-import DeezerWidget from './components/DeezerWidget.vue'
+import YouTubeWidget from './components/YouTubeWidget.vue'
 
 const store = useAppStore()
 
@@ -468,12 +481,12 @@ const isResizing = ref(false)
 // Current time for home mode
 const currentTimeString = ref('')
 
-// Ambiance mode specific state
-const ambianceLeftExpanded = ref(false)
+// Unified mode specific state (all modes use same sidebar system)
+const unifiedLeftExpanded = ref(false)
 const showTodoPreview = ref(false)
 const showMusicPreview = ref(false)
 const showSoundPreview = ref(false)
-const showDeezerWidget = ref(false)
+const showYouTubeWidget = ref(false)
 let previewTimeouts = {}
 
 const currentTime = computed(() => currentTimeString.value)
@@ -537,56 +550,56 @@ function getTaskPriorityClass(task) {
   return 'priority-low'
 }
 
-// Ambiance mode functions
-function toggleAmbianceLeft() {
-  ambianceLeftExpanded.value = !ambianceLeftExpanded.value
+// Unified mode functions (used by all timer modes)
+function toggleUnifiedLeft() {
+  unifiedLeftExpanded.value = !unifiedLeftExpanded.value
 }
 
-function showAmbianceTodoPreview() {
+function showTodoPreview() {
   clearTimeout(previewTimeouts.todo)
   showTodoPreview.value = true
 }
 
-function hideAmbianceTodoPreview() {
+function hideTodoPreview() {
   previewTimeouts.todo = setTimeout(() => {
     showTodoPreview.value = false
   }, 300)
 }
 
-function showAmbianceMusicPreview() {
+function showMusicPreview() {
   clearTimeout(previewTimeouts.music)
   showMusicPreview.value = true
 }
 
-function hideAmbianceMusicPreview() {
+function hideMusicPreview() {
   previewTimeouts.music = setTimeout(() => {
     showMusicPreview.value = false
   }, 300)
 }
 
-function showAmbianceSoundPreview() {
+function showSoundPreview() {
   clearTimeout(previewTimeouts.sound)
   showSoundPreview.value = true
 }
 
-function hideAmbianceSoundPreview() {
+function hideSoundPreview() {
   previewTimeouts.sound = setTimeout(() => {
     showSoundPreview.value = false
   }, 300)
 }
 
-function openAmbianceSettings() {
+function openSettings() {
   store.setActiveTab('timer')
   if (!store.sidebarOpen) {
     store.toggleSidebar()
   }
 }
 
-function openAmbianceMusic() {
-  showDeezerWidget.value = !showDeezerWidget.value
+function openMusic() {
+  showYouTubeWidget.value = !showYouTubeWidget.value
 }
 
-function openAmbianceSound() {
+function openSound() {
   store.setActiveTab('sounds')
   if (!store.sidebarOpen) {
     store.toggleSidebar()
