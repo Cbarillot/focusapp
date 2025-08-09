@@ -93,17 +93,23 @@
             :class="{ active: store.currentTheme === key }"
             @click="selectTheme(key)"
           >
-            <div class="theme-preview">
+            <div class="theme-preview" @mouseenter="playPreview" @mouseleave="pausePreview">
               <video
                 :src="theme.value"
                 muted
-                autoplay
                 loop
                 class="theme-video"
+                :data-theme-key="key"
                 @error="handleImageError"
+                preload="none"
               ></video>
               <div class="theme-type-badge video">
                 🌿
+              </div>
+              <div class="video-play-indicator">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M8 5V19L19 12L8 5Z" fill="currentColor"/>
+                </svg>
               </div>
             </div>
             <div class="theme-info">
@@ -123,17 +129,23 @@
             :class="{ active: store.currentTheme === key }"
             @click="selectTheme(key)"
           >
-            <div class="theme-preview">
+            <div class="theme-preview" @mouseenter="playPreview" @mouseleave="pausePreview">
               <video
                 :src="theme.value"
                 muted
-                autoplay
                 loop
                 class="theme-video"
+                :data-theme-key="key"
                 @error="handleImageError"
+                preload="none"
               ></video>
               <div class="theme-type-badge video">
                 🎵
+              </div>
+              <div class="video-play-indicator">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M8 5V19L19 12L8 5Z" fill="currentColor"/>
+                </svg>
               </div>
             </div>
             <div class="theme-info">
@@ -153,17 +165,23 @@
             :class="{ active: store.currentTheme === key }"
             @click="selectTheme(key)"
           >
-            <div class="theme-preview">
+            <div class="theme-preview" @mouseenter="playPreview" @mouseleave="pausePreview">
               <video
                 :src="theme.value"
                 muted
-                autoplay
                 loop
                 class="theme-video"
+                :data-theme-key="key"
                 @error="handleImageError"
+                preload="none"
               ></video>
               <div class="theme-type-badge video">
                 ☕
+              </div>
+              <div class="video-play-indicator">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M8 5V19L19 12L8 5Z" fill="currentColor"/>
+                </svg>
               </div>
             </div>
             <div class="theme-info">
@@ -532,6 +550,25 @@ function getThemesByCategory(category) {
 
   return themes
 }
+
+// Video preview optimization methods
+function playPreview(event) {
+  const videoElement = event.currentTarget.querySelector('.theme-video')
+  if (videoElement) {
+    videoElement.currentTime = 0
+    videoElement.play().catch(() => {
+      // Ignore play errors (common on mobile or when multiple videos play)
+    })
+  }
+}
+
+function pausePreview(event) {
+  const videoElement = event.currentTarget.querySelector('.theme-video')
+  if (videoElement) {
+    videoElement.pause()
+    videoElement.currentTime = 0
+  }
+}
 </script>
 
 <style scoped>
@@ -665,6 +702,32 @@ function getThemesByCategory(category) {
 
 .theme-type-badge.color {
   background: rgba(168, 85, 247, 0.8);
+}
+
+.video-play-indicator {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 36px;
+  height: 36px;
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: var(--border-radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  opacity: 1;
+  transition: all 0.2s ease;
+  pointer-events: none;
+}
+
+.theme-preview:hover .video-play-indicator {
+  opacity: 0;
+}
+
+.theme-video:not([data-loaded]) + .video-play-indicator {
+  opacity: 1;
 }
 
 .theme-info {

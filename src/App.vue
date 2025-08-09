@@ -188,7 +188,11 @@
     
     <!-- Side Panel -->
     <Transition name="slide">
-      <div v-if="store.sidebarOpen" class="sidebar">
+      <div v-if="store.sidebarOpen" class="sidebar" :style="{ width: sidebarWidth + 'px' }">
+        <div 
+          class="sidebar-resize-handle"
+          @mousedown="startResize"
+        ></div>
         <SidePanel />
       </div>
     </Transition>
@@ -217,6 +221,10 @@ const store = useAppStore()
 const showAddTask = ref(false)
 const newTaskText = ref('')
 const taskInput = ref(null)
+
+// Sidebar resize functionality
+const sidebarWidth = ref(400)
+const isResizing = ref(false)
 
 // Current time for home mode
 const currentTimeString = ref('')
@@ -267,6 +275,30 @@ watch(showAddTask, (newVal) => {
     })
   }
 })
+
+// Sidebar resize functionality
+function startResize(e) {
+  isResizing.value = true
+  const startX = e.clientX
+  const startWidth = sidebarWidth.value
+
+  function doResize(e) {
+    if (!isResizing.value) return
+    const deltaX = startX - e.clientX
+    const newWidth = Math.max(320, Math.min(800, startWidth + deltaX))
+    sidebarWidth.value = newWidth
+  }
+
+  function stopResize() {
+    isResizing.value = false
+    document.removeEventListener('mousemove', doResize)
+    document.removeEventListener('mouseup', stopResize)
+  }
+
+  document.addEventListener('mousemove', doResize)
+  document.addEventListener('mouseup', stopResize)
+  e.preventDefault()
+}
 
 const modes = [
   { key: 'pomodoro', label: 'Pomodoro' },
@@ -524,17 +556,36 @@ export default {
 /* Footer - No longer needed as navigation is in corners */
 /* Removed .app-footer styles as they're replaced by corner navigation */
 
-/* Sidebar - Moved to right side with improved tab navigation */
+/* Sidebar - Resizable panel on right side */
 .sidebar {
   position: fixed;
   top: 0;
   right: 0;
-  width: 400px;
+  width: 400px; /* Default width */
+  min-width: 320px;
+  max-width: 800px;
   height: 100vh;
   background: rgba(0, 0, 0, 0.9);
   backdrop-filter: blur(20px);
   z-index: 200;
   overflow-y: auto;
+}
+
+.sidebar-resize-handle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: transparent;
+  cursor: ew-resize;
+  z-index: 201;
+  transition: background-color 0.2s ease;
+}
+
+.sidebar-resize-handle:hover,
+.sidebar:hover .sidebar-resize-handle {
+  background: var(--color-primary);
 }
 
 .sidebar-overlay {
