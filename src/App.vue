@@ -230,12 +230,17 @@ const modes = [
 }
 
 .time {
-  font-size: clamp(4rem, 12vw, 8rem);
-  font-weight: 300;
-  line-height: 1;
+  /* Timer display inspired by flocus/app.flocus.com for optimal readability */
+  font-family: 'Be Vietnam Pro', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: clamp(5rem, 15vw, 140px);
+  font-weight: 900;
+  line-height: 0.9;
+  letter-spacing: -0.04em;
   margin-bottom: 40px;
-  color: var(--color-text-primary);
-  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+  color: #fff;
+  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5), 0 2px 4px rgba(0, 0, 0, 0.3);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .timer-controls {
