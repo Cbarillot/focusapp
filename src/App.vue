@@ -572,7 +572,6 @@ const modes = [
     font-size: 14px;
   }
 }
-}
 
 @media (max-width: 480px) {
   .app-header {

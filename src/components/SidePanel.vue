@@ -38,6 +38,7 @@ import ThemeSettings from './panels/ThemeSettings.vue'
 import TimerSettings from './panels/TimerSettings.vue'
 import MusicSettings from './panels/MusicSettings.vue'
 import SoundsSettings from './panels/SoundsSettings.vue'
+import TodoSettings from './panels/TodoSettings.vue'
 
 const store = useAppStore()
 
@@ -61,6 +62,11 @@ const tabs = [
     key: 'sounds',
     label: 'Ambient Sounds',
     icon: 'SoundsIcon'
+  },
+  {
+    key: 'todo',
+    label: 'Tasks & Todo',
+    icon: 'TodoIcon'
   }
 ]
 
@@ -70,6 +76,7 @@ const activeComponent = computed(() => {
     case 'timer': return TimerSettings
     case 'music': return MusicSettings
     case 'sounds': return SoundsSettings
+    case 'todo': return TodoSettings
     default: return ThemeSettings
   }
 })
