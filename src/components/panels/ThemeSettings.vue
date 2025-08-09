@@ -52,10 +52,10 @@
       </div>
 
       <div class="category-section">
-        <h4 class="category-title">🏞️ Ambient Worlds</h4>
+        <h4 class="category-title">🖼️ Images</h4>
         <div class="themes-grid">
           <div
-            v-for="(theme, key) in getThemesByCategory('ambient')"
+            v-for="(theme, key) in getThemesByCategory('images')"
             :key="key"
             class="theme-card"
             :class="{ active: store.currentTheme === key }"
@@ -69,49 +69,106 @@
                 @error="handleImageError"
               />
               <div class="theme-type-badge" :class="theme.type">
-                {{ getTypeBadge(theme.type) }}
+                🖼️
               </div>
             </div>
             <div class="theme-info">
               <h4 class="theme-name">{{ theme.name }}</h4>
-              <p class="theme-type">{{ getTypeLabel(theme.type) }}</p>
+              <p class="theme-type">Static Image</p>
             </div>
           </div>
         </div>
       </div>
 
       <div class="category-section">
-        <h4 class="category-title">🎬 Animated</h4>
+        <h4 class="category-title">🎬 Animated Backgrounds</h4>
+        
+        <!-- Nature Subcategory -->
+        <h5 class="subcategory-title">🌿 Nature</h5>
         <div class="themes-grid">
           <div
-            v-for="(theme, key) in getThemesByCategory('animated')"
+            v-for="(theme, key) in getThemesByCategory('nature')"
             :key="key"
             class="theme-card"
             :class="{ active: store.currentTheme === key }"
             @click="selectTheme(key)"
           >
             <div class="theme-preview">
-              <div
-                v-if="theme.type === 'canvas'"
-                class="canvas-preview"
-                :style="{ background: getCanvasPreviewGradient(theme.colors) }"
-              >
-                <div class="canvas-indicator">✨</div>
-              </div>
-              <img
-                v-else
-                :src="getPreviewImage(theme)"
-                :alt="theme.name"
-                class="theme-image"
+              <video
+                :src="theme.value"
+                muted
+                autoplay
+                loop
+                class="theme-video"
                 @error="handleImageError"
-              />
-              <div class="theme-type-badge" :class="theme.type">
-                {{ getTypeBadge(theme.type) }}
+              ></video>
+              <div class="theme-type-badge video">
+                🌿
               </div>
             </div>
             <div class="theme-info">
               <h4 class="theme-name">{{ theme.name }}</h4>
-              <p class="theme-type">{{ getTypeLabel(theme.type) }}</p>
+              <p class="theme-type">Nature Animation</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Lofi Subcategory -->
+        <h5 class="subcategory-title">🎵 Lofi</h5>
+        <div class="themes-grid">
+          <div
+            v-for="(theme, key) in getThemesByCategory('lofi')"
+            :key="key"
+            class="theme-card"
+            :class="{ active: store.currentTheme === key }"
+            @click="selectTheme(key)"
+          >
+            <div class="theme-preview">
+              <video
+                :src="theme.value"
+                muted
+                autoplay
+                loop
+                class="theme-video"
+                @error="handleImageError"
+              ></video>
+              <div class="theme-type-badge video">
+                🎵
+              </div>
+            </div>
+            <div class="theme-info">
+              <h4 class="theme-name">{{ theme.name }}</h4>
+              <p class="theme-type">Lofi Animation</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Café Subcategory -->
+        <h5 class="subcategory-title">☕ Café</h5>
+        <div class="themes-grid">
+          <div
+            v-for="(theme, key) in getThemesByCategory('cafe')"
+            :key="key"
+            class="theme-card"
+            :class="{ active: store.currentTheme === key }"
+            @click="selectTheme(key)"
+          >
+            <div class="theme-preview">
+              <video
+                :src="theme.value"
+                muted
+                autoplay
+                loop
+                class="theme-video"
+                @error="handleImageError"
+              ></video>
+              <div class="theme-type-badge video">
+                ☕
+              </div>
+            </div>
+            <div class="theme-info">
+              <h4 class="theme-name">{{ theme.name }}</h4>
+              <p class="theme-type">Café Animation</p>
             </div>
           </div>
         </div>
@@ -415,33 +472,38 @@ function applyPreset(colors) {
 }
 
 function getThemesByCategory(category) {
-  // === THEME CATEGORIZATION ===
-  // Pour ajouter de nouveaux thèmes dans les catégories :
-  // - gradientThemes : thèmes de type 'canvas', 'gradient', 'color', 'animated-gradient'
-  // - ambientThemes : thèmes de type 'image' pour les paysages et ambiances
-  // - animatedThemes : thèmes de type 'video' pour les vidéos animées
-  
   const gradientThemes = [
     'aura-twilight', 'peach-aura-heart', 'light-pink-heart', 'flare',
     'minimalist-black', 'minimalist-white', 'heat-map', 'dark-purple-heart',
     'light-purple-heart', 'grainy-gradient', 'lava-lamp', 'aurora', 'custom-animated-gradient'
   ]
 
-  const ambientThemes = [
+  const imageThemes = [
     'countryside-morning', 'toto-forest', 'lofi-clouds', 'dusk-peak',
     'tuscan-village', 'forest-retreat', 'cotton-candy-sky', 'countryside-night',
     'underwater-reef', 'enchanted-river', 'hobbit-home', 'golden-forest-cat',
-    // New image themes from assets - ajoutez ici les nouveaux thèmes d'images
-    '3d-cartoon-door', 'digital-river-landscape', 'mysterious-forest-cat'
+    // New image themes from assets
+    '3d-cartoon-door', 'digital-river-landscape', 'mysterious-forest-cat',
+    'mononoke-forest', 'kiki-flying', 'chihiro-flowers', 'totoro-forest',
+    'monet-painting', 'bay-of-naples', 'kiki-workshop'
   ]
 
-  const animatedThemes = [
-    'snowy-winter-cabin', 'rainy-lofi-cafe', 'flickering-fireplace',
-    // New video themes from assets - ajoutez ici les nouveaux thèmes vidéo
-    'castle-beyond-clouds', 'spirited-away-chihiro', 'coffee-shop-ambience',
-    'cozy-room', 'spirited-away-island', 'lofi-coffee-shop', 'lofi-girl-animated',
-    'morning-coffee', 'forest-house', 'spirited-away-train', 'train-spirited-away',
-    'zelda-forest-temple'
+  const natureThemes = [
+    // Nature animated backgrounds
+    'spirited-away-island', 'flowers-water-stream', 'totoro-rain', 
+    'flower-field-howls', 'small-forest-house', 'arrietty-flower-field',
+    'howls-moving-castle', 'zelda-forest-temple', 'castle-beyond-clouds'
+  ]
+
+  const lofiThemes = [
+    // Lofi animated backgrounds  
+    'chihiro-spirited-away', 'evening-chill', 'lofi-cozy-house-rain',
+    'lofi-house-cloudy', 'lofi-girl-animated'
+  ]
+
+  const cafeThemes = [
+    // Café animated backgrounds
+    'japanese-lofi-cafe', 'morning-coffee', 'coffee-shop'
   ]
 
   const themes = {}
@@ -450,12 +512,20 @@ function getThemesByCategory(category) {
     gradientThemes.forEach(key => {
       if (store.themes[key]) themes[key] = store.themes[key]
     })
-  } else if (category === 'ambient') {
-    ambientThemes.forEach(key => {
+  } else if (category === 'images') {
+    imageThemes.forEach(key => {
       if (store.themes[key]) themes[key] = store.themes[key]
     })
-  } else if (category === 'animated') {
-    animatedThemes.forEach(key => {
+  } else if (category === 'nature') {
+    natureThemes.forEach(key => {
+      if (store.themes[key]) themes[key] = store.themes[key]
+    })
+  } else if (category === 'lofi') {
+    lofiThemes.forEach(key => {
+      if (store.themes[key]) themes[key] = store.themes[key]
+    })
+  } else if (category === 'cafe') {
+    cafeThemes.forEach(key => {
       if (store.themes[key]) themes[key] = store.themes[key]
     })
   }
@@ -480,6 +550,15 @@ function getThemesByCategory(category) {
   color: var(--color-text-primary);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   padding-bottom: 8px;
+}
+
+.subcategory-title {
+  margin: 32px 0 16px 0;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  padding-left: 16px;
+  border-left: 3px solid var(--color-primary);
 }
 
 .themes-grid {
@@ -517,6 +596,7 @@ function getThemesByCategory(category) {
 }
 
 .theme-image,
+.theme-video,
 .canvas-preview,
 .gradient-preview,
 .color-preview {
@@ -531,6 +611,7 @@ function getThemesByCategory(category) {
 }
 
 .theme-card:hover .theme-image,
+.theme-card:hover .theme-video,
 .theme-card:hover .canvas-preview,
 .theme-card:hover .color-preview {
   transform: scale(1.05);

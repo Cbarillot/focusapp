@@ -88,6 +88,39 @@
         </label>
       </div>
     </div>
+    
+    <div class="section">
+      <h3 class="section-title">Timer Display Mode</h3>
+      <p class="section-description">Choose how the timer appears on your screen.</p>
+      
+      <div class="display-modes">
+        <div 
+          v-for="mode in displayModes"
+          :key="mode.key"
+          class="mode-option"
+          :class="{ active: store.timerDisplayMode === mode.key }"
+          @click="store.setTimerDisplayMode(mode.key)"
+        >
+          <div class="mode-preview">
+            <div class="preview-container" :class="mode.key">
+              <div class="preview-timer" :class="mode.key">
+                {{ mode.key === 'home' ? '14:32' : '25:00' }}
+              </div>
+              <div v-if="mode.key === 'ambiance'" class="preview-content">
+                <div class="preview-placeholder">Content Area</div>
+              </div>
+              <div v-if="mode.key === 'home'" class="preview-content">
+                <div class="preview-placeholder">Dashboard</div>
+              </div>
+            </div>
+          </div>
+          <div class="mode-info">
+            <h4 class="mode-name">{{ mode.name }}</h4>
+            <p class="mode-description">{{ mode.description }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -95,6 +128,24 @@
 import { useAppStore } from '../../stores/appStore'
 
 const store = useAppStore()
+
+const displayModes = [
+  {
+    key: 'focus',
+    name: 'Focus',
+    description: 'Timer centered on screen - perfect for deep focus sessions'
+  },
+  {
+    key: 'ambiance',
+    name: 'Ambiance',
+    description: 'Small timer in top-right corner - ideal for background timing'
+  },
+  {
+    key: 'home',
+    name: 'Home',
+    description: 'Clock display centered at top - less imposing, more casual'
+  }
+]
 
 function updatePomodoroTime(minutes) {
   store.pomodoroTime = parseInt(minutes) * 60
@@ -230,6 +281,127 @@ function updateLongBreakTime(minutes) {
 .toggle-input:checked + .toggle-slider::before {
   transform: translateX(20px);
   background: var(--color-text-primary);
+}
+
+.section-description {
+  margin: 0 0 16px 0;
+  font-size: 14px;
+  color: var(--color-text-secondary);
+}
+
+/* Timer Display Mode Styles */
+.display-modes {
+  display: grid;
+  gap: 16px;
+}
+
+.mode-option {
+  display: flex;
+  gap: 16px;
+  padding: 16px;
+  border-radius: var(--border-radius-md);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--color-border);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.mode-option:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+.mode-option.active {
+  background: rgba(139, 92, 246, 0.1);
+  border-color: var(--color-primary);
+}
+
+.mode-preview {
+  width: 100px;
+  height: 60px;
+  border-radius: var(--border-radius-sm);
+  background: rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  position: relative;
+}
+
+.preview-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.preview-container.focus {
+  justify-content: center;
+  align-items: center;
+}
+
+.preview-container.ambiance {
+  padding: 4px;
+}
+
+.preview-container.home {
+  justify-content: flex-start;
+  align-items: center;
+  padding: 8px 4px 4px 4px;
+}
+
+.preview-timer {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  text-align: center;
+}
+
+.preview-timer.focus {
+  font-size: 12px;
+}
+
+.preview-timer.ambiance {
+  font-size: 8px;
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 2px 4px;
+  border-radius: 2px;
+}
+
+.preview-timer.home {
+  font-size: 10px;
+  margin-bottom: 2px;
+}
+
+.preview-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.preview-placeholder {
+  font-size: 8px;
+  color: var(--color-text-secondary);
+  opacity: 0.7;
+}
+
+.mode-info {
+  flex: 1;
+}
+
+.mode-name {
+  margin: 0 0 4px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.mode-description {
+  margin: 0;
+  font-size: 14px;
+  color: var(--color-text-secondary);
 }
 
 /* Responsive */

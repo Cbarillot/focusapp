@@ -16,8 +16,9 @@ export const useAppStore = defineStore('app', () => {
   
   // UI state
   const sidebarOpen = ref(false)
-const activeTab = ref('themes') // themes, clock, timer, stats, music, notepad, sounds, quotes, background, todo
-const isFullscreen = ref(false) // Fullscreen mode state
+  const activeTab = ref('themes') // themes, clock, timer, stats, music, notepad, sounds, quotes, background, todo
+  const isFullscreen = ref(false) // Fullscreen mode state
+  const timerDisplayMode = ref('focus') // focus, ambiance, home
 
 // Theme & styling
 const currentTheme = ref('toto-forest') // home, ambiance, focus, toto-forest, etc.
@@ -55,118 +56,202 @@ const themes = ref({
   },
 
   // === NEW THEMES FROM ASSETS ===
-  // Pour ajouter de nouveaux thèmes :
-  // 1. Ajoutez les fichiers image/vidéo dans public/assets/themes/images/ ou public/assets/themes/videos/
-  // 2. Créez un objet thème ici avec : name, type ('image'/'video'), value (chemin du fichier), preview, category
-  // 3. Ajoutez la clé du thème dans l'array approprié dans ThemeSettings.vue (ambientThemes ou animatedThemes)
   
-  // Image themes for Ambient Worlds category
+  // ===== IMAGE THEMES (NATURE/AMBIENT) =====
   '3d-cartoon-door': {
     name: '3D Cartoon Door',
     type: 'image',
     value: '/assets/themes/images/3d-rendering-cartoon-welcome-door.jpg',
     preview: '/assets/themes/images/3d-rendering-cartoon-welcome-door.jpg',
-    category: 'ambient'
+    category: 'images'
   },
   'digital-river-landscape': {
     name: 'Digital River Landscape',
     type: 'image', 
     value: '/assets/themes/images/digital-art-style-river-nature-landscape.jpg',
     preview: '/assets/themes/images/digital-art-style-river-nature-landscape.jpg',
-    category: 'ambient'
+    category: 'images'
   },
   'mysterious-forest-cat': {
     name: 'Mysterious Forest Cat',
     type: 'image',
     value: '/assets/themes/images/mysterious-cat-sunny-forest.jpg', 
     preview: '/assets/themes/images/mysterious-cat-sunny-forest.jpg',
-    category: 'ambient'
+    category: 'images'
+  },
+  'mononoke-forest': {
+    name: 'Mononoke Forest',
+    type: 'image',
+    value: '/assets/themes/images/mononoké forest.jpg',
+    preview: '/assets/themes/images/mononoké forest.jpg',
+    category: 'images'
+  },
+  'kiki-flying': {
+    name: 'Kiki Flying',
+    type: 'image',
+    value: '/assets/themes/images/kiki flying.jpg',
+    preview: '/assets/themes/images/kiki flying.jpg',
+    category: 'images'
+  },
+  'chihiro-flowers': {
+    name: 'Chihiro\'s Flowers',
+    type: 'image',
+    value: '/assets/themes/images/chihiro\'s flowers.jpg',
+    preview: '/assets/themes/images/chihiro\'s flowers.jpg',
+    category: 'images'
+  },
+  'totoro-forest': {
+    name: 'Totoro\'s Forest',
+    type: 'image',
+    value: '/assets/themes/images/totoro\'s forest.jpg',
+    preview: '/assets/themes/images/totoro\'s forest.jpg',
+    category: 'images'
+  },
+  'monet-painting': {
+    name: 'Monet Landscape',
+    type: 'image',
+    value: '/assets/themes/images/793829-monet-desktop-wallpaper-1920x1080-free-download.jpg',
+    preview: '/assets/themes/images/793829-monet-desktop-wallpaper-1920x1080-free-download.jpg',
+    category: 'images'
+  },
+  'bay-of-naples': {
+    name: 'Bay of Naples (Aivazovsky)',
+    type: 'image',
+    value: '/assets/themes/images/4-the-bay-of-naples-in-the-morning-1893-Romantic-Ivan-Aivazovsky-Russian.jpg',
+    preview: '/assets/themes/images/4-the-bay-of-naples-in-the-morning-1893-Romantic-Ivan-Aivazovsky-Russian.jpg',
+    category: 'images'
+  },
+  'kiki-workshop': {
+    name: 'Kiki\'s Workshop',
+    type: 'image',
+    value: '/assets/themes/images/kiki\'s workshop.jpg',
+    preview: '/assets/themes/images/kiki\'s workshop.jpg',
+    category: 'images'
   },
 
-  // Video themes for Animated category
+  // ===== ANIMATED BACKGROUNDS (NATURE SUBCATEGORY) =====
+  'spirited-away-island': {
+    name: 'Island House (Spirited Away)',
+    type: 'video',
+    value: '/assets/themes/videos/island-house-spirited-away-moewalls-com.mp4',
+    preview: '/assets/themes/videos/island-house-spirited-away-moewalls-com.mp4',
+    category: 'nature'
+  },
+  'flowers-water-stream': {
+    name: 'Flowers & Water Stream (Ghibli)',
+    type: 'video',
+    value: '/assets/themes/videos/flowers-water-stream-ghibli-moewalls-com.mp4',
+    preview: '/assets/themes/videos/flowers-water-stream-ghibli-moewalls-com.mp4',
+    category: 'nature'
+  },
+  'totoro-rain': {
+    name: 'Totoro in the Rain',
+    type: 'video',
+    value: '/assets/themes/videos/totoro-in-the-rain-moewalls-com.mp4',
+    preview: '/assets/themes/videos/totoro-in-the-rain-moewalls-com.mp4',
+    category: 'nature'
+  },
+  'flower-field-howls': {
+    name: 'Flower Field (Howl\'s Moving Castle)',
+    type: 'video',
+    value: '/assets/themes/videos/flower-field-howls-moving-castle-moewalls-com.mp4',
+    preview: '/assets/themes/videos/flower-field-howls-moving-castle-moewalls-com.mp4',
+    category: 'nature'
+  },
+  'small-forest-house': {
+    name: 'Small House in Forest',
+    type: 'video',
+    value: '/assets/themes/videos/small-house-in-forest.3840x2160.mp4',
+    preview: '/assets/themes/videos/small-house-in-forest.3840x2160.mp4',
+    category: 'nature'
+  },
+  'arrietty-flower-field': {
+    name: 'Arrietty Flower Field',
+    type: 'video',
+    value: '/assets/themes/videos/shou-relaxing-flower-field-the-secret-world-of-arrietty-moewalls-com.mp4',
+    preview: '/assets/themes/videos/shou-relaxing-flower-field-the-secret-world-of-arrietty-moewalls-com.mp4',
+    category: 'nature'
+  },
+  'howls-moving-castle': {
+    name: 'Howl\'s Moving Castle',
+    type: 'video',
+    value: '/assets/themes/videos/howls-moving-castle-1-moewalls-com.mp4',
+    preview: '/assets/themes/videos/howls-moving-castle-1-moewalls-com.mp4',
+    category: 'nature'
+  },
+  'zelda-forest-temple': {
+    name: 'Zelda Forest Temple',
+    type: 'video',
+    value: '/assets/themes/videos/zelda-forest-temple.3840x2160.mp4',
+    preview: '/assets/themes/videos/zelda-forest-temple.3840x2160.mp4',
+    category: 'nature'
+  },
   'castle-beyond-clouds': {
     name: 'Castle Beyond Clouds',
     type: 'video',
-    value: '/assets/themes/videos/castle-beyond-the-clouds.1920x1080.mp4',
-    preview: '/assets/themes/videos/castle-beyond-the-clouds.1920x1080.mp4', // Will use first frame
-    category: 'animated'
+    value: '/assets/themes/videos/castle-beyond-the-clouds.3840x2160.mp4',
+    preview: '/assets/themes/videos/castle-beyond-the-clouds.3840x2160.mp4',
+    category: 'nature'
   },
-  'spirited-away-chihiro': {
-    name: 'Spirited Away - Chihiro',
+
+  // ===== ANIMATED BACKGROUNDS (LOFI SUBCATEGORY) =====
+  'chihiro-spirited-away': {
+    name: 'Chihiro (Spirited Away)',
     type: 'video',
-    value: '/assets/themes/videos/chihiro-ogino-spirited-away.1920x1080.mp4',
-    preview: '/assets/themes/videos/chihiro-ogino-spirited-away.1920x1080.mp4',
-    category: 'animated'
+    value: '/assets/themes/videos/chihiro-ogino-spirited-away.3840x2160.mp4',
+    preview: '/assets/themes/videos/chihiro-ogino-spirited-away.3840x2160.mp4',
+    category: 'lofi'
   },
-  'coffee-shop-ambience': {
-    name: 'Coffee Shop Ambience',
+  'evening-chill': {
+    name: 'Evening Chill',
     type: 'video',
-    value: '/assets/themes/videos/coffee-shop.1920x1080.mp4',
-    preview: '/assets/themes/videos/coffee-shop.1920x1080.mp4',
-    category: 'animated'
+    value: '/assets/themes/videos/evening-chill.3840x2160.mp4',
+    preview: '/assets/themes/videos/evening-chill.3840x2160.mp4',
+    category: 'lofi'
   },
-  'cozy-room': {
-    name: 'Cozy Room',
+  'lofi-cozy-house-rain': {
+    name: 'Lofi Cozy House (Rainy Day)',
     type: 'video',
-    value: '/assets/themes/videos/cozy-room.1920x1080.mp4',
-    preview: '/assets/themes/videos/cozy-room.1920x1080.mp4',
-    category: 'animated'
+    value: '/assets/themes/videos/lofi-cozy-house-rainy-day-moewalls-com.mp4',
+    preview: '/assets/themes/videos/lofi-cozy-house-rainy-day-moewalls-com.mp4',
+    category: 'lofi'
   },
-  'spirited-away-island': {
-    name: 'Spirited Away - Island House',
+  'lofi-house-cloudy': {
+    name: 'Lofi House (Cloudy Day)',
     type: 'video',
-    value: '/assets/themes/videos/house-on-island-spirited-away.1920x1080.mp4',
-    preview: '/assets/themes/videos/house-on-island-spirited-away.1920x1080.mp4',
-    category: 'animated'
-  },
-  'lofi-coffee-shop': {
-    name: 'Lofi Coffee Shop',
-    type: 'video',
-    value: '/assets/themes/videos/lofi-coffee-shop.1920x1080.mp4',
-    preview: '/assets/themes/videos/lofi-coffee-shop.1920x1080.mp4',
-    category: 'animated'
+    value: '/assets/themes/videos/lofi-house-cloudy-day-1-moewalls-com.mp4',
+    preview: '/assets/themes/videos/lofi-house-cloudy-day-1-moewalls-com.mp4',
+    category: 'lofi'
   },
   'lofi-girl-animated': {
     name: 'Lofi Girl Animated',
     type: 'video',
     value: '/assets/themes/videos/lofi-girl-animated.1920x1080.mp4',
     preview: '/assets/themes/videos/lofi-girl-animated.1920x1080.mp4',
-    category: 'animated'
+    category: 'lofi'
+  },
+
+  // ===== ANIMATED BACKGROUNDS (CAFÉ SUBCATEGORY) =====
+  'japanese-lofi-cafe': {
+    name: 'Japanese Lofi Café',
+    type: 'video',
+    value: '/assets/themes/videos/japanese-lofi-cafe-moewalls-com.mp4',
+    preview: '/assets/themes/videos/japanese-lofi-cafe-moewalls-com.mp4',
+    category: 'cafe'
   },
   'morning-coffee': {
     name: 'Morning Coffee',
     type: 'video',
-    value: '/assets/themes/videos/morning-coffee.1920x1080.mp4',
-    preview: '/assets/themes/videos/morning-coffee.1920x1080.mp4',
-    category: 'animated'
+    value: '/assets/themes/videos/morning-coffee.3840x2160.mp4',
+    preview: '/assets/themes/videos/morning-coffee.3840x2160.mp4',
+    category: 'cafe'
   },
-  'forest-house': {
-    name: 'Small House in Forest',
+  'coffee-shop': {
+    name: 'Coffee Shop',
     type: 'video',
-    value: '/assets/themes/videos/small-house-in-forest.1920x1080.mp4',
-    preview: '/assets/themes/videos/small-house-in-forest.1920x1080.mp4',
-    category: 'animated'
-  },
-  'spirited-away-train': {
-    name: 'Spirited Away - Train Travel',
-    type: 'video',
-    value: '/assets/themes/videos/spirited-away-train-travel.1920x1080.mp4',
-    preview: '/assets/themes/videos/spirited-away-train-travel.1920x1080.mp4',
-    category: 'animated'
-  },
-  'train-spirited-away': {
-    name: 'Train - Spirited Away',
-    type: 'video',
-    value: '/assets/themes/videos/train-spirited-away.1920x1080.mp4',
-    preview: '/assets/themes/videos/train-spirited-away.1920x1080.mp4',
-    category: 'animated'
-  },
-  'zelda-forest-temple': {
-    name: 'Zelda Forest Temple',
-    type: 'video',
-    value: '/assets/themes/videos/zelda-forest-temple.1920x1080.mp4',
-    preview: '/assets/themes/videos/zelda-forest-temple.1920x1080.mp4',
-    category: 'animated'
+    value: '/assets/themes/videos/coffee-shop.3840x2160.mp4',
+    preview: '/assets/themes/videos/coffee-shop.3840x2160.mp4',
+    category: 'cafe'
   },
   // === END NEW THEMES ===
 
@@ -468,6 +553,7 @@ const themes = ref({
     sidebarOpen,
     activeTab,
     isFullscreen,
+    timerDisplayMode,
     currentTheme,
     themes,
     backgroundType,
@@ -510,6 +596,7 @@ const themes = ref({
     applyThemeColors,
     setMusicUrl,
     detectMusicPlatform,
-    toggleFullscreen
+    toggleFullscreen,
+    setTimerDisplayMode: (mode) => { timerDisplayMode.value = mode }
   }
 })

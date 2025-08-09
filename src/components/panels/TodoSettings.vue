@@ -1,7 +1,29 @@
 <template>
   <div class="todo-settings">
+    <!-- Microsoft To-Do Widget -->
     <div class="section">
-      <h3 class="section-title">Add New Task</h3>
+      <h3 class="section-title">Microsoft To-Do</h3>
+      <p class="section-description">Access your Microsoft To-Do tasks directly in the app.</p>
+      
+      <div class="microsoft-todo-widget">
+        <iframe 
+          src="https://to-do.office.com/tasks/today"
+          frameborder="0"
+          class="microsoft-todo-iframe"
+          title="Microsoft To-Do"
+        ></iframe>
+        <div class="widget-overlay">
+          <p>Microsoft To-Do integration</p>
+          <button @click="openMicrosoftTodo" class="open-todo-btn">
+            Open Microsoft To-Do
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Local Task Manager -->
+    <div class="section">
+      <h3 class="section-title">Local Task Manager</h3>
       
       <div class="add-task-form">
         <input 
@@ -13,20 +35,44 @@
         />
         
         <div class="task-options">
+          <!-- Eisenhower Matrix Toggle -->
+          <div class="eisenhower-toggle">
+            <label class="toggle-label">Eisenhower Matrix</label>
+            <div class="matrix-selector">
+              <button 
+                v-for="quadrant in eisenhowerQuadrants"
+                :key="quadrant.key"
+                class="matrix-btn"
+                :class="{ active: newTask.eisenhowerQuadrant === quadrant.key }"
+                @click="newTask.eisenhowerQuadrant = quadrant.key"
+                :title="quadrant.description"
+              >
+                {{ quadrant.icon }} {{ quadrant.label }}
+              </button>
+            </div>
+          </div>
+          
+          <!-- Time Estimation -->
+          <div class="time-estimation">
+            <label class="toggle-label">Estimated Time</label>
+            <div class="time-selector">
+              <button 
+                v-for="timeOption in timeOptions"
+                :key="timeOption.minutes"
+                class="time-btn"
+                :class="{ active: newTask.estimatedMinutes === timeOption.minutes }"
+                @click="newTask.estimatedMinutes = timeOption.minutes"
+              >
+                {{ timeOption.icon }} {{ timeOption.label }}
+              </button>
+            </div>
+          </div>
+          
           <select v-model="newTask.priority" class="priority-select">
             <option value="low">Low Priority</option>
             <option value="medium">Medium Priority</option>
             <option value="high">High Priority</option>
           </select>
-          
-          <input 
-            v-model="newTask.estimatedPomodoros"
-            type="number"
-            min="1"
-            max="20"
-            placeholder="Est. pomodoros"
-            class="pomodoro-input"
-          />
         </div>
         
         <div class="task-tags">
@@ -181,10 +227,50 @@ const newTask = ref({
   title: '',
   priority: 'medium',
   estimatedPomodoros: 1,
+  estimatedMinutes: 30,
+  eisenhowerQuadrant: 'important-urgent', // important-urgent, important-not-urgent, not-important-urgent, not-important-not-urgent
   tags: []
 })
 
 const newTagInput = ref('')
+
+// Eisenhower Matrix quadrants
+const eisenhowerQuadrants = [
+  {
+    key: 'important-urgent',
+    label: 'Do First',
+    icon: '🔴',
+    description: 'Important & Urgent - Do immediately'
+  },
+  {
+    key: 'important-not-urgent', 
+    label: 'Schedule',
+    icon: '🟡',
+    description: 'Important & Not Urgent - Plan to do'
+  },
+  {
+    key: 'not-important-urgent',
+    label: 'Delegate',
+    icon: '🔵', 
+    description: 'Not Important & Urgent - Delegate if possible'
+  },
+  {
+    key: 'not-important-not-urgent',
+    label: 'Eliminate',
+    icon: '⚪',
+    description: 'Not Important & Not Urgent - Consider eliminating'
+  }
+]
+
+// Time estimation options with clock icons
+const timeOptions = [
+  { minutes: 15, label: '15min', icon: '🕐' },
+  { minutes: 30, label: '30min', icon: '🕓' },
+  { minutes: 60, label: '1h', icon: '🕕' },
+  { minutes: 90, label: '1h30', icon: '🕘' },
+  { minutes: 120, label: '2h', icon: '🕘' },
+  { minutes: 150, label: '2h+', icon: '🕘' }
+]
 
 const filters = [
   { key: 'all', label: 'All' },
@@ -225,11 +311,16 @@ const filteredTodos = computed(() => {
   return filtered
 })
 
+function openMicrosoftTodo() {
+  window.open('https://to-do.office.com/tasks/today', '_blank')
+}
+
 function addTask() {
   if (newTask.value.title.trim()) {
     store.addTodo({
       ...newTask.value,
-      title: newTask.value.title.trim()
+      title: newTask.value.title.trim(),
+      estimatedPomodoros: Math.ceil(newTask.value.estimatedMinutes / 25) // Convert minutes to pomodoros
     })
     
     // Reset form
@@ -237,6 +328,8 @@ function addTask() {
       title: '',
       priority: 'medium',
       estimatedPomodoros: 1,
+      estimatedMinutes: 30,
+      eisenhowerQuadrant: 'important-urgent',
       tags: []
     }
   }
@@ -310,6 +403,135 @@ function onDrop(event, targetTodo) {
   margin: 0 0 16px 0;
   font-size: 16px;
   font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.section-description {
+  margin: 0 0 16px 0;
+  font-size: 14px;
+  color: var(--color-text-secondary);
+}
+
+/* Microsoft To-Do Widget Styles */
+.microsoft-todo-widget {
+  position: relative;
+  height: 300px;
+  border-radius: var(--border-radius-md);
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.microsoft-todo-iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.widget-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  color: var(--color-text-primary);
+}
+
+.open-todo-btn {
+  padding: 12px 24px;
+  background: var(--color-primary);
+  color: var(--color-text-primary);
+  border: none;
+  border-radius: var(--border-radius-md);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.open-todo-btn:hover {
+  background: var(--color-primary-dark);
+  transform: translateY(-2px);
+}
+
+/* Eisenhower Matrix Styles */
+.eisenhower-toggle {
+  margin-bottom: 16px;
+}
+
+.toggle-label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-text-primary);
+}
+
+.matrix-selector {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+.matrix-btn {
+  padding: 8px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-sm);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--color-text-secondary);
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+.matrix-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--color-text-primary);
+}
+
+.matrix-btn.active {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-text-primary);
+}
+
+/* Time Estimation Styles */
+.time-estimation {
+  margin-bottom: 16px;
+}
+
+.time-selector {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+}
+
+.time-btn {
+  padding: 8px 6px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-sm);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--color-text-secondary);
+  font-size: 11px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+.time-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--color-text-primary);
+}
+
+.time-btn.active {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
   color: var(--color-text-primary);
 }
 

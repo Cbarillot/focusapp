@@ -18,8 +18,8 @@
         </button>
       </header>
       
-      <!-- Central Timer Area -->
-      <main class="timer-area">
+      <!-- Central Timer Area - Focus Mode -->
+      <main v-if="store.timerDisplayMode === 'focus'" class="timer-area focus-mode">
         <div class="timer-container">
           <!-- Mode Tabs -->
           <div class="mode-tabs">
@@ -54,6 +54,56 @@
           </div>
         </div>
       </main>
+
+      <!-- Ambiance Mode - Timer in top-right corner -->
+      <div v-else-if="store.timerDisplayMode === 'ambiance'" class="ambiance-timer">
+        <div class="mini-timer-container">
+          <div class="mini-mode-indicator">{{ store.timerMode.charAt(0).toUpperCase() }}</div>
+          <div class="mini-time">{{ store.displayTime }}</div>
+          <div class="mini-controls">
+            <button 
+              class="mini-control-btn"
+              @click="store.toggleTimer()"
+              :title="store.isRunning ? 'Pause' : 'Start'"
+            >
+              <svg v-if="!store.isRunning" width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8 5V19L19 12L8 5Z" fill="currentColor"/>
+              </svg>
+              <svg v-else width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="6" y="4" width="4" height="16" fill="currentColor"/>
+                <rect x="14" y="4" width="4" height="16" fill="currentColor"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Home Mode - Clock display at top -->
+      <div v-else-if="store.timerDisplayMode === 'home'" class="home-clock">
+        <div class="clock-container">
+          <div class="current-time">{{ currentTime }}</div>
+          <div class="session-info">
+            <span class="session-type">{{ modes.find(m => m.key === store.timerMode)?.label }}</span>
+            <span class="session-time">{{ store.displayTime }}</span>
+            <div class="session-controls">
+              <button 
+                class="session-control-btn"
+                @click="store.toggleTimer()"
+              >
+                {{ store.isRunning ? '⏸️' : '▶️' }}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Content area for ambiance and home modes -->
+      <main v-if="store.timerDisplayMode !== 'focus'" class="content-area">
+        <div class="content-placeholder">
+          <h2>Focus Content Area</h2>
+          <p>This space is available when using Ambiance or Home timer modes.</p>
+        </div>
+      </main>
       
       <!-- Corner Navigation - replaces footer for cleaner layout -->
       <CornerNavigation />
@@ -78,52 +128,37 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useAppStore } from './stores/appStore'
 import DynamicBackground from './components/DynamicBackground.vue'
 import SidePanel from './components/SidePanel.vue'
 import CornerNavigation from './components/CornerNavigation.vue'
 
-// Variables fusionnées pour la gestion des thèmes, du background et du fullscreen
-const activeTab = ref('themes') // themes, clock, timer, stats, music, notepad, sounds, quotes, background, todo
-const isFullscreen = ref(false) // Fullscreen mode state
+const store = useAppStore()
 
-// Theme & styling
-const currentTheme = ref('toto-forest') // home, ambiance, focus, toto-forest, etc.
-const backgroundType = ref('canvas') // gradient, image, video, canvas, color, youtube, animated-gradient
-const backgroundValue = ref('lava-lamp') // valeur par défaut selon le backgroundType
-const overlayOpacity = ref(0.2) // compromis entre 0.1 et 0.3
+// Current time for home mode
+const currentTimeString = ref('')
 
-// Custom gradient colors (utilisé pour les backgrounds personnalisés)
-const customGradientColors = ref(['#DF437A', '#3d57d6', '#a117fd', '#ec634b'])
+const currentTime = computed(() => currentTimeString.value)
 
-// Authentic Flocus themes with official assets + custom and canvas/animated themes
-const themes = ref({
-  // Gradients & Couleurs
-  'aura-twilight': {
-    name: 'Aura Twilight',
-    type: 'image',
-    value: 'https://app.flocus.com/resources/images/themes/fc5d2c05dba5c17ea3fa.jpg',
-    preview: 'https://app.flocus.com/resources/images/themes/58caf7f5c0a933ebfcf7.jpg'
-  },
-  // Ajoutez ici les autres thèmes et backgrounds customisés
-  'lava-lamp': {
-    name: 'Lava Lamp',
-    type: 'canvas',
-    value: 'lava-lamp',
-    colors: ['#DF437A', '#3d57d6', '#a117fd', '#ec634b'],
-    preview: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDIwMCAxMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj48c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojREY0MzdBIiAvPjxzdG9wIG9mZnNldD0iMzMlIiBzdHlsZT0ic3RvcC1jb2xvcjojM2Q1N2Q2IiAvPjxzdG9wIG9mZnNldD0iNjYlIiBzdHlsZT0ic3RvcC1jb2xvcjojYTExN2ZkIiAvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6I2VjNjM0YiIgLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjEyMCIgZmlsbD0idXJsKCNncmFkKSIgcng9IjgiLz48L3N2Zz4='
-  },
-  'custom-animated-gradient': {
-    name: 'Custom Animated Gradient',
-    type: 'animated-gradient',
-    value: 'custom',
-    colors: ['#DF437A', '#3d57d6', '#a117fd', '#ec634b'],
-    preview: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDIwMCAxMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJhbmltYXRlZCIgeDI9IjEwMCUiIHkyPSIxMDAlIj48c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojREY0MzdBIiAvPjxzdG9wIG9mZnNldD0iMzMlIiBzdHlsZT0ic3RvcC1jb2xvcjojM2Q1N2Q2IiAvPjxzdG9wIG9mZnNldD0iNjYlIiBzdHlsZT0ic3RvcC1jb2xvcjojYTExN2ZkIiAvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6I2VjNjM0YiIgLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjEyMCIgZmlsbD0idXJsKCNhbmltYXRlZCkiIHJ4PSI4Ii8+PGNpcmNsZSBjeD0iMTAwIiBjeT0iNjAiIHI9IjMiIGZpbGw9IndoaXRlIiBvcGFjaXR5PSIwLjgiPjxhbmltYXRlIGF0dHJpYnV0ZU5hbWU9Im9wYWNpdHkiIHZhbHVlcz0iMC44OzAuMzswLjgiIGR1cj0iMnMiIHJlcGVhdENvdW50PSJpbmRlZmluaXRlIi8+PC9jaXJjbGU+PC9zdmc+'
+// Update current time every second
+let timeInterval = null
+
+onMounted(() => {
+  updateCurrentTime()
+  timeInterval = setInterval(updateCurrentTime, 1000)
+})
+
+onUnmounted(() => {
+  if (timeInterval) {
+    clearInterval(timeInterval)
   }
 })
 
-const store = useAppStore()
+function updateCurrentTime() {
+  const now = new Date()
+  currentTimeString.value = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+}
 
 const modes = [
   { key: 'pomodoro', label: 'Pomodoro' },
@@ -309,6 +344,155 @@ const modes = [
   z-index: 150;
 }
 
+/* Timer Display Modes */
+
+/* Ambiance Mode - Small timer in top-right corner */
+.ambiance-timer {
+  position: fixed;
+  top: 20px;
+  right: 80px;
+  z-index: 50;
+}
+
+.mini-timer-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(20px);
+  border-radius: var(--border-radius-full);
+  border: 1px solid var(--color-border);
+}
+
+.mini-mode-indicator {
+  width: 20px;
+  height: 20px;
+  background: var(--color-primary);
+  border-radius: var(--border-radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.mini-time {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  font-family: 'Be Vietnam Pro', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  letter-spacing: -0.02em;
+}
+
+.mini-control-btn {
+  width: 24px;
+  height: 24px;
+  border-radius: var(--border-radius-full);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.mini-control-btn:hover {
+  background: var(--color-primary);
+  transform: scale(1.1);
+}
+
+/* Home Mode - Clock display at top */
+.home-clock {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 50;
+}
+
+.clock-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 24px;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(20px);
+  border-radius: var(--border-radius-lg);
+  border: 1px solid var(--color-border);
+}
+
+.current-time {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  font-family: 'Be Vietnam Pro', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  letter-spacing: -0.02em;
+}
+
+.session-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+}
+
+.session-type {
+  color: var(--color-text-secondary);
+  font-weight: 500;
+}
+
+.session-time {
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.session-control-btn {
+  background: none;
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.session-control-btn:hover {
+  transform: scale(1.2);
+}
+
+/* Content Area for non-focus modes */
+.content-area {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 120px 20px 80px;
+}
+
+.content-placeholder {
+  text-align: center;
+  max-width: 600px;
+  padding: 40px;
+  border-radius: var(--border-radius-lg);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--color-border);
+}
+
+.content-placeholder h2 {
+  margin: 0 0 16px 0;
+  color: var(--color-text-primary);
+  font-size: 24px;
+}
+
+.content-placeholder p {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: 16px;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .sidebar {
@@ -333,6 +517,61 @@ const modes = [
     font-size: 15px;
     min-width: 100px;
   }
+
+  /* Mobile responsive for new timer modes */
+  .ambiance-timer {
+    top: 15px;
+    right: 70px;
+  }
+
+  .mini-timer-container {
+    padding: 6px 10px;
+    gap: 6px;
+  }
+
+  .mini-time {
+    font-size: 14px;
+  }
+
+  .mini-control-btn {
+    width: 20px;
+    height: 20px;
+  }
+
+  .home-clock {
+    top: 15px;
+  }
+
+  .clock-container {
+    padding: 12px 20px;
+    gap: 6px;
+  }
+
+  .current-time {
+    font-size: 20px;
+  }
+
+  .session-info {
+    gap: 8px;
+    font-size: 12px;
+  }
+
+  .content-area {
+    padding: 100px 15px 80px;
+  }
+
+  .content-placeholder {
+    padding: 30px 20px;
+  }
+
+  .content-placeholder h2 {
+    font-size: 20px;
+  }
+
+  .content-placeholder p {
+    font-size: 14px;
+  }
+}
 }
 
 @media (max-width: 480px) {
