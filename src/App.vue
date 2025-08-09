@@ -163,29 +163,29 @@
         </button>
 
         <!-- Ambiance Left Sidebar -->
-        <div class="ambiance-left-sidebar" :class="{ expanded: ambianceLeftExpanded }">
+        <div class="ambiance-left-sidebar" :class="{ expanded: unifiedLeftExpanded }">
           <!-- Todo Section -->
           <div class="ambiance-sidebar-section">
             <button 
               class="ambiance-sidebar-btn"
-              @mouseenter="showAmbianceTodoPreview"
-              @mouseleave="hideAmbianceTodoPreview"
-              @click="toggleAmbianceLeft"
+              @mouseenter="showTodoPreviewHandler"
+              @mouseleave="hideTodoPreview"
+              @click="toggleUnifiedLeft"
               title="Tâches"
             >
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M9 11L12 14L22 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 <path d="M21 12V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
-              <span class="ambiance-task-count" v-if="!ambianceLeftExpanded && incompleteTasks.length > 0">{{ incompleteTasks.length }}</span>
+              <span class="ambiance-task-count" v-if="!unifiedLeftExpanded && incompleteTasks.length > 0">{{ incompleteTasks.length }}</span>
             </button>
             
             <!-- Todo Preview -->
             <div 
-              v-if="showTodoPreview && !ambianceLeftExpanded"
+              v-if="showTodoPreview && !unifiedLeftExpanded"
               class="ambiance-todo-preview"
-              @mouseenter="showAmbianceTodoPreview"
-              @mouseleave="hideAmbianceTodoPreview"
+              @mouseenter="showTodoPreviewHandler"
+              @mouseleave="hideTodoPreview"
             >
               <div class="preview-tasks">
                 <div 
@@ -207,9 +207,9 @@
           <div class="ambiance-sidebar-section">
             <button 
               class="ambiance-sidebar-btn"
-              @mouseenter="showAmbianceMusicPreview"
-              @mouseleave="hideAmbianceMusicPreview"
-              @click="openAmbianceMusic"
+              @mouseenter="showMusicPreviewHandler"
+              @mouseleave="hideMusicPreview"
+              @click="openMusic"
               title="Musique"
             >
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -223,8 +223,8 @@
             <div 
               v-if="showMusicPreview"
               class="ambiance-music-preview"
-              @mouseenter="showAmbianceMusicPreview"
-              @mouseleave="hideAmbianceMusicPreview"
+              @mouseenter="showMusicPreviewHandler"
+              @mouseleave="hideMusicPreview"
             >
               <div class="current-track" v-if="store.currentTrack">
                 <div class="track-title">{{ store.currentTrack }}</div>
@@ -238,9 +238,9 @@
           <div class="ambiance-sidebar-section">
             <button 
               class="ambiance-sidebar-btn"
-              @mouseenter="showAmbianceSoundPreview"
-              @mouseleave="hideAmbianceSoundPreview"
-              @click="openAmbianceSound"
+              @mouseenter="showSoundPreviewHandler"
+              @mouseleave="hideSoundPreview"
+              @click="openSound"
               title="Sons"
             >
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -253,8 +253,8 @@
             <div 
               v-if="showSoundPreview"
               class="ambiance-sound-preview"
-              @mouseenter="showAmbianceSoundPreview"
-              @mouseleave="hideAmbianceSoundPreview"
+              @mouseenter="showSoundPreviewHandler"
+              @mouseleave="hideSoundPreview"
             >
               <div class="current-sound" v-if="store.currentSound">
                 <div class="sound-title">{{ store.currentSound }}</div>
@@ -265,7 +265,7 @@
           </div>
 
           <!-- Expanded Content -->
-          <div v-if="ambianceLeftExpanded" class="ambiance-expanded-content">
+          <div v-if="unifiedLeftExpanded" class="ambiance-expanded-content">
             <!-- Todo List Interface -->
             <div class="expanded-todo-section">
               <h4>Gestion des Tâches</h4>
@@ -401,25 +401,6 @@
               <path d="M8 3H5C4.46957 3 3.96086 3.21071 3.58579 3.58579C3.21071 3.96086 3 4.46957 3 5V8M21 8V5C21 4.46957 20.7893 3.96086 20.4142 3.58579C20.0391 3.21071 19.5304 3 19 3H16M16 21H19C19.5304 21 20.0391 20.7893 20.4142 20.4142C20.7893 20.0391 21 19.5304 21 19V16M3 16V19C3 19.5304 3.21071 20.0391 3.58579 20.4142C3.96086 20.7893 4.46957 21 5 21H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </button>
-        </div>
-      </div>
-
-      <!-- Home Mode - Digital clock display at top -->
-      <div v-else-if="store.timerDisplayMode === 'home'" class="home-clock">
-        <div class="clock-container">
-          <div class="current-time">{{ currentTime }}</div>
-          <div class="session-info">
-            <span class="session-type">{{ modes.find(m => m.key === store.timerMode)?.label }}</span>
-            <span class="session-time">{{ store.displayTime }}</span>
-            <div class="session-controls">
-              <button 
-                class="session-control-btn"
-                @click="store.toggleTimer()"
-              >
-                {{ store.isRunning ? '⏸️' : '▶️' }}
-              </button>
-            </div>
-          </div>
         </div>
       </div>
 
@@ -681,7 +662,7 @@ function toggleUnifiedLeft() {
   unifiedLeftExpanded.value = !unifiedLeftExpanded.value
 }
 
-function showTodoPreview() {
+function showTodoPreviewHandler() {
   clearTimeout(previewTimeouts.todo)
   showTodoPreview.value = true
 }
@@ -692,7 +673,7 @@ function hideTodoPreview() {
   }, 300)
 }
 
-function showMusicPreview() {
+function showMusicPreviewHandler() {
   clearTimeout(previewTimeouts.music)
   showMusicPreview.value = true
 }
@@ -703,7 +684,7 @@ function hideMusicPreview() {
   }, 300)
 }
 
-function showSoundPreview() {
+function showSoundPreviewHandler() {
   clearTimeout(previewTimeouts.sound)
   showSoundPreview.value = true
 }
